@@ -2,12 +2,20 @@ package com.example.compose_study.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
+import coil.size.Size
 
 
 @Composable
@@ -18,4 +26,44 @@ fun Loading() {
     ) {
         CircularProgressIndicator()
     }
+}
+
+@Composable
+fun ImageBigSize(url: String) {
+    val model = ImageRequest.Builder(LocalContext.current)
+        .data(url)
+        .placeholder(com.example.compose_study.R.drawable.ic_launcher_foreground)
+        .size(Size(128, 128))
+        .build()
+
+    AsyncImage(
+        model = model,
+        contentDescription = null,
+        contentScale = ContentScale.Crop,
+        modifier = Modifier
+            .padding(32.dp)
+            .fillMaxWidth()
+            .height(320.dp)
+            .clip(RoundedCornerShape(CornerSize(16.dp)))
+    )
+}
+
+@Composable
+fun ImageSmallSize(url: String) {
+    val model = ImageRequest.Builder(LocalContext.current)
+        .data(url)
+        .placeholder(com.example.compose_study.R.drawable.ic_launcher_foreground)
+        .size(Size(128, 128))
+        .build()
+
+    AsyncImage(
+        model = model,
+        contentDescription = null,
+        contentScale = ContentScale.Crop,
+        modifier = Modifier
+            .padding(8.dp)
+            .size(84.dp)
+            .clip(RoundedCornerShape(CornerSize(16.dp)))
+    )
+
 }
