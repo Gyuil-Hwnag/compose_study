@@ -1,9 +1,10 @@
-package com.example.compose_study.ui
+package com.example.compose_study.ui.screen
 
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.compose_study.domain.GetPhotoListUseCase
 import com.example.compose_study.model.Photo
+import com.example.compose_study.ui.BaseViewModel
 import com.example.compose_study.ui.paging_source.createPhotoPager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
@@ -13,7 +14,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(
+class HomeViewModel @Inject constructor(
     private val getPhotoListUseCase: GetPhotoListUseCase
 ) : BaseViewModel() {
 

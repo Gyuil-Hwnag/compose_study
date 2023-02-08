@@ -1,8 +1,7 @@
 package com.example.compose_study.ui.item
 
-import android.util.Log
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -15,22 +14,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.semantics.Role.Companion.Image
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.size.Size
 import com.example.compose_study.model.Photo
-import com.example.compose_study.ui.model.Puppy
 import com.example.compose_study.ui.theme.Typography
 
 @Composable
-fun PhotoListItem(photo: Photo) {
+fun PhotoListItem(photo: Photo, onClick: (id: String) -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(0.dp, 8.dp),
+            .padding(0.dp, 8.dp)
+            .clickable { onClick(photo.id) },
         elevation = 4.dp,
         shape = RoundedCornerShape(corner = CornerSize(24.dp)),
         border = BorderStroke(1.dp, MaterialTheme.colors.primary)

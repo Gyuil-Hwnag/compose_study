@@ -13,3 +13,14 @@ fun List<PhotoResponse>.toDomain(): List<Photo> {
         download_url = it.download_url
     ) }
 }
+
+fun PhotoResponse.toDomain(): Photo {
+    return Photo(
+        id = this.id,
+        author = this.author,
+        width = this.width,
+        height = this.height,
+        url = this.url,
+        download_url = this.download_url
+    )
+}

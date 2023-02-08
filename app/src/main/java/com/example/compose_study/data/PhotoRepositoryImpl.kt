@@ -11,4 +11,8 @@ class PhotoRepositoryImpl @Inject constructor(
     override suspend fun getPhotoList(page: Int, limit: Int): List<Photo> {
         return photoDataSource.getPhotoList(page = page, limit = limit)
     }
+
+    override suspend fun getPhoto(id: String): Photo {
+        return photoDataSource.getPhoto(id = id.toInt())
+    }
 }

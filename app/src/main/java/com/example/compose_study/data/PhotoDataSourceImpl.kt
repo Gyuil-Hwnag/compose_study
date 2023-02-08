@@ -9,4 +9,8 @@ class PhotoDataSourceImpl @Inject constructor(
     override suspend fun getPhotoList(page: Int, limit: Int): List<Photo> {
         return photoApi.getPhotoList(page = page, limit = limit).toDomain()
     }
+
+    override suspend fun getPhoto(id: Int): Photo {
+        return photoApi.getPhoto(id = id).toDomain()
+    }
 }

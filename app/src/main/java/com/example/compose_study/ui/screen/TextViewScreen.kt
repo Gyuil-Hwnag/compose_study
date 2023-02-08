@@ -1,7 +1,5 @@
 package com.example.compose_study.ui.screen
 
-import android.view.Gravity
-import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -17,12 +15,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
-import com.example.compose_study.ui.MainViewModel
 
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun TextFieldItem(viewModel: MainViewModel) {
+fun TextFieldItem(viewModel: HomeViewModel) {
     val keyboardController = LocalSoftwareKeyboardController.current
     var text by rememberSaveable { mutableStateOf("") }
 
