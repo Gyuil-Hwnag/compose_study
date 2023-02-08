@@ -26,7 +26,9 @@ fun HomeScreen(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Column(modifier = Modifier.fillMaxWidth().weight(8f)) {
+            Column(modifier = Modifier
+                .fillMaxWidth()
+                .weight(8f)) {
                 PhotoLazyColumn(photoList = viewModel.photos, onClick = { toDetail(it) })
             }
             TextFieldItem(viewModel)

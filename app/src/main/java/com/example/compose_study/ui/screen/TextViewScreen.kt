@@ -1,5 +1,6 @@
 package com.example.compose_study.ui.screen
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -24,6 +25,9 @@ fun TextFieldItem(viewModel: HomeViewModel) {
     var text by rememberSaveable { mutableStateOf("") }
 
     val context = LocalContext.current
+    val toastMessage = viewModel.searchState.collectAsState()
+
+    if(toastMessage.value.isNotBlank()) Toast.makeText(context, toastMessage.value, Toast.LENGTH_SHORT).show()
 
     OutlinedTextField(
         modifier = Modifier

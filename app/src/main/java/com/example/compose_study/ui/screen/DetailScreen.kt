@@ -9,6 +9,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -22,7 +23,7 @@ fun DetailScreen(
     viewModel: DetailViewModel = hiltViewModel()
 ) {
     viewModel.getPhoto(id = id)
-    val photo = viewModel.photoState.collectAsState().value
+    val photo = viewModel.photoState.collectAsState()
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -37,22 +38,24 @@ fun DetailScreen(
             )
         }
     ) { paddingValues ->
-        if(photo == null) {
+        if(photo.value == null) {
             Loading()
         } else {
             Column(modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)) {
 
-                ImageBigSize(url = photo.url)
+                ImageBigSize(url = photo.value!!.url)
                 Text(
                     modifier = Modifier.fillMaxWidth().padding(16.dp, 8.dp),
-                    text = photo.author
+                    text = photo.value!!.author
                 )
                 Text(
                     modifier = Modifier.fillMaxWidth().padding(16.dp, 8.dp),
-                    text = photo.download_url
+                    text = photo.value!!.download_url
                 )
+
+                PhotoLazyGrid(photoList = viewModel.photos, onClick = { viewModel.getPhoto(id = it) })
             }
         }
     }
