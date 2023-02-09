@@ -3,40 +3,41 @@ package com.example.compose_study.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.compose_study.ui.item.BottomNavItem
+import com.example.compose_study.ui.item.DETAIL
 import com.example.compose_study.ui.screen.DetailScreen
 import com.example.compose_study.ui.screen.HomeScreen
 import com.example.compose_study.ui.screen.HomeViewModel
+import com.example.compose_study.ui.screen.TodoScreen
 
 @Composable
-fun NavigationController() {
+fun NavigationGraph(modifier: Modifier, navController: NavHostController) {
     val (value: String, setValue: (String) -> Unit) = remember { mutableStateOf("") }
 
-    val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = "Home") {
-        composable("Home") {
-//            val parentEntry = remember(it) {
-//                navController.getBackStackEntry("Parent")
-//            }
-//            val parentViewModel = viewModel<HomeViewModel>(parentEntry)
-//            parentViewModel
+    NavHost(navController = navController, startDestination = BottomNavItem.Paging.screenRoute, modifier = modifier) {
+        composable(BottomNavItem.Paging.screenRoute) {
             HomeScreen(
                 toDetail = {
                     setValue(it)
-                    navController.navigate("Detail")
+                    navController.navigate(DETAIL)
                 }
             )
         }
-
-        composable("Detail") {
+        composable(DETAIL) {
             DetailScreen(
                 id = value,
                 toBack = { navController.popBackStack() }
             )
+        }
+        composable(BottomNavItem.Todo.screenRoute) {
+            TodoScreen()
         }
     }
 }

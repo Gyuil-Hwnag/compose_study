@@ -1,9 +1,9 @@
 package com.example.compose_study.ui.screen
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
@@ -11,10 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.compose_study.ui.ScrollToTopButton
-import kotlinx.coroutines.launch
 
-
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun HomeScreen(
     toDetail: (id: String) -> Unit,
@@ -23,7 +20,7 @@ fun HomeScreen(
     Scaffold(
         backgroundColor = MaterialTheme.colors.background,
         modifier = Modifier.fillMaxSize()
-    ) {
+    ) { contentPadding ->
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -36,6 +33,6 @@ fun HomeScreen(
             TextFieldItem(viewModel)
         }
 
-        ScrollToTopButton(onClick = { viewModel.scrollToTop() })
+        ScrollToTopButton(onClick = { viewModel.scrollToTop() }, modifier = Modifier.padding(contentPadding))
     }
 }

@@ -35,11 +35,11 @@ fun Loading() {
 }
 
 @Composable
-fun ScrollToTopButton(onClick: () -> Unit) {
+fun ScrollToTopButton(onClick: () -> Unit, modifier: Modifier) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
-            .padding(bottom = 100.dp, end = 10.dp),
+            .padding(bottom = 90.dp, end = 10.dp),
         horizontalAlignment = Alignment.End,
         verticalArrangement = Arrangement.Bottom
     ) {
