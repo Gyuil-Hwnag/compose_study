@@ -14,6 +14,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
@@ -23,10 +24,11 @@ import androidx.lifecycle.repeatOnLifecycle
 import kotlinx.coroutines.flow.collectLatest
 
 
-@OptIn(ExperimentalComposeUiApi::class)
+//@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun TextFieldItem(viewModel: HomeViewModel) {
-    val keyboardController = LocalSoftwareKeyboardController.current
+//    val keyboardController = LocalSoftwareKeyboardController.current
+    val focusManager = LocalFocusManager.current
     var text by rememberSaveable { mutableStateOf("") }
 
     val context = LocalContext.current
@@ -47,7 +49,7 @@ fun TextFieldItem(viewModel: HomeViewModel) {
         keyboardActions = KeyboardActions(onDone = {
             viewModel.searchAuthor(text = text)
             text = ""
-            keyboardController?.hide()
+            focusManager.clearFocus()
         }),
         value = text,
         onValueChange = { text = it },
