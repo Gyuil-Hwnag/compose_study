@@ -10,6 +10,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.compose_study.ui.ScrollToTopButton
+import kotlinx.coroutines.launch
 
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -33,5 +35,7 @@ fun HomeScreen(
             }
             TextFieldItem(viewModel)
         }
+
+        ScrollToTopButton(onClick = { viewModel.scrollToTop() })
     }
 }

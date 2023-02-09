@@ -1,9 +1,11 @@
 package com.example.compose_study.ui.screen
 
+import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -12,7 +14,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.*
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.coroutineScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -23,22 +31,41 @@ import com.example.compose_study.ui.ScrollToTopButton
 import com.example.compose_study.ui.item.GridPhotoItem
 import com.example.compose_study.ui.item.PhotoItem
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+@SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun PhotoLazyColumn(
-    photoList: Flow<PagingData<Photo>>, onClick: (id: String) -> Unit
+    photoList: Flow<PagingData<Photo>>, onClick: (id: String) -> Unit,
+    viewModel: HomeViewModel = hiltViewModel()
 ) {
     val photos = photoList.collectAsLazyPagingItems()
 
-    val listState = rememberLazyListState()
+    val scrollState = rememberLazyListState()
+
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
     val coroutineScope = rememberCoroutineScope()
 
-    val showButton by remember{ derivedStateOf { listState.firstVisibleItemIndex > 0 } }
+    LaunchedEffect(key1 = Unit) {
+        lifecycle.repeatOnLifecycle(state = Lifecycle.State.STARTED) {
+            launch {
+                viewModel.scrollToTopEvent.collectLatest {
+                    coroutineScope.launch {
+                        scrollState.animateScrollToItem(0)
+                    }
+                }
+            }
+        }
+    }
 
     if (photos.loadState.refresh is LoadState.Loading) Loading()
 
-    LazyColumn(contentPadding = PaddingValues(16.dp, 8.dp)) {
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = PaddingValues(16.dp, 8.dp),
+        state = scrollState
+    ) {
         items(
             items = photos,
             itemContent = {
@@ -47,18 +74,6 @@ fun PhotoLazyColumn(
                 }
             }
         )
-    }
-
-    AnimatedVisibility(
-        visible = showButton,
-        enter = fadeIn(),
-        exit = fadeOut(),
-    ) {
-        ScrollToTopButton(onClick = {
-            coroutineScope.launch {
-                listState.animateScrollToItem(0)
-            }
-        })
     }
 
     if(photos.loadState.append is LoadState.Loading) Loading()

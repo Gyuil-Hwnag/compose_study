@@ -5,12 +5,11 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Icon
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material.icons.rounded.KeyboardArrowUp
+import androidx.compose.material.icons.rounded.ThumbUp
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -37,22 +36,23 @@ fun Loading() {
 
 @Composable
 fun ScrollToTopButton(onClick: () -> Unit) {
-    Box(
-        Modifier
+    Column(
+        modifier = Modifier
             .fillMaxSize()
-            .padding(bottom = 100.dp), Alignment.BottomCenter
+            .padding(bottom = 100.dp, end = 10.dp),
+        horizontalAlignment = Alignment.End,
+        verticalArrangement = Arrangement.Bottom
     ) {
-        Button(
-            onClick = { onClick() }, modifier = Modifier
-                .shadow(10.dp, shape = CircleShape)
-                .clip(shape = CircleShape)
-                .size(65.dp),
-            colors = ButtonDefaults.buttonColors(
-                backgroundColor = Color.White,
-                contentColor = Color.Black
-            )
+        FloatingActionButton(
+            onClick = { onClick() },
+            shape = RoundedCornerShape(16.dp),
+            backgroundColor = Color.Blue,
         ) {
-            Icon(Icons.Filled.KeyboardArrowUp, "arrow up")
+            Icon(
+                imageVector = Icons.Rounded.KeyboardArrowUp,
+                contentDescription = "Scroll To Top FAB",
+                tint = Color.White,
+            )
         }
     }
 }
