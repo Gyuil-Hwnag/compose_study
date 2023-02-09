@@ -21,7 +21,11 @@ import com.example.compose_study.ui.screen.TodoScreen
 fun NavigationGraph(modifier: Modifier, navController: NavHostController) {
     val (value: String, setValue: (String) -> Unit) = remember { mutableStateOf("") }
 
-    NavHost(navController = navController, startDestination = BottomNavItem.Paging.screenRoute, modifier = modifier) {
+    NavHost(
+        navController = navController,
+        startDestination = BottomNavItem.Paging.screenRoute,
+        modifier = modifier
+    ) {
         composable(BottomNavItem.Paging.screenRoute) {
             HomeScreen(
                 toDetail = {

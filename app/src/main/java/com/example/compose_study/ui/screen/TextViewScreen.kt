@@ -3,6 +3,7 @@ package com.example.compose_study.ui.screen
 import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -13,9 +14,13 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.repeatOnLifecycle
+import kotlinx.coroutines.flow.collectLatest
 
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -25,9 +30,12 @@ fun TextFieldItem(viewModel: HomeViewModel) {
     var text by rememberSaveable { mutableStateOf("") }
 
     val context = LocalContext.current
-    val toastMessage = viewModel.searchState.collectAsState()
 
-    if(toastMessage.value.isNotBlank()) Toast.makeText(context, toastMessage.value, Toast.LENGTH_SHORT).show()
+    LaunchedEffect(key1 = Unit) {
+        viewModel.searchState.collectLatest {
+            if(it.isNotBlank()) Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+        }
+    }
 
     OutlinedTextField(
         modifier = Modifier

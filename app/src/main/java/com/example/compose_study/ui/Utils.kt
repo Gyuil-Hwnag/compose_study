@@ -72,7 +72,7 @@ fun ImageBigSize(url: String) {
         modifier = Modifier
             .padding(32.dp)
             .fillMaxWidth()
-            .height(240.dp)
+            .height(200.dp)
             .clip(RoundedCornerShape(CornerSize(16.dp)))
     )
 }

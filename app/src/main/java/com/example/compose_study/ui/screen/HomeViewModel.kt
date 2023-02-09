@@ -19,14 +19,16 @@ class HomeViewModel @Inject constructor(
     val photos: Flow<PagingData<Photo>> = createPhotoPager(getPhotoListUseCase = getPhotoListUseCase)
         .flow.cachedIn(baseViewModelScope)
 
-    private val _searchState: MutableStateFlow<String> = MutableStateFlow("")
-    val searchState: StateFlow<String> = _searchState.asStateFlow()
+    private val _searchState: MutableSharedFlow<String> = MutableSharedFlow()
+    val searchState: SharedFlow<String> = _searchState.asSharedFlow()
 
     private val _scrollToTopEvent: MutableSharedFlow<Unit> = MutableSharedFlow()
     val scrollToTopEvent: SharedFlow<Unit> = _scrollToTopEvent.asSharedFlow()
 
     fun searchAuthor(text: String) {
-        _searchState.value = text
+        baseViewModelScope.launch {
+            _searchState.emit(text)
+        }
     }
 
     fun scrollToTop() {
