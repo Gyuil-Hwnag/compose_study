@@ -12,10 +12,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.compose_study.ui.item.BottomNavItem
 import com.example.compose_study.ui.item.DETAIL
-import com.example.compose_study.ui.screen.DetailScreen
-import com.example.compose_study.ui.screen.HomeScreen
-import com.example.compose_study.ui.screen.HomeViewModel
-import com.example.compose_study.ui.screen.TodoScreen
+import com.example.compose_study.ui.screen.*
 
 @Composable
 fun NavigationGraph(modifier: Modifier, navController: NavHostController) {
@@ -39,6 +36,9 @@ fun NavigationGraph(modifier: Modifier, navController: NavHostController) {
                 id = value,
                 toBack = { navController.popBackStack() }
             )
+        }
+        composable(BottomNavItem.Dialog.screenRoute) {
+            CustomDialogScreen()
         }
         composable(BottomNavItem.Todo.screenRoute) {
             TodoScreen()

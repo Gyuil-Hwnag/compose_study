@@ -1,5 +1,6 @@
 package com.example.compose_study.ui.screen
 
+import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -7,6 +8,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import kotlinx.coroutines.launch
@@ -62,18 +64,50 @@ fun BottomSheetScreen(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(contentPadding),
-                contentAlignment = Alignment.Center,
+                    .padding(contentPadding)
             ) {
-                Button(
-                    onClick = {
-                        coroutineScope.launch {
-                            if (modalSheetState.isVisible) modalSheetState.hide()
-                            else modalSheetState.animateTo(ModalBottomSheetValue.Expanded)
-                        }
-                    },
+                val context = LocalContext.current
+                var showDialog by remember { mutableStateOf(false) }
+
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text(text = "Open Sheet")
+                    TextButton(onClick = { showDialog = true }) {
+                        Text(text = "Show Dialog")
+                    }
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    TextButton(
+                        onClick = {
+                            coroutineScope.launch {
+                                if (modalSheetState.isVisible) modalSheetState.hide()
+                                else modalSheetState.animateTo(ModalBottomSheetValue.Expanded)
+                            }
+                        },
+                    ) {
+                        Text(text = "Show Bottom Sheet")
+                    }
+                }
+
+                if(showDialog) {
+                    CustomDialogScreen(
+                        onDismiss = {
+                            showDialog = false
+                            Toast.makeText(context, "Dismiss Dialog", Toast.LENGTH_SHORT).show()
+                        },
+                        onNegativeClick = {
+                            showDialog = false
+                            Toast.makeText(context, "Negative Dialog", Toast.LENGTH_SHORT).show()
+                        },
+                        onPositiveClick = {
+                            showDialog = false
+                            Toast.makeText(context, "Positive Dialog", Toast.LENGTH_SHORT).show()
+                        },
+                        modifier = Modifier.padding(contentPadding)
+                    )
                 }
             }
         }

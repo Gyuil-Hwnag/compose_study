@@ -3,4 +3,5 @@
 
     <string name="paging">Paging</string>
     <string name="todo">Todo</string>
+    <string name="dialog">Dialog</string>
 </resources>

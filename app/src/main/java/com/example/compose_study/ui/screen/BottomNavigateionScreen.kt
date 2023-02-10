@@ -19,6 +19,7 @@ import com.example.compose_study.ui.item.BottomNavItem
 fun BottomNavigationScreen(navController: NavController) {
     val items = listOf(
         BottomNavItem.Paging,
+        BottomNavItem.Dialog,
         BottomNavItem.Todo
     )
     BottomNavigation(

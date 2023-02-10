@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
-fun TodoScreen(
+fun CustomDialogScreen(
 ) {
     Scaffold(
         backgroundColor = MaterialTheme.colors.background,
