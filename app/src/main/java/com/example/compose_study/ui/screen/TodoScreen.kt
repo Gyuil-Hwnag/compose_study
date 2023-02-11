@@ -14,6 +14,6 @@ fun TodoScreen(
         backgroundColor = MaterialTheme.colors.background,
         modifier = Modifier.fillMaxSize()
     ) { contentPadding ->
-        BottomSheetScreen(modifier = Modifier.padding(contentPadding))
+        ConstraintLayoutContent(modifier = Modifier.padding(contentPadding))
     }
 }
