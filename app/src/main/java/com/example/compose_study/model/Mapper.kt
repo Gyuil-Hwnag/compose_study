@@ -25,7 +25,7 @@ fun PhotoResponse.toDomain(): Photo {
 
 fun Todo.toData(): TodoEntity {
     return TodoEntity(
-        time =  this.time.toString(),
+        time =  this.time.convertToString(),
         title = this.title,
         body = this.body
     )
@@ -33,7 +33,7 @@ fun Todo.toData(): TodoEntity {
 
 fun List<TodoEntity>.toDomain(): List<Todo> {
     return map { Todo(
-        time = it.time.toDate(),
+        time = it.time.convertToDate(),
         todoIdx = it.todoIdx,
         title = it.title,
         body = it.body,
@@ -43,7 +43,7 @@ fun List<TodoEntity>.toDomain(): List<Todo> {
 
 fun TodoEntity.toDomain(): Todo {
     return Todo(
-        time = this.time.toDate(),
+        time = this.time.convertToDate(),
         todoIdx = this.todoIdx,
         title = this.title,
         body = this.body,
