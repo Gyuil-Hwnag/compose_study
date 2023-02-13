@@ -14,10 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.soywiz.klock.DateTime
-import com.soywiz.klock.Time
-import com.soywiz.klock.TimeSpan
-import com.soywiz.klock.milliseconds
+import com.example.compose_study.model.TimeItem
 
 @Composable
 fun TimeTableItem(dateTime: TimeItem, onClick: (day: Int) -> Unit) {
@@ -31,18 +28,18 @@ fun TimeTableItem(dateTime: TimeItem, onClick: (day: Int) -> Unit) {
             .fillMaxWidth()
             .wrapContentHeight())
         {
-            val alpha = if(dateTime.dateTime.minutes == 30) 0f else 1f
+            val alpha = if(dateTime.minutes == 30) 0f else 1f
             Column {
                 Text(
                     modifier = Modifier.alpha(alpha),
-                    text = if(dateTime.dateTime.hours > 12) (dateTime.dateTime.hours-12).toString() else (dateTime.dateTime.hours).toString(),
+                    text = if(dateTime.hour > 12) (dateTime.hour-12).toString() else (dateTime.hour).toString(),
                     color = Color.Black,
                     fontSize = 16.sp,
                     textAlign = TextAlign.End
                 )
                 Text(
                     modifier = Modifier.alpha(alpha),
-                    text = if(dateTime.dateTime.hours > 12) "PM" else "AM",
+                    text = if(dateTime.hour > 12) "PM" else "AM",
                     color = Color.Black,
                     fontSize = 10.sp,
                     textAlign = TextAlign.End
@@ -57,23 +54,4 @@ fun TimeTableItem(dateTime: TimeItem, onClick: (day: Int) -> Unit) {
             }
         }
     }
-}
-
-data class TimeItem(
-    val dateTime: DateTime,
-    val span: TimeSpan
-) {
-
-    val hour: Int
-        get() = dateTime.hours
-
-    val minutes: Int
-        get() = dateTime.minutes
-
-    val range: ClosedRange<Time>
-        get() = dateTime.time..(dateTime + (span - 1.milliseconds)).time
-
-    val isDimmed: Boolean
-        get() = dateTime < DateTime.nowLocal().local
-
 }

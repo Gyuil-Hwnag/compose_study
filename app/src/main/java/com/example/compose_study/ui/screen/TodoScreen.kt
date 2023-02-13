@@ -14,9 +14,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.example.compose_study.model.TimeItem
 import com.example.compose_study.model.getDateDay
 import com.example.compose_study.ui.item.DateItem
-import com.example.compose_study.ui.item.TimeItem
 import com.example.compose_study.ui.item.TimeTableItem
 import com.soywiz.klock.*
 import java.util.*
