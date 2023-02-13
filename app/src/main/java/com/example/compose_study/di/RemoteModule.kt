@@ -1,19 +1,17 @@
 package com.example.compose_study.di
 
-import com.example.compose_study.data.ApiClient.BASE_URL
-import com.example.compose_study.data.PhotoApi
-import com.example.compose_study.data.PhotoDataSource
-import com.example.compose_study.data.PhotoDataSourceImpl
-import com.example.compose_study.data.PhotoRepositoryImpl
+import com.example.compose_study.data.api.ApiClient.BASE_URL
+import com.example.compose_study.data.api.PhotoApi
+import com.example.compose_study.data.datasource.PhotoDataSource
+import com.example.compose_study.data.datasource.PhotoDataSourceImpl
+import com.example.compose_study.data.repository.PhotoRepositoryImpl
 import com.example.compose_study.domain.PhotoRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import javax.inject.Named
 import javax.inject.Singleton
 
 @Module

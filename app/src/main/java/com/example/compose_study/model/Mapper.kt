@@ -1,6 +1,4 @@
-package com.example.compose_study.data
-
-import com.example.compose_study.model.Photo
+package com.example.compose_study.model
 
 @JvmName("toDomainPhotoResponse")
 fun List<PhotoResponse>.toDomain(): List<Photo> {

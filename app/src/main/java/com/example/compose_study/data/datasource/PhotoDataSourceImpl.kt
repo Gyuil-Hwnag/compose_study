@@ -1,4 +1,6 @@
-package com.example.compose_study.data
+package com.example.compose_study.data.datasource
+import com.example.compose_study.data.api.PhotoApi
+import com.example.compose_study.model.toDomain
 import com.example.compose_study.model.Photo
 import javax.inject.Inject
 

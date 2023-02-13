@@ -1,5 +1,6 @@
-package com.example.compose_study.data
+package com.example.compose_study.data.api
 
+import com.example.compose_study.model.PhotoResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
