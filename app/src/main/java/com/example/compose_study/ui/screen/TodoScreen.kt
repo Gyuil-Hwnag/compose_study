@@ -1,8 +1,10 @@
 package com.example.compose_study.ui.screen
 
-import android.util.Log
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -28,8 +30,8 @@ fun TodoScreen(
     date.time = Date()
 
     for(i in 0 .. 14) {
-        date.add(Calendar.DATE, i)
         dateList.add(date.time.getDateDay())
+        date.add(Calendar.DATE, 1)
     }
 
     Scaffold(
