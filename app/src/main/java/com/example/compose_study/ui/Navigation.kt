@@ -40,6 +40,9 @@ fun NavigationGraph(modifier: Modifier, navController: NavHostController) {
         composable(BottomNavItem.Dialog.screenRoute) {
             CustomDialogScreen()
         }
+        composable(BottomNavItem.Constraint.screenRoute) {
+            ConstraintScreen()
+        }
         composable(BottomNavItem.Todo.screenRoute) {
             TodoScreen()
         }

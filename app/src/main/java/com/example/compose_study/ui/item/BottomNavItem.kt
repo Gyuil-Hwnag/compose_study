@@ -7,6 +7,7 @@ sealed class BottomNavItem(
 ) {
     object Paging : BottomNavItem(title = R.string.paging, icon = R.drawable.ic_page, screenRoute = PAGING)
     object Dialog : BottomNavItem(title = R.string.dialog, icon = R.drawable.ic_dialog, screenRoute = DIALOG)
+    object Constraint: BottomNavItem(title = R.string.constraint, icon = R.drawable.ic_constraint, screenRoute = CONSTRAINT)
     object Todo : BottomNavItem(title = R.string.todo, icon = R.drawable.ic_todo, screenRoute = TODO)
 }
 
@@ -14,4 +15,5 @@ const val PAGING = "PAGING"
 const val TODO = "TODO"
 const val DETAIL = "DETAIL"
 const val DIALOG = "DIALOG"
+const val CONSTRAINT = "CONSTRAINT"
 

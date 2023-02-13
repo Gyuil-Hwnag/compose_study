@@ -20,6 +20,7 @@ fun BottomNavigationScreen(navController: NavController) {
     val items = listOf(
         BottomNavItem.Paging,
         BottomNavItem.Dialog,
+        BottomNavItem.Constraint,
         BottomNavItem.Todo
     )
     BottomNavigation(
