@@ -14,25 +14,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.compose_study.model.TimeItem
-import com.example.compose_study.model.getDateDay
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.compose_study.ui.item.DateItem
 import com.example.compose_study.ui.item.TimeTableItem
-import com.soywiz.klock.*
-import java.util.*
-import java.util.Date
 
 @Composable
 fun TodoScreen(
+    viewModel: TodoViewModel = hiltViewModel()
 ) {
-    val dateList = mutableListOf<String>()
-    val date = Calendar.getInstance()
-    date.time = Date()
-
-    for(i in 0 .. 14) {
-        dateList.add(date.time.getDateDay())
-        date.add(Calendar.DATE, 1)
-    }
 
     Scaffold(
         backgroundColor = MaterialTheme.colors.background,
@@ -46,18 +35,10 @@ fun TodoScreen(
                 contentPadding = PaddingValues(16.dp, 8.dp)
             ) {
                 items(
-                    items = dateList,
+                    items = viewModel.dateList,
                     itemContent = { DateItem(date = it, onClick = {} ) }
                 )
             }
-
-            val timeItems = (0..23)
-                .flatMap { hour ->
-                    listOf(
-                        TimeItem(dateTime = DateTime.now().date + Time(hour.hours), span = 30.minutes),
-                        TimeItem(dateTime = DateTime.now().date + Time(hour.hours + 30.minutes), span = 30.minutes)
-                    )
-                }
 
             LazyColumn(
                 modifier = Modifier
@@ -66,7 +47,7 @@ fun TodoScreen(
                 contentPadding = PaddingValues(16.dp, 8.dp)
             ) {
                 items(
-                    items = timeItems,
+                    items = viewModel.timeItems,
                     itemContent = { TimeTableItem(dateTime = it, onClick = {} ) }
                 )
             }
