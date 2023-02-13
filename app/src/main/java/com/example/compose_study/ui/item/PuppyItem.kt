@@ -14,7 +14,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.example.compose_study.ui.model.Puppy
+import com.example.compose_study.model.Puppy
 import com.example.compose_study.ui.theme.Typography
 
 @Composable

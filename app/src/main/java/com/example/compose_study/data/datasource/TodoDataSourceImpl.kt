@@ -1,9 +1,9 @@
 package com.example.compose_study.data.datasource
 
 import com.example.compose_study.data.local.TodoDao
+import com.example.compose_study.model.Todo
 import com.example.compose_study.model.TodoEntity
-import com.example.compose_study.ui.model.Todo
-import com.example.compose_study.ui.model.toDomain
+import com.example.compose_study.model.toDomain
 import javax.inject.Inject
 
 class TodoDataSourceImpl @Inject constructor(

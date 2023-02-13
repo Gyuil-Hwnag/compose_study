@@ -22,3 +22,32 @@ fun PhotoResponse.toDomain(): Photo {
         download_url = this.download_url
     )
 }
+
+fun Todo.toData(): TodoEntity {
+    return TodoEntity(
+        time =  this.time.toString(),
+        title = this.title,
+        body = this.body
+    )
+}
+
+fun List<TodoEntity>.toDomain(): List<Todo> {
+    return map { Todo(
+        time = it.time.toDate(),
+        todoIdx = it.todoIdx,
+        title = it.title,
+        body = it.body,
+        isChecked = it.isChecked
+    ) }
+}
+
+fun TodoEntity.toDomain(): Todo {
+    return Todo(
+        time = this.time.toDate(),
+        todoIdx = this.todoIdx,
+        title = this.title,
+        body = this.body,
+        isChecked = this.isChecked
+    )
+}
+

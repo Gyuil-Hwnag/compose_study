@@ -1,10 +1,10 @@
-package com.example.compose_study.ui.model
+package com.example.compose_study.model
 
-import java.util.*
+import java.util.Date
 
 data class Todo(
-    var todoIdx: Int,
     val time: Date,
+    var todoIdx: Int,
     val title: String,
     val body: String,
     var isChecked: Boolean = false

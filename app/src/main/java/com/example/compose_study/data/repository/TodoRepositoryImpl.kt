@@ -2,8 +2,8 @@ package com.example.compose_study.data.repository
 
 import com.example.compose_study.data.datasource.TodoDataSource
 import com.example.compose_study.domain.TodoRepository
-import com.example.compose_study.ui.model.Todo
-import com.example.compose_study.ui.model.toData
+import com.example.compose_study.model.Todo
+import com.example.compose_study.model.toData
 import javax.inject.Inject
 
 class TodoRepositoryImpl @Inject constructor(

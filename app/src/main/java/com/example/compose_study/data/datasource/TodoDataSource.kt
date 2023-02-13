@@ -1,7 +1,7 @@
 package com.example.compose_study.data.datasource
 
 import com.example.compose_study.model.TodoEntity
-import com.example.compose_study.ui.model.Todo
+import com.example.compose_study.model.Todo
 
 interface  TodoDataSource {
     suspend fun createTodo(todo: TodoEntity): Unit

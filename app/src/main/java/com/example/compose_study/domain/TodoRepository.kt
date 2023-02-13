@@ -1,6 +1,6 @@
 package com.example.compose_study.domain
 
-import com.example.compose_study.ui.model.Todo
+import com.example.compose_study.model.Todo
 
 interface TodoRepository {
     suspend fun createTodo(todo: Todo): Unit
