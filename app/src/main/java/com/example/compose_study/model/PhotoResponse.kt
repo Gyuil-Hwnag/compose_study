@@ -1,4 +1,4 @@
-package com.example.compose_study.data
+package com.example.compose_study.model
 
 import com.google.gson.annotations.SerializedName
 

@@ -1,4 +1,4 @@
-package com.example.compose_study.ui.model
+package com.example.compose_study.model
 
 data class Puppy(
     val name: String,

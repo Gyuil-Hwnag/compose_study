@@ -1,4 +1,4 @@
-package com.example.compose_study.data
+package com.example.compose_study.data.datasource
 
 import com.example.compose_study.model.Photo
 
