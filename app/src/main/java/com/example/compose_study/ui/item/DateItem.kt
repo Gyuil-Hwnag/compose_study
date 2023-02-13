@@ -1,5 +1,6 @@
 package com.example.compose_study.ui.item
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -23,7 +24,9 @@ fun DateItem(date: String, onClick: (day: Int) -> Unit) {
             .wrapContentSize(align = Alignment.Center)
             .clickable { onClick(dateTime.date) },
     ) {
-        Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)) {
+        Column(
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)
+        ) {
             Text(text = dateTime.day.getDateDay(), fontSize = 12.sp, modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.CenterHorizontally))

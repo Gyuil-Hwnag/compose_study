@@ -2,9 +2,7 @@ package com.example.compose_study.ui.screen
 
 import android.util.Log
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -16,30 +14,60 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.compose_study.model.getDateDay
 import com.example.compose_study.ui.item.DateItem
+import com.example.compose_study.ui.item.TimeItem
+import com.example.compose_study.ui.item.TimeTableItem
+import com.soywiz.klock.*
 import java.util.*
+import java.util.Date
 
 @Composable
 fun TodoScreen(
 ) {
     val dateList = mutableListOf<String>()
+    val date = Calendar.getInstance()
+    date.time = Date()
+
     for(i in 0 .. 14) {
-        val date = Calendar.getInstance()
-        date.time = Date()
         date.add(Calendar.DATE, i)
         dateList.add(date.time.getDateDay())
     }
+
     Scaffold(
         backgroundColor = MaterialTheme.colors.background,
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxWidth()
     ) { contentPadding ->
-        LazyRow(
-            modifier = Modifier.fillMaxSize().padding(contentPadding).background(Color.Transparent),
-            contentPadding = PaddingValues(16.dp, 8.dp)
-        ) {
-            items(
-                items = dateList,
-                itemContent = { DateItem(date = it, onClick = {} ) }
-            )
+        Column(modifier = Modifier.padding(contentPadding)) {
+            LazyRow(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Color.Transparent),
+                contentPadding = PaddingValues(16.dp, 8.dp)
+            ) {
+                items(
+                    items = dateList,
+                    itemContent = { DateItem(date = it, onClick = {} ) }
+                )
+            }
+
+            val timeItems = (0..23)
+                .flatMap { hour ->
+                    listOf(
+                        TimeItem(dateTime = DateTime.now().date + Time(hour.hours), span = 30.minutes),
+                        TimeItem(dateTime = DateTime.now().date + Time(hour.hours + 30.minutes), span = 30.minutes)
+                    )
+                }
+
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Color.Transparent),
+                contentPadding = PaddingValues(16.dp, 8.dp)
+            ) {
+                items(
+                    items = timeItems,
+                    itemContent = { TimeTableItem(dateTime = it, onClick = {} ) }
+                )
+            }
         }
     }
 }

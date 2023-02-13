@@ -19,6 +19,12 @@ fun String.convertToDate(): Date {
 }
 
 @SuppressLint("SimpleDateFormat")
+fun String.convertToHourMinute(): Date {
+    val formatter = SimpleDateFormat("HH:mm")
+    return formatter.parse(this)
+}
+
+@SuppressLint("SimpleDateFormat")
 fun Int.getDateDay(): String {
     return when (this) {
         0 -> "일"
