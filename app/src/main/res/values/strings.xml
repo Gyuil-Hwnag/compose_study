@@ -5,4 +5,5 @@
     <string name="todo">Todo</string>
     <string name="dialog">Dialog</string>
     <string name="constraint">Constraint</string>
+    <string name="viewpager">ViewPager</string>
 </resources>

@@ -104,6 +104,11 @@ dependencies {
     // Time
     def klockVersion = "2.2.0"
     implementation "com.soywiz.korlibs.klock:klock-android:$klockVersion"
+
+    // View Pager in Compose
+    def viewPager = "0.20.1"
+    implementation "com.google.accompanist:accompanist-pager:$viewPager"
+    implementation "com.google.accompanist:accompanist-pager-indicators:$viewPager"
 }
 kapt {
     correctErrorTypes true

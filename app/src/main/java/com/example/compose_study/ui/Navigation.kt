@@ -43,6 +43,9 @@ fun NavigationGraph(modifier: Modifier, navController: NavHostController) {
         composable(BottomNavItem.Constraint.screenRoute) {
             ConstraintScreen()
         }
+        composable(BottomNavItem.ViewPager.screenRoute) {
+            ViewpagerScreen()
+        }
         composable(BottomNavItem.Todo.screenRoute) {
             TodoScreen()
         }
