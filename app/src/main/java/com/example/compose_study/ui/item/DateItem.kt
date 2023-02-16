@@ -16,13 +16,13 @@ import com.example.compose_study.model.convertToDate
 import com.example.compose_study.model.getDateDay
 
 @Composable
-fun DateItem(date: String, onClick: (day: Int) -> Unit) {
+fun DateItem(date: String, onClick: (day: String) -> Unit) {
     val dateTime = date.convertToDate()
     Surface(
         modifier = Modifier
             .background(Color.Transparent)
             .wrapContentSize(align = Alignment.Center)
-            .clickable { onClick(dateTime.date) },
+            .clickable { onClick(dateTime.getDateDay())},
     ) {
         Column(
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)

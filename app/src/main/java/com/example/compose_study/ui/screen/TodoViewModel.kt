@@ -42,4 +42,8 @@ class TodoViewModel @Inject constructor(
         _currentDayIndex.value = dates.indexOfFirst { it.contains(Calendar.getInstance().time.getDateDay()) }
         _currentTimeIndex.value = timeItems.map { it.range }.indexOfFirst { timeRange -> timeRange.contains(DateTimeTz.nowLocal().local.time) }
     }
+
+    fun onDayClicked(day: String) {
+        _currentDayIndex.value = dates.indexOfFirst { it.contains(day) }
+    }
 }

@@ -72,7 +72,7 @@ fun TodoScreen(
             ) {
                 items(
                     items = viewModel.dates,
-                    itemContent = { DateItem(date = it, onClick = {} ) }
+                    itemContent = { DateItem(date = it, onClick = { day -> viewModel.onDayClicked(day) } ) }
                 )
             }
 
