@@ -9,6 +9,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+import java.lang.Thread.State
 import java.util.*
 import java.util.Date
 import javax.inject.Inject
@@ -38,12 +40,20 @@ class TodoViewModel @Inject constructor(
     private val _currentDayIndex: MutableStateFlow<Int> = MutableStateFlow<Int>(0)
     val currentDayIndex: StateFlow<Int> = _currentDayIndex.asStateFlow()
 
+    private val _currentDay: MutableStateFlow<String> = MutableStateFlow<String>("")
+    val currentDay: StateFlow<String> = _currentDay.asStateFlow()
+
     init {
-        _currentDayIndex.value = dates.indexOfFirst { it.contains(Calendar.getInstance().time.getDateDay()) }
-        _currentTimeIndex.value = timeItems.map { it.range }.indexOfFirst { timeRange -> timeRange.contains(DateTimeTz.nowLocal().local.time) }
+        val day = Calendar.getInstance().time.getDateDay()
+        val time = DateTimeTz.nowLocal().local.time
+
+        _currentDayIndex.value = dates.indexOfFirst { it.contains(day) }
+        _currentDay.value = day
+        _currentTimeIndex.value = timeItems.map { it.range }.indexOfFirst { timeRange -> timeRange.contains(time) }
     }
 
     fun onDayClicked(day: String) {
+        _currentDay.value = day
         _currentDayIndex.value = dates.indexOfFirst { it.contains(day) }
     }
 }
