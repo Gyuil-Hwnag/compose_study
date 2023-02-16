@@ -1,14 +1,12 @@
 package com.example.compose_study.ui.screen
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
@@ -74,6 +72,8 @@ fun TodoScreen(
                     itemContent = { DateItem(date = it, onClick = { day -> viewModel.onDayClicked(day) } ) }
                 )
             }
+
+            Divider(modifier = Modifier.height(1.dp), color = Color.LightGray)
 
             LazyColumn(
                 modifier = Modifier
