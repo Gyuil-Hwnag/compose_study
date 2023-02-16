@@ -17,14 +17,12 @@ import javax.inject.Inject
 class TodoViewModel @Inject constructor(
 ) : BaseViewModel() {
 
-    val dateList = mutableListOf<String>().apply {
-        val date = Calendar.getInstance()
-        date.time = Date()
+    private val date: Calendar = Calendar.getInstance()
 
-        for(i in 0 .. 14) {
-            this.add(date.time.getDateDay())
-            date.add(Calendar.DATE, 1)
-        }
+    val dates = (-14..14).flatMap { index ->
+        date.time = Date()
+        date.add(Calendar.DATE, index)
+        listOf(date.time.getDateDay())
     }
 
     val timeItems = (0..23).flatMap { hour ->
@@ -37,7 +35,11 @@ class TodoViewModel @Inject constructor(
     private val _currentTimeIndex: MutableStateFlow<Int> = MutableStateFlow<Int>(0)
     val currentTimeIndex: StateFlow<Int> = _currentTimeIndex.asStateFlow()
 
+    private val _currentDayIndex: MutableStateFlow<Int> = MutableStateFlow<Int>(0)
+    val currentDayIndex: StateFlow<Int> = _currentDayIndex.asStateFlow()
+
     init {
+        _currentDayIndex.value = dates.indexOfFirst { it.contains(Calendar.getInstance().time.getDateDay()) }
         _currentTimeIndex.value = timeItems.map { it.range }.indexOfFirst { timeRange -> timeRange.contains(DateTimeTz.nowLocal().local.time) }
     }
 }

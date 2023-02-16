@@ -1,5 +1,6 @@
 package com.example.compose_study.ui.screen
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -31,7 +32,8 @@ fun TodoScreen(
     viewModel: TodoViewModel = hiltViewModel()
 ) {
 
-    val scrollState = rememberLazyListState()
+    val timeScrollState = rememberLazyListState()
+    val dayScrollState = rememberLazyListState()
 
     val lifecycle = LocalLifecycleOwner.current.lifecycle
     val coroutineScope = rememberCoroutineScope()
@@ -41,7 +43,15 @@ fun TodoScreen(
             launch {
                 viewModel.currentTimeIndex.collectLatest {
                     coroutineScope.launch {
-                        scrollState.animateScrollToItem(it)
+                        timeScrollState.animateScrollToItem(it)
+                    }
+                }
+            }
+
+            launch {
+                viewModel.currentDayIndex.collectLatest {
+                    coroutineScope.launch {
+                        dayScrollState.scrollToItem(it)
                     }
                 }
             }
@@ -57,10 +67,11 @@ fun TodoScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(Color.Transparent),
-                contentPadding = PaddingValues(16.dp, 8.dp)
+                contentPadding = PaddingValues(16.dp, 8.dp),
+                state = dayScrollState
             ) {
                 items(
-                    items = viewModel.dateList,
+                    items = viewModel.dates,
                     itemContent = { DateItem(date = it, onClick = {} ) }
                 )
             }
@@ -70,7 +81,7 @@ fun TodoScreen(
                     .fillMaxWidth()
                     .background(Color.Transparent),
                 contentPadding = PaddingValues(16.dp, 8.dp),
-                state = scrollState
+                state = timeScrollState
             ) {
                 items(
                     items = viewModel.timeItems,
