@@ -9,6 +9,7 @@ sealed class BottomNavItem(
     object Dialog : BottomNavItem(title = R.string.dialog, icon = R.drawable.ic_dialog, screenRoute = DIALOG)
     object Constraint: BottomNavItem(title = R.string.constraint, icon = R.drawable.ic_constraint, screenRoute = CONSTRAINT)
     object ViewPager: BottomNavItem(title = R.string.viewpager, icon = R.drawable.ic_viewpager, screenRoute = VIEWPAGER)
+    object Collapsing : BottomNavItem(title = R.string.collapsing, icon = R.drawable.ic_collapsing, screenRoute = COLLAPSING)
     object Todo : BottomNavItem(title = R.string.todo, icon = R.drawable.ic_todo, screenRoute = TODO)
 }
 
@@ -18,3 +19,4 @@ const val DETAIL = "DETAIL"
 const val DIALOG = "DIALOG"
 const val CONSTRAINT = "CONSTRAINT"
 const val VIEWPAGER = "VIEWPAGER"
+const val COLLAPSING = "COLLAPSING"
