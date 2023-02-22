@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -36,26 +37,33 @@ fun DateItem(
             .background(Color.Transparent)
             .wrapContentSize(align = Alignment.Center)
             .clickable { onClick(dateTime.getDateDay()) }
-            .padding(horizontal = 4.dp, vertical = 6.dp)
+            .padding(top = 10.dp, bottom = 7.dp, start = 11.dp, end = 11.dp)
     ) {
         Column(
-            modifier = Modifier.clip(shape = CircleShape).background(backgroundColor.value).padding(horizontal = 16.dp, vertical = 4.dp).wrapContentSize()
+            modifier = Modifier.wrapContentSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
                 text = dateTime.day.getDateDay(),
                 fontSize = 12.sp,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.CenterHorizontally),
-                color = textColor.value
+                modifier = Modifier.fillMaxWidth(),
+                color = Color.Black,
+                textAlign = TextAlign.Center
             )
             Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                text = dateTime.date.toString(),
-                fontSize = 16.sp,
-                modifier = Modifier.fillMaxWidth(),
-                color = textColor.value
-            )
+            Box(
+                modifier = Modifier.width(32.dp).height(32.dp).clip(shape = CircleShape).background(backgroundColor.value),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = dateTime.date.toString(),
+                    fontSize = 12.sp,
+                    color = textColor.value,
+                    textAlign = TextAlign.Center,
+                )
+            }
+
         }
     }
 }

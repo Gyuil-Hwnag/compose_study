@@ -64,7 +64,6 @@ fun TodoScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(Color.Transparent),
-                contentPadding = PaddingValues(16.dp, 8.dp),
                 state = dayScrollState
             ) {
                 items(
