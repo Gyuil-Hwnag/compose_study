@@ -1,7 +1,7 @@
 package com.example.compose_study.ui.screen
 
-import android.util.Log
 import com.example.compose_study.model.TimeItem
+import com.example.compose_study.model.getCalendarDate
 import com.example.compose_study.model.getDateDay
 import com.example.compose_study.ui.BaseViewModel
 import com.soywiz.klock.*
@@ -9,8 +9,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
-import java.lang.Thread.State
 import java.util.*
 import java.util.Date
 import javax.inject.Inject
@@ -24,7 +22,7 @@ class TodoViewModel @Inject constructor(
     val dates = (-14..14).flatMap { index ->
         date.time = Date()
         date.add(Calendar.DATE, index)
-        listOf(date.time.getDateDay())
+        listOf(date.time.getCalendarDate())
     }
 
     val timeItems = (0..23).flatMap { hour ->
@@ -37,23 +35,29 @@ class TodoViewModel @Inject constructor(
     private val _currentTimeIndex: MutableStateFlow<Int> = MutableStateFlow<Int>(0)
     val currentTimeIndex: StateFlow<Int> = _currentTimeIndex.asStateFlow()
 
-    private val _currentDayIndex: MutableStateFlow<Int> = MutableStateFlow<Int>(0)
-    val currentDayIndex: StateFlow<Int> = _currentDayIndex.asStateFlow()
+    private val _currentDayIndex: MutableStateFlow<Pair<String, Int>> = MutableStateFlow<Pair<String, Int>>(Pair(first = "", second = 0))
+    val currentDayIndex: StateFlow<Pair<String, Int>> = _currentDayIndex.asStateFlow()
 
     private val _currentDay: MutableStateFlow<String> = MutableStateFlow<String>("")
     val currentDay: StateFlow<String> = _currentDay.asStateFlow()
 
     init {
-        val day = Calendar.getInstance().time.getDateDay()
+        val day = Calendar.getInstance().time.getCalendarDate()
         val time = DateTimeTz.nowLocal().local.time
 
-        _currentDayIndex.value = dates.indexOfFirst { it.contains(day) }
+        _currentDayIndex.value = Pair(first = day, second = dates.indexOfFirst { it.contains(day) })
         _currentDay.value = day
         _currentTimeIndex.value = timeItems.map { it.range }.indexOfFirst { timeRange -> timeRange.contains(time) }
     }
 
     fun onDayClicked(day: String) {
         _currentDay.value = day
-        _currentDayIndex.value = dates.indexOfFirst { it.contains(day) }
+        _currentDayIndex.value = Pair(first = day, second = dates.indexOfFirst { it.contains(day) })
+
+        if(day != Calendar.getInstance().time.getCalendarDate()) {
+            _currentTimeIndex.value = 20
+        } else {
+            _currentTimeIndex.value = timeItems.map { it.range }.indexOfFirst { timeRange -> timeRange.contains(DateTimeTz.nowLocal().local.time) }
+        }
     }
 }

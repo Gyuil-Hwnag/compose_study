@@ -1,5 +1,6 @@
 package com.example.compose_study.ui.item
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -17,9 +18,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.compose_study.model.convertToCalendarDay
 import com.example.compose_study.model.convertToDate
+import com.example.compose_study.model.getCalendarDate
 import com.example.compose_study.model.getDateDay
 import com.example.compose_study.ui.screen.TodoViewModel
+import java.util.Calendar
 
 @Composable
 fun DateItem(
@@ -27,7 +31,7 @@ fun DateItem(
     date: String,
     onClick: (day: String) -> Unit
 ) {
-    val dateTime = date.convertToDate()
+    val dateTime = date.convertToCalendarDay()
     val isClicked = viewModel.currentDay.collectAsState().value == date
     val textColor = derivedStateOf { if(isClicked) Color.White else Color.Black }
     val backgroundColor = derivedStateOf { if(isClicked) Color.Black else Color.Transparent }
@@ -36,7 +40,7 @@ fun DateItem(
         modifier = Modifier
             .background(Color.Transparent)
             .wrapContentSize(align = Alignment.Center)
-            .clickable { onClick(dateTime.getDateDay()) }
+            .clickable { onClick(dateTime.getCalendarDate()) }
             .padding(top = 10.dp, bottom = 7.dp, start = 11.dp, end = 11.dp)
     ) {
         Column(
@@ -52,6 +56,7 @@ fun DateItem(
                 textAlign = TextAlign.Center
             )
             Spacer(modifier = Modifier.height(4.dp))
+
             Box(
                 modifier = Modifier.width(32.dp).height(32.dp).clip(shape = CircleShape).background(backgroundColor.value),
                 contentAlignment = Alignment.Center
@@ -63,6 +68,14 @@ fun DateItem(
                     textAlign = TextAlign.Center,
                 )
             }
+
+            Text(
+                text = if(dateTime.getCalendarDate() == Calendar.getInstance().time.getCalendarDate()) "오늘" else "",
+                fontSize = 12.sp,
+                modifier = Modifier.fillMaxWidth(),
+                color = Color.Black,
+                textAlign = TextAlign.Center
+            )
 
         }
     }

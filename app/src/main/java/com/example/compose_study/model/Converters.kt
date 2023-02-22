@@ -19,6 +19,12 @@ fun String.convertToDate(): Date {
 }
 
 @SuppressLint("SimpleDateFormat")
+fun String.convertToCalendarDay(): Date {
+    val formatter = SimpleDateFormat("yyyy-MM-dd")
+    return formatter.parse(this)
+}
+
+@SuppressLint("SimpleDateFormat")
 fun String.convertToHourMinute(): Date {
     val formatter = SimpleDateFormat("HH:mm")
     return formatter.parse(this)
@@ -41,5 +47,11 @@ fun Int.getDateDay(): String {
 @SuppressLint("SimpleDateFormat")
 fun Date.getDateDay(): String {
     val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm")
+    return dateFormat.format(this)
+}
+
+@SuppressLint("SimpleDateFormat")
+fun Date.getCalendarDate(): String {
+    val dateFormat = SimpleDateFormat("yyyy-MM-dd")
     return dateFormat.format(this)
 }
