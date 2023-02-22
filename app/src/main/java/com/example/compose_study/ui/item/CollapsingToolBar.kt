@@ -3,7 +3,7 @@ package com.example.compose_study.ui.item
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -42,7 +42,9 @@ fun CustomToolbar(
     }
 
     val fullyCollapsedTitleScale = when {
-        collapsingTitle != null -> CollapsedTitleLineHeight.value / collapsingTitle.expandedTextStyle.lineHeight.value
+        collapsingTitle != null -> {
+            CollapsedTitleLineHeight.value / collapsingTitle.expandedTextStyle.lineHeight.value
+        }
         else -> 1f
     }
 
@@ -298,10 +300,10 @@ data class CollapsingTitle(
 
     companion object {
         @Composable
-        fun large(titleText: String) = CollapsingTitle(titleText, MaterialTheme.typography.h2)
+        fun large(titleText: String) = CollapsingTitle(titleText, MaterialTheme.typography.headlineLarge)
 
         @Composable
-        fun medium(titleText: String) = CollapsingTitle(titleText, MaterialTheme.typography.h4)
+        fun medium(titleText: String) = CollapsingTitle(titleText, MaterialTheme.typography.headlineMedium)
     }
 
 }

@@ -7,10 +7,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -26,8 +26,9 @@ import com.example.compose_study.ui.item.CustomToolbar
 import com.example.compose_study.ui.item.rememberToolbarScrollBehavior
 import kotlinx.parcelize.Parcelize
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun CustomToolbarScreen() {
+internal fun CollapsingToolBarScreen() {
     val toolbarDemoSettingsState = rememberSaveable { mutableStateOf(ToolbarDemoSettings()) }
 
     val scrollBehavior = rememberToolbarScrollBehavior()
@@ -125,15 +126,15 @@ private fun getCentralContentSlot(toolbarDemoSettings: ToolbarDemoSettings): (@C
 
         CentralContentMode.Title -> {
             {
-                Text(text = "Screen title", style = MaterialTheme.typography.h3)
+                Text(text = "Screen title", style = MaterialTheme.typography.titleLarge)
             }
         }
 
         CentralContentMode.TitleSubtitle -> {
             {
                 Column {
-                    Text(text = "Screen title", style = MaterialTheme.typography.h4)
-                    Text(text = "Subtitle", style = MaterialTheme.typography.h4)
+                    Text(text = "Screen title", style = MaterialTheme.typography.titleMedium)
+                    Text(text = "Subtitle", style = MaterialTheme.typography.bodyMedium)
                 }
             }
         }
@@ -206,14 +207,14 @@ private fun MutableState<ToolbarDemoSettings>.ToolbarDemoSettingsRadio(
         Text(
             modifier = Modifier.align(Alignment.CenterVertically),
             text = name,
-            style = MaterialTheme.typography.h3
+            style = MaterialTheme.typography.bodyMedium
         )
     }
 }
 
 @Composable
 private fun ToolbarDemoSettingsTitle(text: String) {
-    Text(modifier = Modifier.padding(16.dp), text = text, style = MaterialTheme.typography.h4)
+    Text(modifier = Modifier.padding(16.dp), text = text, style = MaterialTheme.typography.titleSmall)
 }
 
 @Composable
