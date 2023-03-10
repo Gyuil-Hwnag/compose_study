@@ -1,4 +1,4 @@
-package com.example.compose_study.ui.screen
+package com.example.compose_study.ui.screen.detail
 
 import androidx.paging.PagingData
 import androidx.paging.cachedIn

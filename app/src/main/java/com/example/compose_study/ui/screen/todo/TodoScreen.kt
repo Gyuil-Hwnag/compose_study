@@ -1,4 +1,4 @@
-package com.example.compose_study.ui.screen
+package com.example.compose_study.ui.screen.todo
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -19,19 +19,15 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
-import com.example.compose_study.model.getDateDay
 import com.example.compose_study.ui.item.DateItem
 import com.example.compose_study.ui.item.TimeTableItem
-import com.soywiz.klock.DateTime
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import java.util.*
 
 @Composable
 fun TodoScreen(
     viewModel: TodoViewModel = hiltViewModel()
 ) {
-
     val timeScrollState = rememberLazyListState()
     val dayScrollState = rememberLazyListState()
 

@@ -3,8 +3,8 @@
 
     <string name="paging">Paging</string>
     <string name="todo">Todo</string>
-    <string name="dialog">Dialog</string>
+    <string name="custom_dialog">Dialog</string>
     <string name="constraint">Constraint</string>
     <string name="viewpager">ViewPager</string>
-    <string name="collapsing">ViewPager</string>
+    <string name="collapsing">CollapsingToolBar</string>
 </resources>

@@ -1,8 +1,7 @@
-package com.example.compose_study.ui.screen
+package com.example.compose_study.ui.screen.todo
 
 import com.example.compose_study.model.TimeItem
 import com.example.compose_study.model.getCalendarDate
-import com.example.compose_study.model.getDateDay
 import com.example.compose_study.ui.BaseViewModel
 import com.soywiz.klock.*
 import dagger.hilt.android.lifecycle.HiltViewModel

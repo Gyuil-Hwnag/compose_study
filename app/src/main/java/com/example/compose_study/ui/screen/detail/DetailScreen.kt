@@ -1,4 +1,4 @@
-package com.example.compose_study.ui.screen
+package com.example.compose_study.ui.screen.detail
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,12 +9,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.compose_study.ui.ImageBigSize
 import com.example.compose_study.ui.Loading
+import com.example.compose_study.ui.screen.PhotoLazyGrid
 
 @Composable
 fun DetailScreen(

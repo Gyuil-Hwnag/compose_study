@@ -1,4 +1,4 @@
-package com.example.compose_study.ui.screen
+package com.example.compose_study.ui.screen.dialog
 
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
@@ -10,7 +10,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)

@@ -1,4 +1,4 @@
-package com.example.compose_study.ui.screen
+package com.example.compose_study.ui.screen.collapsing
 
 import android.os.Parcelable
 import androidx.compose.foundation.background

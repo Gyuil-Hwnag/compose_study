@@ -4,15 +4,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import com.example.compose_study.ui.item.BottomNavItem
 import com.example.compose_study.ui.item.DETAIL
 import com.example.compose_study.ui.screen.*
+import com.example.compose_study.ui.screen.collapsing.CollapsingToolBarScreen
+import com.example.compose_study.ui.screen.detail.DetailScreen
+import com.example.compose_study.ui.screen.dialog.CustomDialogScreen
+import com.example.compose_study.ui.screen.home.HomeScreen
+import com.example.compose_study.ui.screen.todo.TodoScreen
+import com.example.compose_study.ui.screen.viewpager.ViewpagerScreen
 
 @Composable
 fun NavigationGraph(modifier: Modifier, navController: NavHostController) {

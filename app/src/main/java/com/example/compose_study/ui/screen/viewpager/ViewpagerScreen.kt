@@ -1,4 +1,4 @@
-package com.example.compose_study.ui.screen
+package com.example.compose_study.ui.screen.viewpager
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*

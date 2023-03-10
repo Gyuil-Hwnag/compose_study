@@ -1,6 +1,5 @@
 package com.example.compose_study.ui.item
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -19,10 +18,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.compose_study.model.convertToCalendarDay
-import com.example.compose_study.model.convertToDate
 import com.example.compose_study.model.getCalendarDate
 import com.example.compose_study.model.getDateDay
-import com.example.compose_study.ui.screen.TodoViewModel
+import com.example.compose_study.ui.screen.todo.TodoViewModel
 import java.util.Calendar
 
 @Composable
