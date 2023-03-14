@@ -108,7 +108,7 @@ dependencies {
     implementation "com.soywiz.korlibs.klock:klock-android:$klockVersion"
 
     // View Pager in Compose
-    def viewPager = "0.20.1"
+    def viewPager = "0.24.1-alpha"
     implementation "com.google.accompanist:accompanist-pager:$viewPager"
     implementation "com.google.accompanist:accompanist-pager-indicators:$viewPager"
 }
