@@ -12,6 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.compose_study.ui.screen.ConstraintScreen
+import com.example.compose_study.ui.screen.more.More
+import com.example.compose_study.ui.screen.more.MoreScreen
 import com.example.compose_study.ui.screen.todo.TodoScreen
 import com.google.accompanist.pager.*
 import kotlinx.coroutines.launch
@@ -26,6 +28,7 @@ enum class Designer(val value: String) {
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun ViewPagerWithTabBarScreen(
+    onMoreClicked: (more: More) -> Unit
 ) {
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -45,7 +48,9 @@ fun ViewPagerWithTabBarScreen(
             val pagerState = rememberPagerState()
             val indicator = @Composable { tabPositions: List<TabPosition> ->
                 TabIndicator(
-                    Modifier.tabIndicatorOffset(tabPositions[pagerState.currentPage]).width(tabPositions[pagerState.currentPage].width),
+                    Modifier
+                        .tabIndicatorOffset(tabPositions[pagerState.currentPage])
+                        .width(tabPositions[pagerState.currentPage].width),
                     color = Color.White,
                 )
             }
@@ -85,8 +90,8 @@ fun ViewPagerWithTabBarScreen(
                 ) {
                     if (pages[index] == Designer.Reservation.value) {
                         TodoScreen()
-                    } else {
-                        ConstraintScreen()
+                    } else if (pages[index] == Designer.More.value) {
+                        MoreScreen(onClick = { onMoreClicked.invoke(it) })
                     }
                 }
             }
@@ -100,7 +105,9 @@ fun TabIndicator(
     color: Color = MaterialTheme.colors.onSurface
 ) {
     Spacer(
-        modifier = modifier.height(2.dp).background(color, RoundedCornerShape(topStartPercent = 100, topEndPercent = 100))
+        modifier = modifier
+            .height(2.dp)
+            .background(color, RoundedCornerShape(topStartPercent = 100, topEndPercent = 100))
     )
 }
 

@@ -7,4 +7,10 @@
     <string name="constraint">Constraint</string>
     <string name="viewpager">ViewPager</string>
     <string name="collapsing">CollapsingToolBar</string>
+
+    <string name="title_profile">프로필</string>
+    <string name="title_notification">공지사항</string>
+    <string name="title_information">도움말</string>
+    <string name="title_question">문의하기</string>
+    <string name="title_unknown">알수없음</string>
 </resources>

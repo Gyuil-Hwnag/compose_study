@@ -7,13 +7,13 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.compose_study.ui.item.BottomNavItem
-import com.example.compose_study.ui.item.DETAIL
+import com.example.compose_study.ui.item.*
 import com.example.compose_study.ui.screen.*
 import com.example.compose_study.ui.screen.collapsing.CollapsingToolBarScreen
 import com.example.compose_study.ui.screen.detail.DetailScreen
 import com.example.compose_study.ui.screen.dialog.CustomDialogScreen
 import com.example.compose_study.ui.screen.home.HomeScreen
+import com.example.compose_study.ui.screen.more.More
 import com.example.compose_study.ui.screen.todo.TodoScreen
 import com.example.compose_study.ui.screen.viewpager.ViewpagerScreen
 import com.example.compose_study.ui.screen.viewpagerwithtabbar.ViewPagerWithTabBarScreen
@@ -54,7 +54,16 @@ fun NavigationGraph(modifier: Modifier, navController: NavHostController) {
             CollapsingToolBarScreen()
         }
         composable(BottomNavItem.Todo.screenRoute) {
-            ViewPagerWithTabBarScreen()
+            ViewPagerWithTabBarScreen(
+                onMoreClicked = {
+                    when(it) {
+                        is More.Profile -> navController.navigate(DETAIL)
+                        is More.Notification -> navController.navigate(DIALOG)
+                        is More.Information -> navController.navigate(VIEWPAGER)
+                        is More.Question -> navController.navigate(COLLAPSING)
+                    }
+                }
+            )
         }
     }
 }
