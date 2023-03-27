@@ -3,6 +3,7 @@
 
     <string name="paging">Paging</string>
     <string name="todo">Todo</string>
+    <string name="slider">Slider</string>
     <string name="custom_dialog">Dialog</string>
     <string name="constraint">Constraint</string>
     <string name="viewpager">ViewPager</string>

@@ -14,6 +14,7 @@ import com.example.compose_study.ui.screen.detail.DetailScreen
 import com.example.compose_study.ui.screen.dialog.CustomDialogScreen
 import com.example.compose_study.ui.screen.home.HomeScreen
 import com.example.compose_study.ui.screen.more.More
+import com.example.compose_study.ui.screen.slider.SliderScreen
 import com.example.compose_study.ui.screen.todo.TodoScreen
 import com.example.compose_study.ui.screen.viewpager.ViewpagerScreen
 import com.example.compose_study.ui.screen.viewpagerwithtabbar.ViewPagerWithTabBarScreen
@@ -52,6 +53,9 @@ fun NavigationGraph(modifier: Modifier, navController: NavHostController) {
         }
         composable(BottomNavItem.Collapsing.screenRoute) {
             CollapsingToolBarScreen()
+        }
+        composable(BottomNavItem.Slider.screenRoute) {
+            SliderScreen()
         }
         composable(BottomNavItem.Todo.screenRoute) {
             ViewPagerWithTabBarScreen(

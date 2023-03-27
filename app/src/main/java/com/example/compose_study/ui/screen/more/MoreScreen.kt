@@ -17,7 +17,7 @@ import com.example.compose_study.ui.IconUtils
 fun MoreScreen(
     onClick: (More) -> Unit
 ) {
-    val moreitems = listOf(More.Profile, More.Notification, More.Information, More.Question)
+    val moreItems = listOf(More.Profile, More.Notification, More.Information, More.Question)
     Scaffold(
         modifier = Modifier.fillMaxSize()
     ) { paddingValues ->
@@ -27,8 +27,8 @@ fun MoreScreen(
                 .padding(paddingValues)
         ) {
             items(
-                items = moreitems,
-                itemContent = { MoreItem(item = it, onClick = { onClick(it) } ) }
+                items = moreItems,
+                itemContent = { MoreItem(item = it, onClick = { more -> onClick(more) } ) }
             )
         }
     }

@@ -23,6 +23,7 @@ fun BottomNavigationScreen(navController: NavController) {
         BottomNavItem.Constraint,
         BottomNavItem.ViewPager,
         BottomNavItem.Collapsing,
+        BottomNavItem.Slider,
         BottomNavItem.Todo
     )
     BottomNavigation(
