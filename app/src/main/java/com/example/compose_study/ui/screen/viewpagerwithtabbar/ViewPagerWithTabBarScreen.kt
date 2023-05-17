@@ -88,10 +88,10 @@ fun ViewPagerWithTabBarScreen(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    if (pages[index] == Designer.Reservation.value) {
-                        TodoScreen()
-                    } else if (pages[index] == Designer.More.value) {
-                        MoreScreen(onClick = { onMoreClicked.invoke(it) })
+                    when(pages[index]) {
+                        Designer.Reservation.value -> TodoScreen()
+                        Designer.More.value -> MoreScreen(onClick = { onMoreClicked.invoke(it) })
+                        else -> {}
                     }
                 }
             }
