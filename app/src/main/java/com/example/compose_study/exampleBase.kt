@@ -1,4 +1,4 @@
-package com.example.compose_study.chap1
+package com.example.compose_study
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
