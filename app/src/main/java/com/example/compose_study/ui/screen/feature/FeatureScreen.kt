@@ -7,4 +7,5 @@ import androidx.hilt.navigation.compose.hiltViewModel
 fun FeatureScreen(
     viewModel: FeatureViewModel = hiltViewModel()
 ) {
+
 }
