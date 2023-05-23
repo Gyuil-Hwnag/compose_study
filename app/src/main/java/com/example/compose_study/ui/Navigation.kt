@@ -12,6 +12,7 @@ import com.example.compose_study.ui.screen.*
 import com.example.compose_study.ui.screen.collapsing.CollapsingToolBarScreen
 import com.example.compose_study.ui.screen.detail.DetailScreen
 import com.example.compose_study.ui.screen.dialog.CustomDialogScreen
+import com.example.compose_study.ui.screen.feature.FeatureScreen
 import com.example.compose_study.ui.screen.home.HomeScreen
 import com.example.compose_study.ui.screen.more.More
 import com.example.compose_study.ui.screen.slider.SliderScreen
@@ -68,6 +69,9 @@ fun NavigationGraph(modifier: Modifier, navController: NavHostController) {
                     }
                 }
             )
+        }
+        composable(BottomNavItem.Feature.screenRoute) {
+            FeatureScreen()
         }
     }
 }

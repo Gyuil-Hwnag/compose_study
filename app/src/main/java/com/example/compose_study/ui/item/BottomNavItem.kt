@@ -12,6 +12,7 @@ sealed class BottomNavItem(
     object Collapsing : BottomNavItem(title = R.string.collapsing, icon = R.drawable.ic_collapsing, screenRoute = COLLAPSING)
     object Slider : BottomNavItem(title = R.string.slider, icon = R.drawable.ic_slider, screenRoute = SLIDER)
     object Todo : BottomNavItem(title = R.string.todo, icon = R.drawable.ic_todo, screenRoute = TODO)
+    object Feature : BottomNavItem(title = R.string.feature, icon = R.drawable.ic_feature, screenRoute = FEATURE)
 }
 
 const val PAGING = "PAGING"
@@ -22,3 +23,4 @@ const val CONSTRAINT = "CONSTRAINT"
 const val VIEWPAGER = "VIEWPAGER"
 const val COLLAPSING = "COLLAPSING"
 const val SLIDER = "SLIDER"
+const val FEATURE = "FEATURE"
