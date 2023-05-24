@@ -24,7 +24,8 @@ fun BottomNavigationScreen(navController: NavController) {
         BottomNavItem.ViewPager,
         BottomNavItem.Collapsing,
         BottomNavItem.Slider,
-        BottomNavItem.Todo
+        BottomNavItem.Todo,
+        BottomNavItem.Feature
     )
     BottomNavigation(
         backgroundColor = Color.Blue,
