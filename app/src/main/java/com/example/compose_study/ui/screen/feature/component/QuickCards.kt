@@ -1,7 +1,10 @@
 package com.example.compose_study.ui.screen.feature.component
 
+import androidx.compose.animation.core.CubicBezierEasing
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -11,16 +14,25 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -107,7 +119,9 @@ fun CardMessage(type: QuickCardType) {
 @Composable
 fun WelcomeCard() {
     Button(
-        modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 4.dp),
         border = BorderStroke(4.dp, color = Color.Yellow),
         colors = ButtonDefaults.buttonColors(backgroundColor = Color.Yellow),
         onClick = {}
@@ -124,8 +138,22 @@ fun WelcomeCard() {
 
 @Composable
 fun ReservationCard() {
+    val scrollState = rememberScrollState()
+    var animateState by remember { mutableStateOf(true) }
+
+    LaunchedEffect(key1 = animateState){
+        scrollState.animateScrollTo(
+            scrollState.maxValue,
+            animationSpec = tween(1000, 200, easing = CubicBezierEasing(0f,0f,0f,0f))
+        )
+        scrollState.scrollTo(0)
+        animateState = !animateState
+    }
+
     Button(
-        modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 4.dp),
         border = BorderStroke(4.dp, color = Color(0xFFFF695B)),
         colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFFF695B)),
         onClick = {}
@@ -140,21 +168,34 @@ fun ReservationCard() {
                 modifier = Modifier.size(56.dp)
             )
             Spacer(modifier = Modifier.size(12.dp))
-            Column {
+            Column(modifier = Modifier.weight(1f), horizontalAlignment = Alignment.Start) {
                 Text(text = "여성 디자인컷", fontSize = 15.sp, color = Color.White)
                 Spacer(modifier = Modifier.size(4.dp))
-                Text(text = "이수 수석 ・ 준오헤어 판교점", fontSize = 13.sp, color = Color.White)
+                Text(text = "이수 수석 ・ 준오헤어 판교점", fontSize = 13.sp, color = Color.White, modifier = Modifier.horizontalScroll(scrollState, false), maxLines = 1)
             }
-            Spacer(modifier = Modifier.weight(1f))
-            Text(text = "D-5", fontSize = 15.sp, color = Color.White)
+            Text(text = "D-5", fontSize = 15.sp, color = Color.White, modifier = Modifier.width(73.dp), textAlign = TextAlign.Center)
         }
     }
 }
 
 @Composable
 fun DDayCard() {
+    val scrollState = rememberScrollState()
+    var animateState by remember { mutableStateOf(true) }
+
+    LaunchedEffect(key1 = animateState){
+        scrollState.animateScrollTo(
+            scrollState.maxValue,
+            animationSpec = tween(1000, 200, easing = CubicBezierEasing(0f,0f,0f,0f))
+        )
+        scrollState.scrollTo(0)
+        animateState = !animateState
+    }
+
     Button(
-        modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 4.dp),
         border = BorderStroke(4.dp, color = Color(0xFF666DC5)),
         colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF666DC5)),
         onClick = {}
@@ -169,21 +210,34 @@ fun DDayCard() {
                 modifier = Modifier.size(56.dp)
             )
             Spacer(modifier = Modifier.size(12.dp))
-            Column {
+            Column(modifier = Modifier.weight(1f), horizontalAlignment = Alignment.Start) {
                 Text(text = "여성 디자인컷", fontSize = 15.sp, color = Color.White)
                 Spacer(modifier = Modifier.size(4.dp))
-                Text(text = "이수 수석 ・ 준오헤어 판교점", fontSize = 13.sp, color = Color.White)
+                Text(text = "이수 수석 ・ 준오헤어 판교점", fontSize = 13.sp, color = Color.White, modifier = Modifier.horizontalScroll(scrollState, false), maxLines = 1)
             }
-            Spacer(modifier = Modifier.weight(1f))
-            Text(text = "10:56:22", fontSize = 15.sp, color = Color.White)
+            Text(text = "10:56:22", fontSize = 15.sp, color = Color.White, modifier = Modifier.width(73.dp), textAlign = TextAlign.Center)
         }
     }
 }
 
 @Composable
 fun BeforeReviewCard() {
+    val scrollState = rememberScrollState()
+    var animateState by remember { mutableStateOf(true) }
+
+    LaunchedEffect(key1 = animateState){
+        scrollState.animateScrollTo(
+            scrollState.maxValue,
+            animationSpec = tween(1000, 200, easing = CubicBezierEasing(0f,0f,0f,0f))
+        )
+        scrollState.scrollTo(0)
+        animateState = !animateState
+    }
+
     Button(
-        modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 4.dp),
         border = BorderStroke(4.dp, color = Color(0xFF888888)),
         colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF888888)),
         onClick = {}
@@ -198,13 +252,12 @@ fun BeforeReviewCard() {
                 modifier = Modifier.size(56.dp)
             )
             Spacer(modifier = Modifier.size(12.dp))
-            Column {
+            Column(modifier = Modifier.weight(1f), horizontalAlignment = Alignment.Start) {
                 Text(text = "여성 디자인컷", fontSize = 15.sp, color = Color.White)
                 Spacer(modifier = Modifier.size(4.dp))
-                Text(text = "이수 수석 ・ 준오헤어 판교점", fontSize = 13.sp, color = Color.White)
+                Text(text = "이수 수석 ・ 준오헤어 판교점", fontSize = 13.sp, color = Color.White, modifier = Modifier.horizontalScroll(scrollState, false), maxLines = 1)
             }
-            Spacer(modifier = Modifier.weight(1f))
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.width(73.dp)) {
                 Image(painter = painterResource(id = R.drawable.ic_review), contentDescription = "리뷰 아이콘", modifier = Modifier.size(28.dp))
                 Text(text = "리뷰 쓰기", fontSize = 11.sp, color = Color.White)
             }
@@ -214,8 +267,22 @@ fun BeforeReviewCard() {
 
 @Composable
 fun AfterReviewCard() {
+    val scrollState = rememberScrollState()
+    var animateState by remember { mutableStateOf(true) }
+
+    LaunchedEffect(key1 = animateState){
+        scrollState.animateScrollTo(
+            scrollState.maxValue,
+            animationSpec = tween(1000, 200, easing = CubicBezierEasing(0f,0f,0f,0f))
+        )
+        scrollState.scrollTo(0)
+        animateState = !animateState
+    }
+
     Button(
-        modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 4.dp),
         border = BorderStroke(4.dp, color = Color(0xFF888888)),
         colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF888888)),
         onClick = {}
@@ -230,13 +297,12 @@ fun AfterReviewCard() {
                 modifier = Modifier.size(56.dp)
             )
             Spacer(modifier = Modifier.size(12.dp))
-            Column {
+            Column(modifier = Modifier.weight(1f), horizontalAlignment = Alignment.Start) {
                 Text(text = "여성 디자인컷", fontSize = 15.sp, color = Color.White)
                 Spacer(modifier = Modifier.size(4.dp))
-                Text(text = "이수 수석 ・ 준오헤어 판교점", fontSize = 13.sp, color = Color.White)
+                Text(text = "이수 수석 ・ 준오헤어 판교점", fontSize = 13.sp, color = Color.White, modifier = Modifier.horizontalScroll(scrollState, false), maxLines = 1)
             }
-            Spacer(modifier = Modifier.weight(1f))
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.width(73.dp)) {
                 Image(painter = painterResource(id = R.drawable.ic_review), contentDescription = "리뷰 아이콘", modifier = Modifier.size(28.dp))
                 Text(text = "리뷰 보기", fontSize = 11.sp, color = Color.White)
             }
@@ -246,8 +312,22 @@ fun AfterReviewCard() {
 
 @Composable
 fun ReReservationCard() {
+    val scrollState = rememberScrollState()
+    var animateState by remember { mutableStateOf(true) }
+
+    LaunchedEffect(key1 = animateState){
+        scrollState.animateScrollTo(
+            scrollState.maxValue,
+            animationSpec = tween(1000, 200, easing = CubicBezierEasing(0f,0f,0f,0f))
+        )
+        scrollState.scrollTo(0)
+        animateState = !animateState
+    }
+
     Button(
-        modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 4.dp),
         border = BorderStroke(4.dp, color = Color(0xFF74E0C7)),
         colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF74E0C7)),
         onClick = {}
@@ -262,20 +342,33 @@ fun ReReservationCard() {
                 modifier = Modifier.size(56.dp)
             )
             Spacer(modifier = Modifier.size(12.dp))
-            Column {
+            Column(modifier = Modifier.weight(1f), horizontalAlignment = Alignment.Start) {
                 Text(text = "재예약하기", fontSize = 15.sp, color = Color.White)
                 Spacer(modifier = Modifier.size(4.dp))
-                Text(text = "남성 디자인컷・준오헤어 판교돔시티점" , fontSize = 13.sp, color = Color.White)
+                Text(text = "이수 수석 ・ 준오헤어 판교점", fontSize = 13.sp, color = Color.White, modifier = Modifier.horizontalScroll(scrollState, false), maxLines = 1)
             }
-            Spacer(modifier = Modifier.weight(1f))
         }
     }
 }
 
 @Composable
 fun NormalCard() {
+    val scrollState = rememberScrollState()
+    var animateState by remember { mutableStateOf(true) }
+
+    LaunchedEffect(key1 = animateState){
+        scrollState.animateScrollTo(
+            scrollState.maxValue,
+            animationSpec = tween(1000, 200, easing = CubicBezierEasing(0f,0f,0f,0f))
+        )
+        scrollState.scrollTo(0)
+        animateState = !animateState
+    }
+
     Button(
-        modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 4.dp),
         border = BorderStroke(4.dp, color = Color(0xFFDDDDDD)),
         colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFDDDDDD)),
         onClick = {}
@@ -287,7 +380,7 @@ fun NormalCard() {
             Column {
                 Text(text = "여성 디자인컷", fontSize = 15.sp, color = Color.White)
                 Spacer(modifier = Modifier.size(4.dp))
-                Text(text = "이수 수석 ・ 준오헤어 판교점" , fontSize = 13.sp, color = Color.White)
+                Text(text = "이수 수석 ・ 준오헤어 판교점", fontSize = 13.sp, color = Color.White, modifier = Modifier.horizontalScroll(scrollState, false), maxLines = 1)
             }
             Spacer(modifier = Modifier.weight(1f))
         }
@@ -297,7 +390,9 @@ fun NormalCard() {
 @Composable
 fun UpdateProfileCard() {
     Button(
-        modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 4.dp),
         border = BorderStroke(4.dp, color = Color(0xFF666DC5)),
         colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF666DC5)),
         onClick = {}

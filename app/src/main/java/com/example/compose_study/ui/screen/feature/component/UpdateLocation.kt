@@ -45,6 +45,10 @@ fun Divider() {
         .background(Color(0xfff3f3f3)))
 }
 
+/**
+ * 밑줄 관련 : https://stackoverflow.com/questions/75643210/how-to-change-the-textdecoration-underline-with-a-custom-style
+ **/
+
 @Composable
 fun Location() {
     Row(
