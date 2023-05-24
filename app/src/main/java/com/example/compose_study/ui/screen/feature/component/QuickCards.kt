@@ -4,6 +4,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -58,13 +59,18 @@ fun QuickCardScreen() {
             state = state,
             count = quickCards.size,
             modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
+            contentPadding = PaddingValues(end = 16.dp, start = 12.dp)
         ) { page ->
             QuickCard(type = quickCards[page])
         }
     }
 
 }
+
+/**
+ * Text Auto Slider 참고 링크 : https://stackoverflow.com/questions/68974245/marquee-text-effect-in-jetpack-compose
+ **/
 
 @Composable
 fun QuickCard(type: QuickCardType) {
@@ -101,9 +107,7 @@ fun CardMessage(type: QuickCardType) {
 @Composable
 fun WelcomeCard() {
     Button(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp),
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp),
         border = BorderStroke(4.dp, color = Color.Yellow),
         colors = ButtonDefaults.buttonColors(backgroundColor = Color.Yellow),
         onClick = {}
@@ -121,9 +125,7 @@ fun WelcomeCard() {
 @Composable
 fun ReservationCard() {
     Button(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp),
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp),
         border = BorderStroke(4.dp, color = Color(0xFFFF695B)),
         colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFFF695B)),
         onClick = {}
@@ -152,9 +154,7 @@ fun ReservationCard() {
 @Composable
 fun DDayCard() {
     Button(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp),
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp),
         border = BorderStroke(4.dp, color = Color(0xFF666DC5)),
         colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF666DC5)),
         onClick = {}
@@ -183,9 +183,7 @@ fun DDayCard() {
 @Composable
 fun BeforeReviewCard() {
     Button(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp),
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp),
         border = BorderStroke(4.dp, color = Color(0xFF888888)),
         colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF888888)),
         onClick = {}
@@ -217,9 +215,7 @@ fun BeforeReviewCard() {
 @Composable
 fun AfterReviewCard() {
     Button(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp),
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp),
         border = BorderStroke(4.dp, color = Color(0xFF888888)),
         colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF888888)),
         onClick = {}
@@ -251,9 +247,7 @@ fun AfterReviewCard() {
 @Composable
 fun ReReservationCard() {
     Button(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp),
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp),
         border = BorderStroke(4.dp, color = Color(0xFF74E0C7)),
         colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF74E0C7)),
         onClick = {}
@@ -281,9 +275,7 @@ fun ReReservationCard() {
 @Composable
 fun NormalCard() {
     Button(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp),
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp),
         border = BorderStroke(4.dp, color = Color(0xFFDDDDDD)),
         colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFDDDDDD)),
         onClick = {}
@@ -305,9 +297,7 @@ fun NormalCard() {
 @Composable
 fun UpdateProfileCard() {
     Button(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp),
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp),
         border = BorderStroke(4.dp, color = Color(0xFF666DC5)),
         colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF666DC5)),
         onClick = {}
