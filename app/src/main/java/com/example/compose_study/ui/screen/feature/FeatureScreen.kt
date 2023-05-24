@@ -12,6 +12,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.compose_study.ui.screen.feature.component.QuickCardScreen
 import com.example.compose_study.ui.screen.feature.component.QuickLinkScreen
 import com.example.compose_study.ui.screen.feature.component.TopBannerScreen
+import com.example.compose_study.ui.screen.feature.component.UpdateLocationScreen
 import com.example.compose_study.ui.theme.Compose_studyTheme
 import com.google.accompanist.pager.ExperimentalPagerApi
 
@@ -28,7 +29,7 @@ fun FeatureScreen(
                 QuickCardScreen()
             }
         }
-
+        UpdateLocationScreen()
     }
 }
 
