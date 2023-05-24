@@ -38,10 +38,24 @@ fun TopBannerScreen() {
     val banner2 = TopBanner(imageUri = "https://cdn.travie.com/news/photo/first/201710/img_19975_1.jpg", title = "네일 스타일의 모든것\nBOBBED NAIL STYLE", description = "요즘 유행하는 네일 스타일")
     val banner3 = TopBanner(imageUri = "https://mblogthumb-phinf.pstatic.net/MjAxODA2MjZfMTMw/MDAxNTMwMDE0NDk2Mzcz.7re42MA5wqJxZlJ8J5FzfDKEEqugtVuhg49bSFYUuYsg.0Y0kjwH4oi1LXXpqrcGaVBch_4eQsyKyVTRsNtg7fCMg.JPEG.ichufs/%EC%82%AC%EC%A7%84%EC%8C%A4%EC%9A%B0%EC%93%B0%EB%9D%BC_3_0%EC%9D%B8%ED%8A%B8%EB%A1%9C.jpg?type=w800", title = "에스테틱의 모든것\nBOBBED ESTHETIC STYLE", description = "요즘 유행하는 에스테틱 스타일")
 
-    val banners = listOf<TopBanner>(banner1, banner2, banner3, banner1, banner2, banner3)
+    val banners = listOf<TopBanner>(banner3, banner1, banner2, banner3, banner1, banner2, banner3, banner1)
     val state = rememberPagerState()
 
+    LaunchedEffect(key1 = Unit) {
+        state.scrollToPage(1)
+    }
+
     LaunchedEffect(key1 = state.currentPage) {
+        when(state.currentPage) {
+            banners.size - 1 -> {
+                state.scrollToPage(1)
+                return@LaunchedEffect
+            }
+            0 -> {
+                state.scrollToPage(banners.size - 2)
+                return@LaunchedEffect
+            }
+        }
         delay(3000)
         var newPosition = state.currentPage + 1
         if (newPosition > banners.size - 1) newPosition = 0
@@ -82,7 +96,7 @@ fun TopBannerSlider(state: PagerState, banners: List<TopBanner>) {
                     fontSize = 14.sp
                 )
                 Spacer(modifier = Modifier.weight(1f))
-                BannerIndicator(current = state.currentPage + 1, totalCount = banners.size)
+                BannerIndicator(current = state.currentPage, totalCount = banners.size - 2)
             }
             Spacer(modifier = Modifier.size(44.dp))
         }

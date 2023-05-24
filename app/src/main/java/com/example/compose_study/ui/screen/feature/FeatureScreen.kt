@@ -1,5 +1,6 @@
 package com.example.compose_study.ui.screen.feature
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
@@ -20,7 +21,10 @@ fun FeatureScreen(
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
         TopBannerScreen()
-        QuickLinkScreen(modifier = Modifier.offset(y = (-20).dp))
+        Box(modifier = Modifier.offset(y = (-20).dp)) {
+            QuickLinkScreen()
+        }
+
     }
 }
 
