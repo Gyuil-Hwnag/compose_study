@@ -1,25 +1,20 @@
 package com.example.compose_study.ui.screen.feature.component
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ScrollableTabRow
 import androidx.compose.material.Surface
-import androidx.compose.material.Tab
-import androidx.compose.material.TabRowDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -27,10 +22,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
@@ -53,28 +46,28 @@ fun RecommendMenuScreen() {
         shopName = "밈 청담본점",
         menuName = "매직셋팅 S컬 + 클리닉",
         price = "187,000원",
-        sales = "15%"
+        saleRatio = "15%"
     )
     val menu2 = Menu(
         imgUri = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjVlZo3j6UOTSdINV6h0R6Ll5YxZochezX6h8Z7DcZ89XAaNTIN2etv3tOdpkc9e4FrxY&usqp=CAU",
         shopName = "밈 청담본점",
         menuName = "매직셋팅 S컬 + 클리닉",
         price = "187,000원",
-        sales = "15%"
+        saleRatio = "15%"
     )
     val menu3 = Menu(
         imgUri = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqwuLtzNxwEa6dsXWzSa0p7RaixhleZ7jP9w&usqp=CAU",
         shopName = "밈 청담본점",
         menuName = "매직셋팅 S컬 + 클리닉",
         price = "187,000원",
-        sales = "15%"
+        saleRatio = "15%"
     )
     val menu4 = Menu(
         imgUri = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSg25GD2Ly8O-j0zCsX6qgXo4aeAlMyPqhivA&usqp=CAU",
         shopName = "밈 청담본점",
         menuName = "매직셋팅 S컬 + 클리닉",
         price = "187,000원",
-        sales = "15%"
+        saleRatio = "15%"
     )
 
     val menus = listOf<Menu>(menu1, menu2, menu3, menu4, menu1, menu2, menu3, menu4)
@@ -87,7 +80,9 @@ fun RecommendMenuScreen() {
             selectedTabIndex = selectIndex,
             onTabClicked = { tabIndex, _ -> selectIndex = tabIndex }
         )
-        LazyRow(modifier = Modifier.padding(vertical = 18.dp)) {
+        LazyRow(
+            modifier = Modifier.padding(vertical = 18.dp),
+        ) {
             item {
                 Spacer(modifier = Modifier.size(10.dp))
             }
@@ -129,7 +124,7 @@ fun MenuItem(menu: Menu) {
         Text(text = menu.menuName, color = Color.Black, fontSize = 14.sp)
         Spacer(modifier = Modifier.size(4.dp))
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(text = menu.sales, color = Color.Red, fontSize = 13.sp)
+            Text(text = menu.saleRatio, color = Color.Red, fontSize = 13.sp)
             Spacer(modifier = Modifier.size(4.dp))
             Text(text = menu.price, color = Color.Black, fontSize = 13.sp)
         }
@@ -141,7 +136,7 @@ data class Menu(
     val shopName: String,
     val menuName: String,
     val price: String,
-    val sales: String
+    val saleRatio: String
 )
 
 
