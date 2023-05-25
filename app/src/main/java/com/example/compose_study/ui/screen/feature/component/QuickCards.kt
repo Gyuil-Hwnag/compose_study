@@ -2,9 +2,9 @@ package com.example.compose_study.ui.screen.feature.component
 
 import androidx.compose.animation.core.CubicBezierEasing
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
@@ -53,7 +52,10 @@ fun QuickCardScreen() {
         QuickCardType.D_DAY,
         QuickCardType.BEFORE_REVIEW,
         QuickCardType.AFTER_REVIEW,
-        QuickCardType.RE_RESERVATION,
+        QuickCardType.RE_RESERVATION_FEMALE,
+        QuickCardType.RE_RESERVATION_MALE,
+        QuickCardType.MY_DESIGNER,
+        QuickCardType.MY_MENU,
         QuickCardType.NORMAL,
         QuickCardType.PROFILE_UPDATE
     )
@@ -91,11 +93,12 @@ fun QuickCard(type: QuickCardType) {
         QuickCardType.WELCOME -> WelcomeCard()
         QuickCardType.RESERVATION -> ReservationCard()
         QuickCardType.D_DAY -> DDayCard()
-        QuickCardType.BEFORE_REVIEW -> BeforeReviewCard()
-        QuickCardType.AFTER_REVIEW -> AfterReviewCard()
-        QuickCardType.RE_RESERVATION -> ReReservationCard()
-        QuickCardType.MY_DESIGNER -> {}
-        QuickCardType.MY_MENU -> {}
+        QuickCardType.BEFORE_REVIEW -> ReviewCard(isWrite = false)
+        QuickCardType.AFTER_REVIEW -> ReviewCard(isWrite = true)
+        QuickCardType.RE_RESERVATION_FEMALE -> ReReservationCard(isFemale = true)
+        QuickCardType.RE_RESERVATION_MALE -> ReReservationCard(isFemale = false)
+        QuickCardType.MY_DESIGNER -> FavoriteCard(FavoriteType.DESIGNER)
+        QuickCardType.MY_MENU -> FavoriteCard(FavoriteType.MENU)
         QuickCardType.PROFILE_UPDATE -> UpdateProfileCard()
         QuickCardType.NORMAL -> NormalCard()
     }
@@ -109,9 +112,10 @@ fun CardMessage(type: QuickCardType) {
         QuickCardType.D_DAY -> Text(text = "24시간 전", color = Color.Black, fontSize = 15.sp)
         QuickCardType.BEFORE_REVIEW -> Text(text = "시술 후 - 리뷰작성 전", color = Color.Black, fontSize = 15.sp)
         QuickCardType.AFTER_REVIEW -> Text(text = "시술 후 - 리뷰작성 후", color = Color.Black, fontSize = 15.sp)
-        QuickCardType.RE_RESERVATION -> Text(text = "재예약하기", color = Color.Black, fontSize = 15.sp)
-        QuickCardType.MY_DESIGNER -> {}
-        QuickCardType.MY_MENU -> {}
+        QuickCardType.RE_RESERVATION_FEMALE -> Text(text = "여성 재예약하기", color = Color.Black, fontSize = 15.sp)
+        QuickCardType.RE_RESERVATION_MALE -> Text(text = "남성 재예약하기", color = Color.Black, fontSize = 15.sp)
+        QuickCardType.MY_DESIGNER -> Text(text = "나의 단골 디자이너", color = Color.Black, fontSize = 15.sp)
+        QuickCardType.MY_MENU -> Text(text = "최근 본 메뉴", color = Color.Black, fontSize = 15.sp)
         QuickCardType.PROFILE_UPDATE -> Text(text = "기본", color = Color.Black, fontSize = 15.sp)
         QuickCardType.NORMAL -> Text(text = "프로필 업데이트", color = Color.Black, fontSize = 15.sp)
     }
@@ -169,9 +173,8 @@ fun ReservationCard() {
                 modifier = Modifier.size(56.dp)
             )
             Spacer(modifier = Modifier.size(12.dp))
-            Column(modifier = Modifier.weight(1f), horizontalAlignment = Alignment.Start) {
+            Column(modifier = Modifier.weight(1f), horizontalAlignment = Alignment.Start, verticalArrangement = Arrangement.Center) {
                 Text(text = "여성 디자인컷", fontSize = 15.sp, color = Color.White)
-                Spacer(modifier = Modifier.size(4.dp))
                 Text(text = "이수 수석 ・ 준오헤어 판교점", fontSize = 13.sp, color = Color.White, modifier = Modifier.horizontalScroll(scrollState, false), maxLines = 1)
             }
             Text(text = "D-5", fontSize = 15.sp, color = Color.White, modifier = Modifier.width(73.dp), textAlign = TextAlign.Center)
@@ -211,9 +214,8 @@ fun DDayCard() {
                 modifier = Modifier.size(56.dp)
             )
             Spacer(modifier = Modifier.size(12.dp))
-            Column(modifier = Modifier.weight(1f), horizontalAlignment = Alignment.Start) {
+            Column(modifier = Modifier.weight(1f), horizontalAlignment = Alignment.Start, verticalArrangement = Arrangement.Center) {
                 Text(text = "여성 디자인컷", fontSize = 15.sp, color = Color.White)
-                Spacer(modifier = Modifier.size(4.dp))
                 Text(text = "이수 수석 ・ 준오헤어 판교점", fontSize = 13.sp, color = Color.White, modifier = Modifier.horizontalScroll(scrollState, false), maxLines = 1)
             }
             Text(text = "10:56:22", fontSize = 15.sp, color = Color.White, modifier = Modifier.width(73.dp), textAlign = TextAlign.Center)
@@ -222,7 +224,7 @@ fun DDayCard() {
 }
 
 @Composable
-fun BeforeReviewCard() {
+fun ReviewCard(isWrite: Boolean) {
     val scrollState = rememberScrollState()
     var animateState by remember { mutableStateOf(true) }
 
@@ -253,21 +255,20 @@ fun BeforeReviewCard() {
                 modifier = Modifier.size(56.dp)
             )
             Spacer(modifier = Modifier.size(12.dp))
-            Column(modifier = Modifier.weight(1f), horizontalAlignment = Alignment.Start) {
+            Column(modifier = Modifier.weight(1f), horizontalAlignment = Alignment.Start, verticalArrangement = Arrangement.Center) {
                 Text(text = "여성 디자인컷", fontSize = 15.sp, color = Color.White)
-                Spacer(modifier = Modifier.size(4.dp))
                 Text(text = "이수 수석 ・ 준오헤어 판교점", fontSize = 13.sp, color = Color.White, modifier = Modifier.horizontalScroll(scrollState, false), maxLines = 1)
             }
             Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.width(73.dp)) {
                 Image(painter = painterResource(id = R.drawable.ic_review), contentDescription = "리뷰 아이콘", modifier = Modifier.size(28.dp))
-                Text(text = "리뷰 쓰기", fontSize = 11.sp, color = Color.White)
+                Text(text = if (isWrite) "리뷰 보기" else "리뷰 쓰기" , fontSize = 11.sp, color = Color.White)
             }
         }
     }
 }
 
 @Composable
-fun AfterReviewCard() {
+fun ReReservationCard(isFemale: Boolean) {
     val scrollState = rememberScrollState()
     var animateState by remember { mutableStateOf(true) }
 
@@ -280,12 +281,15 @@ fun AfterReviewCard() {
         animateState = !animateState
     }
 
+    val backgroundColor = if (isFemale) 0xFFFFA05B else 0xFF74E0C7
+    val message = if (isFemale) "줄리님 스타일 손볼 때 되셨네요!" else "랄프님 머리할 때 되셨네요!"
+
     Button(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 4.dp),
         shape = RoundedCornerShape(4.dp),
-        colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF888888)),
+        colors = ButtonDefaults.buttonColors(backgroundColor = Color(backgroundColor)),
         onClick = {}
     ) {
         Row(
@@ -298,21 +302,16 @@ fun AfterReviewCard() {
                 modifier = Modifier.size(56.dp)
             )
             Spacer(modifier = Modifier.size(12.dp))
-            Column(modifier = Modifier.weight(1f), horizontalAlignment = Alignment.Start) {
-                Text(text = "여성 디자인컷", fontSize = 15.sp, color = Color.White)
-                Spacer(modifier = Modifier.size(4.dp))
-                Text(text = "이수 수석 ・ 준오헤어 판교점", fontSize = 13.sp, color = Color.White, modifier = Modifier.horizontalScroll(scrollState, false), maxLines = 1)
-            }
-            Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.width(73.dp)) {
-                Image(painter = painterResource(id = R.drawable.ic_review), contentDescription = "리뷰 아이콘", modifier = Modifier.size(28.dp))
-                Text(text = "리뷰 보기", fontSize = 11.sp, color = Color.White)
+            Column(modifier = Modifier.weight(1f), horizontalAlignment = Alignment.Start, verticalArrangement = Arrangement.Center) {
+                Text(text = message, fontSize = 15.sp, color = Color.Black)
+                Text(text = "이수 수석 ・ 준오헤어 판교점", fontSize = 13.sp, color = Color.Black, modifier = Modifier.horizontalScroll(scrollState, false), maxLines = 1)
             }
         }
     }
 }
 
 @Composable
-fun ReReservationCard() {
+fun FavoriteCard(type: FavoriteType) {
     val scrollState = rememberScrollState()
     var animateState by remember { mutableStateOf(true) }
 
@@ -325,12 +324,22 @@ fun ReReservationCard() {
         animateState = !animateState
     }
 
+    val backgroundColor = when(type) {
+        FavoriteType.DESIGNER -> 0xFFEA6062
+        FavoriteType.MENU -> 0xFF4FABC9
+    }
+
+    val message = when(type) {
+        FavoriteType.DESIGNER -> "나의 단골 디자이너"
+        FavoriteType.MENU -> "여성 디자인컷"
+    }
+
     Button(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 4.dp),
         shape = RoundedCornerShape(4.dp),
-        colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF74E0C7)),
+        colors = ButtonDefaults.buttonColors(backgroundColor = Color(backgroundColor)),
         onClick = {}
     ) {
         Row(
@@ -343,11 +352,11 @@ fun ReReservationCard() {
                 modifier = Modifier.size(56.dp)
             )
             Spacer(modifier = Modifier.size(12.dp))
-            Column(modifier = Modifier.weight(1f), horizontalAlignment = Alignment.Start) {
-                Text(text = "재예약하기", fontSize = 15.sp, color = Color.White)
-                Spacer(modifier = Modifier.size(4.dp))
+            Column(modifier = Modifier.weight(1f), horizontalAlignment = Alignment.Start, verticalArrangement = Arrangement.Center) {
+                Text(text = message, fontSize = 15.sp, color = Color.White)
                 Text(text = "이수 수석 ・ 준오헤어 판교점", fontSize = 13.sp, color = Color.White, modifier = Modifier.horizontalScroll(scrollState, false), maxLines = 1)
             }
+            Image(painter = painterResource(id = R.drawable.ic_close), contentDescription = "리뷰 아이콘", modifier = Modifier.size(20.dp))
         }
     }
 }
@@ -378,9 +387,8 @@ fun NormalCard() {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Spacer(modifier = Modifier.height(56.dp))
-            Column {
+            Column(horizontalAlignment = Alignment.Start, verticalArrangement = Arrangement.Center) {
                 Text(text = "여성 디자인컷", fontSize = 15.sp, color = Color.White)
-                Spacer(modifier = Modifier.size(4.dp))
                 Text(text = "이수 수석 ・ 준오헤어 판교점", fontSize = 13.sp, color = Color.White, modifier = Modifier.horizontalScroll(scrollState, false), maxLines = 1)
             }
             Spacer(modifier = Modifier.weight(1f))
@@ -413,7 +421,13 @@ fun UpdateProfileCard() {
 
 
 enum class QuickCardType {
-    WELCOME, RESERVATION, D_DAY, BEFORE_REVIEW, AFTER_REVIEW, RE_RESERVATION, MY_DESIGNER, MY_MENU, NORMAL, PROFILE_UPDATE
+    WELCOME, RESERVATION, D_DAY, BEFORE_REVIEW, AFTER_REVIEW,
+    RE_RESERVATION_FEMALE, RE_RESERVATION_MALE, MY_DESIGNER, MY_MENU,
+    NORMAL, PROFILE_UPDATE
+}
+
+enum class FavoriteType {
+    DESIGNER, MENU
 }
 
 @OptIn(ExperimentalPagerApi::class)
