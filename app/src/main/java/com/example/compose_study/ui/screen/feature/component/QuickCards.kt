@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
@@ -122,7 +123,7 @@ fun WelcomeCard() {
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 4.dp),
-        border = BorderStroke(4.dp, color = Color.Yellow),
+        shape = RoundedCornerShape(4.dp),
         colors = ButtonDefaults.buttonColors(backgroundColor = Color.Yellow),
         onClick = {}
     ) {
@@ -154,7 +155,7 @@ fun ReservationCard() {
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 4.dp),
-        border = BorderStroke(4.dp, color = Color(0xFFFF695B)),
+        shape = RoundedCornerShape(4.dp),
         colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFFF695B)),
         onClick = {}
     ) {
@@ -196,7 +197,7 @@ fun DDayCard() {
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 4.dp),
-        border = BorderStroke(4.dp, color = Color(0xFF666DC5)),
+        shape = RoundedCornerShape(4.dp),
         colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF666DC5)),
         onClick = {}
     ) {
@@ -238,7 +239,7 @@ fun BeforeReviewCard() {
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 4.dp),
-        border = BorderStroke(4.dp, color = Color(0xFF888888)),
+        shape = RoundedCornerShape(4.dp),
         colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF888888)),
         onClick = {}
     ) {
@@ -283,7 +284,7 @@ fun AfterReviewCard() {
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 4.dp),
-        border = BorderStroke(4.dp, color = Color(0xFF888888)),
+        shape = RoundedCornerShape(4.dp),
         colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF888888)),
         onClick = {}
     ) {
@@ -328,7 +329,7 @@ fun ReReservationCard() {
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 4.dp),
-        border = BorderStroke(4.dp, color = Color(0xFF74E0C7)),
+        shape = RoundedCornerShape(4.dp),
         colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF74E0C7)),
         onClick = {}
     ) {
@@ -369,7 +370,7 @@ fun NormalCard() {
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 4.dp),
-        border = BorderStroke(4.dp, color = Color(0xFFDDDDDD)),
+        shape = RoundedCornerShape(4.dp),
         colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFDDDDDD)),
         onClick = {}
     ) {
@@ -393,7 +394,7 @@ fun UpdateProfileCard() {
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 4.dp),
-        border = BorderStroke(4.dp, color = Color(0xFF666DC5)),
+        shape = RoundedCornerShape(4.dp),
         colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF666DC5)),
         onClick = {}
     ) {

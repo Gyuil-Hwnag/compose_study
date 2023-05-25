@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
@@ -83,6 +84,7 @@ fun Location() {
             modifier = Modifier.padding(vertical = 8.dp, horizontal = 12.dp),
             onClick = {},
             border = BorderStroke(1.dp, Color.Black),
+            shape = RoundedCornerShape(6.dp),
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)
         ) {
             Text(text = "지역 변경", fontSize = 11.sp, color = Color.Black)

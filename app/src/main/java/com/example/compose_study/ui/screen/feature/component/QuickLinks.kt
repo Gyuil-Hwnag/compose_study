@@ -1,7 +1,7 @@
 package com.example.compose_study.ui.screen.feature.component
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
@@ -40,13 +41,14 @@ fun QuickLinkScreen() {
     val subLink4 = QuickLink(title = "\uD83D\uDC87 스타일TIP", description = "")
     val subQuickLinks = listOf<QuickLink>(subLink1, subLink2, subLink3, subLink4, subLink1, subLink2, subLink3, subLink4)
 
-    Column {
+    Column(modifier = Modifier.fillMaxWidth()) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp)
                 .wrapContentHeight(Alignment.CenterVertically),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
         ) {
             Box(modifier = Modifier.weight(weight = 1f, fill = true)) {
                 MainQuickLinkItems(quickLink = hairQuickLink)
@@ -77,7 +79,7 @@ fun QuickLinkScreen() {
 fun MainQuickLinkItems(quickLink: QuickLink) {
     Button(
         modifier = Modifier.fillMaxWidth(),
-        border = BorderStroke(10.dp, color = Color.White),
+        shape = RoundedCornerShape(4.dp),
         colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
         onClick = {}
     ) {
@@ -106,7 +108,7 @@ fun MainQuickLinkItems(quickLink: QuickLink) {
 fun SubQuickLinkItems(quickLink: QuickLink) {
     Button(
         modifier = Modifier.fillMaxWidth(),
-        border = BorderStroke(10.dp, color = Color.White),
+        shape = RoundedCornerShape(4.dp),
         colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
         onClick = {}
     ) {
@@ -134,7 +136,7 @@ fun SubQuickLinkItems(quickLink: QuickLink) {
 fun QuickLinkItems(quickLink: QuickLink) {
     Button(
         modifier = Modifier.padding(vertical = 12.dp, horizontal = 4.dp),
-        border = BorderStroke(6.dp, color = Color.White),
+        shape = RoundedCornerShape(6.dp),
         colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
         onClick = {}
     ) {
