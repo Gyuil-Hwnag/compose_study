@@ -82,7 +82,7 @@ fun RecommendMenuScreen() {
     var selectIndex by remember { mutableStateOf(0) }
     Column(modifier = Modifier.fillMaxWidth()) {
         RecommendMenuTitle()
-        RecommendTab(
+        Tab(
             tabs = tabs,
             selectedTabIndex = selectIndex,
             onTabClicked = { tabIndex, _ -> selectIndex = tabIndex }
@@ -111,54 +111,6 @@ fun RecommendMenuTitle() {
 }
 
 @Composable
-fun RecommendTab(
-    tabs: List<Category>,
-    selectedTabIndex: Int,
-    onTabClicked: (index: Int, category: Category) -> Unit
-) {
-    val density = LocalDensity.current
-    val tabWidths = remember {
-        val tabWidthStateList = mutableStateListOf<Dp>()
-        repeat(tabs.size) { tabWidthStateList.add(0.dp) }
-        tabWidthStateList
-    }
-
-    ScrollableTabRow(
-        selectedTabIndex = selectedTabIndex,
-        edgePadding = 0.dp,
-        backgroundColor = Color.Transparent,
-        indicator = { tabPositions ->
-            TabRowDefaults.Indicator(
-                modifier = Modifier.tabIndicatorOffset(
-                    currentTabPosition = tabPositions[selectedTabIndex],
-                    tabWidth = tabWidths[selectedTabIndex],
-                ),
-                color = Color.Black,
-                height = TabRowDefaults.IndicatorHeight * 0.5F
-            )
-        },
-        divider = {}
-    ) {
-        tabs.forEachIndexed { index, tab ->
-            Tab(
-                selected = index == selectedTabIndex,
-                onClick = { onTabClicked(index, tab) },
-                text = {
-                    Text(
-                        text = tab.name,
-                        onTextLayout = { textLayoutResult ->
-                            tabWidths[index] = with(density) { textLayoutResult.size.width.toDp() }
-                        },
-                        color = Color.Black,
-                        fontSize = 15.sp
-                    )
-                }
-            )
-        }
-    }
-}
-
-@Composable
 fun MenuItem(menu: Menu) {
     Column(modifier = Modifier.padding(6.dp)) {
         Surface(
@@ -183,10 +135,6 @@ fun MenuItem(menu: Menu) {
         }
     }
 }
-
-data class Category(
-    val name: String
-)
 
 data class Menu(
     val imgUri: String,
