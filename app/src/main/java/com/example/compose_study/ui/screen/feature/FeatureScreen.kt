@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -21,7 +23,10 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 fun FeatureScreen(
     viewModel: FeatureViewModel = hiltViewModel()
 ) {
-    Column(modifier = Modifier.fillMaxSize()) {
+    val scrollState = rememberScrollState()
+    Column(
+        modifier = Modifier.fillMaxSize().verticalScroll(scrollState)
+    ) {
         TopBannerScreen()
         Box(modifier = Modifier.offset(y = (-20).dp)) {
             Column {
