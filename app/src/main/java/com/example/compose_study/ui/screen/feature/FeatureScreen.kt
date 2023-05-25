@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.compose_study.ui.screen.feature.component.QuickCardScreen
 import com.example.compose_study.ui.screen.feature.component.QuickLinkScreen
+import com.example.compose_study.ui.screen.feature.component.ReReservationScreen
 import com.example.compose_study.ui.screen.feature.component.RecommendMenuScreen
 import com.example.compose_study.ui.screen.feature.component.TopBannerScreen
 import com.example.compose_study.ui.screen.feature.component.UpdateLocationScreen
@@ -42,6 +43,8 @@ fun FeatureScreen(
         UpdateLocationScreen()
         Spacer(modifier = Modifier.size(40.dp))
         RecommendMenuScreen()
+        Spacer(modifier = Modifier.size(40.dp))
+        ReReservationScreen()
     }
 }
 

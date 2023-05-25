@@ -78,17 +78,11 @@ fun ReReservationScreen() {
             onTabClicked = { tabIndex, _ -> selectIndex = tabIndex }
         )
         LazyRow(
-            modifier = Modifier.padding(vertical = 18.dp),
-//            contentPadding = PaddingValues(end = 48.dp)
+            modifier = Modifier.fillMaxWidth().padding(vertical = 18.dp),
+            contentPadding = PaddingValues(end = 48.dp, start = 16.dp)
         ) {
-            item {
-                Spacer(modifier = Modifier.size(10.dp))
-            }
             items(listOf(reservation, reservation, reservation)) {
                 ReReservationItem(item = it)
-            }
-            item {
-                Spacer(modifier = Modifier.size(10.dp))
             }
         }
     }
@@ -112,7 +106,9 @@ fun ReReservationItem(item: ReReservation) {
                 model = item.shopImg,
                 contentDescription = "매장 이미지",
                 contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxWidth().height(221.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(221.dp),
             )
         }
         Spacer(modifier = Modifier.size(16.dp))
@@ -129,8 +125,8 @@ fun ReReservationItem(item: ReReservation) {
             Spacer(modifier = Modifier.size(4.dp))
             Text(text = item.shopReviews.toString(), color = Color.Black, fontSize = 13.sp)
         }
-        LazyColumn {
-            items(item.pickMenus) {
+        Column {
+            item.pickMenus.forEach {
                 PickMenuItem(item = it)
             }
         }
