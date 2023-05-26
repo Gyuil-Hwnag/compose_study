@@ -165,17 +165,15 @@ fun StyleTag(item: String) {
 @Composable
 fun RecommendStyleMore() {
     Row(modifier = Modifier.padding(horizontal = 16.dp)) {
-        Button(
+        Surface(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 14.dp),
-            onClick = {},
             border = BorderStroke(1.dp, Color(0xFFEEEEEE)),
             shape = RoundedCornerShape(4.dp),
-            colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)
         ) {
             Row(
-                modifier = Modifier.fillMaxWidth().padding(6.dp),
+                modifier = Modifier.fillMaxWidth().padding(14.dp),
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.Bottom
             ) {
