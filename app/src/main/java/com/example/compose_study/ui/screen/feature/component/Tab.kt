@@ -1,6 +1,5 @@
 package com.example.compose_study.ui.screen.feature.component
 
-import androidx.compose.material.ScrollableTabRow
 import androidx.compose.material.Tab
 import androidx.compose.material.TabRowDefaults
 import androidx.compose.material.Text
