@@ -30,7 +30,7 @@ import com.example.compose_study.ui.theme.Compose_studyTheme
 @Composable
 fun UpdateLocationScreen() {
     Column(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth().background(Color.White)
     ) {
         Divider()
         Location()

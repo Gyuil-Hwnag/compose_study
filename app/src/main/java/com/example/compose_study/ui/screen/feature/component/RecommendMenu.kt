@@ -1,6 +1,7 @@
 package com.example.compose_study.ui.screen.feature.component
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -73,7 +74,7 @@ fun RecommendMenuScreen() {
     val menus = listOf<Menu>(menu1, menu2, menu3, menu4, menu1, menu2, menu3, menu4)
 
     var selectIndex by remember { mutableStateOf(0) }
-    Column(modifier = Modifier.fillMaxWidth()) {
+    Column(modifier = Modifier.fillMaxWidth().background(Color.White)) {
         RecommendMenuTitle()
         Tab(
             tabs = tabs,

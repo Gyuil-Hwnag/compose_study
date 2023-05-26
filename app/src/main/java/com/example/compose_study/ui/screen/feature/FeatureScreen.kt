@@ -1,5 +1,6 @@
 package com.example.compose_study.ui.screen.feature
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -10,6 +11,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -17,6 +19,7 @@ import com.example.compose_study.ui.screen.feature.component.QuickCardScreen
 import com.example.compose_study.ui.screen.feature.component.QuickLinkScreen
 import com.example.compose_study.ui.screen.feature.component.ReReservationScreen
 import com.example.compose_study.ui.screen.feature.component.RecommendMenuScreen
+import com.example.compose_study.ui.screen.feature.component.RecommendStyleScreen
 import com.example.compose_study.ui.screen.feature.component.TopBannerScreen
 import com.example.compose_study.ui.screen.feature.component.UpdateLocationScreen
 import com.example.compose_study.ui.theme.Compose_studyTheme
@@ -41,11 +44,20 @@ fun FeatureScreen(
             }
         }
         UpdateLocationScreen()
-        Spacer(modifier = Modifier.size(40.dp))
+        ContentsDivider()
         RecommendMenuScreen()
-        Spacer(modifier = Modifier.size(40.dp))
+        ContentsDivider()
         ReReservationScreen()
+        ContentsDivider()
+        RecommendStyleScreen()
     }
+}
+
+@Composable
+fun ContentsDivider() {
+    Spacer(modifier = Modifier
+        .size(40.dp)
+        .background(Color.White))
 }
 
 
