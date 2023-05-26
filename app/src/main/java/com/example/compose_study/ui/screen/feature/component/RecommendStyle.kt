@@ -63,7 +63,7 @@ fun RecommendStyleScreen() {
 
     var selectIndex by remember { mutableStateOf(0) }
     Column(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth().background(Color.White)
     ) {
         RecommendStyleTitle()
         Tab(

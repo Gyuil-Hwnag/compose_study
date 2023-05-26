@@ -70,7 +70,7 @@ fun ReReservationScreen() {
     )
     var selectIndex by remember { mutableStateOf(0) }
 
-    Column(modifier = Modifier.fillMaxWidth()) {
+    Column(modifier = Modifier.fillMaxWidth().background(Color.White)) {
         ReReservationTitle()
         Tab(
             tabs = tabs,
