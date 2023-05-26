@@ -63,7 +63,9 @@ fun RecommendStyleScreen() {
 
     var selectIndex by remember { mutableStateOf(0) }
     Column(
-        modifier = Modifier.fillMaxWidth().background(Color.White)
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(Color.White)
     ) {
         RecommendStyleTitle()
         Tab(
@@ -165,15 +167,20 @@ fun StyleTag(item: String) {
 @Composable
 fun RecommendStyleMore() {
     Row(modifier = Modifier.padding(horizontal = 16.dp)) {
-        Surface(
+        Button(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 14.dp),
+            onClick = {},
             border = BorderStroke(1.dp, Color(0xFFEEEEEE)),
             shape = RoundedCornerShape(4.dp),
+            colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
+            elevation = ButtonDefaults.elevation(0.dp)
         ) {
             Row(
-                modifier = Modifier.fillMaxWidth().padding(14.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(6.dp),
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.Bottom
             ) {
