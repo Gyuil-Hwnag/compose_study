@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.Dp
  * indicator 참고 : https://medium.com/@sukhdip_sandhu/jetpack-compose-scrollabletabrow-indicator-matches-width-of-text-e79c0e5826fe
  **/
 fun Modifier.tabIndicatorOffset(
-    currentTabPosition: androidx.compose.material.TabPosition,
+    currentTabPosition: TabPosition,
     tabWidth: Dp,
 ): Modifier = composed(
     inspectorInfo = debugInspectorInfo {
