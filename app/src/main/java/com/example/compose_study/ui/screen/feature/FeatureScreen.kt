@@ -22,7 +22,9 @@ import com.example.compose_study.ui.screen.feature.component.QuickCardScreen
 import com.example.compose_study.ui.screen.feature.component.QuickLinkScreen
 import com.example.compose_study.ui.screen.feature.component.ReReservationScreen
 import com.example.compose_study.ui.screen.feature.component.RecommendMenuScreen
+import com.example.compose_study.ui.screen.feature.component.RecommendNailScreen
 import com.example.compose_study.ui.screen.feature.component.RecommendStyleScreen
+import com.example.compose_study.ui.screen.feature.component.ReservationShopScreen
 import com.example.compose_study.ui.screen.feature.component.TopBannerScreen
 import com.example.compose_study.ui.screen.feature.component.UpdateLocationScreen
 import com.example.compose_study.ui.theme.Compose_studyTheme
@@ -55,6 +57,10 @@ fun FeatureScreen(
         RecommendStyleScreen()
         ContentsDivider()
         EventBannerScreen()
+        ContentsDivider()
+        ReservationShopScreen()
+        ContentsDivider()
+        RecommendNailScreen()
     }
 }
 
