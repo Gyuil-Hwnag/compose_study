@@ -61,7 +61,10 @@ fun FeatureScreen(
         ContentsDivider()
         ReservationShopScreen()
         ContentsDivider()
+        RecommendNailScreen()
+        ContentsDivider()
         StyleBookScreen()
+        ContentsDivider()
     }
 }
 
