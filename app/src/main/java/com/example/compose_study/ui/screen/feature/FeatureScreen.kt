@@ -25,6 +25,7 @@ import com.example.compose_study.ui.screen.feature.component.RecommendMenuScreen
 import com.example.compose_study.ui.screen.feature.component.RecommendNailScreen
 import com.example.compose_study.ui.screen.feature.component.RecommendStyleScreen
 import com.example.compose_study.ui.screen.feature.component.ReservationShopScreen
+import com.example.compose_study.ui.screen.feature.component.StyleBookScreen
 import com.example.compose_study.ui.screen.feature.component.TopBannerScreen
 import com.example.compose_study.ui.screen.feature.component.UpdateLocationScreen
 import com.example.compose_study.ui.theme.Compose_studyTheme
@@ -60,16 +61,18 @@ fun FeatureScreen(
         ContentsDivider()
         ReservationShopScreen()
         ContentsDivider()
-        RecommendNailScreen()
+        StyleBookScreen()
     }
 }
 
 @Composable
 fun ContentsDivider() {
-    Spacer(modifier = Modifier
-        .fillMaxWidth()
-        .height(40.dp)
-        .background(Color.White))
+    Spacer(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(40.dp)
+            .background(Color.White)
+    )
 }
 
 
