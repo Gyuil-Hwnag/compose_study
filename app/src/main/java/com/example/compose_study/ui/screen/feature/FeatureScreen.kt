@@ -21,6 +21,7 @@ import com.example.compose_study.ui.screen.feature.component.NewShopScreen
 import com.example.compose_study.ui.screen.feature.component.QuickCardScreen
 import com.example.compose_study.ui.screen.feature.component.QuickLinkScreen
 import com.example.compose_study.ui.screen.feature.component.ReReservationScreen
+import com.example.compose_study.ui.screen.feature.component.RecentStyleScreen
 import com.example.compose_study.ui.screen.feature.component.RecommendMenuScreen
 import com.example.compose_study.ui.screen.feature.component.RecommendNailScreen
 import com.example.compose_study.ui.screen.feature.component.RecommendStyleScreen
@@ -69,6 +70,8 @@ fun FeatureScreen(
         NewShopScreen()
         ContentsDivider()
         UpdateProfileCard()
+        ContentsDivider()
+        RecentStyleScreen()
         ContentsDivider()
     }
 }
