@@ -79,7 +79,7 @@ fun ReReservationScreen() {
         )
         LazyRow(
             modifier = Modifier.fillMaxWidth().padding(vertical = 18.dp),
-            contentPadding = PaddingValues(end = 48.dp, start = 16.dp)
+            contentPadding = PaddingValues(start = 10.dp)
         ) {
             items(listOf(reservation, reservation, reservation)) {
                 ReReservationItem(item = it)
@@ -90,10 +90,7 @@ fun ReReservationScreen() {
 
 @Composable
 fun ReReservationTitle() {
-    Row {
-        Spacer(modifier = Modifier.size(16.dp))
-        Text(text = "시술 별 재예약 많은 샵", fontSize = 20.sp)
-    }
+    Text(modifier = Modifier.padding(horizontal = 16.dp), text = "시술 별 재예약 많은 샵", fontSize = 20.sp)
 }
 
 @Composable

@@ -56,8 +56,7 @@ fun QuickCardScreen() {
         QuickCardType.RE_RESERVATION_MALE,
         QuickCardType.MY_DESIGNER,
         QuickCardType.MY_MENU,
-        QuickCardType.NORMAL,
-        QuickCardType.PROFILE_UPDATE
+        QuickCardType.NORMAL
     )
 
     val state = rememberPagerState()
@@ -99,7 +98,6 @@ fun QuickCard(type: QuickCardType) {
         QuickCardType.RE_RESERVATION_MALE -> ReReservationCard(isFemale = false)
         QuickCardType.MY_DESIGNER -> FavoriteCard(FavoriteType.DESIGNER)
         QuickCardType.MY_MENU -> FavoriteCard(FavoriteType.MENU)
-        QuickCardType.PROFILE_UPDATE -> UpdateProfileCard()
         QuickCardType.NORMAL -> NormalCard()
     }
 }
@@ -116,7 +114,6 @@ fun CardMessage(type: QuickCardType) {
         QuickCardType.RE_RESERVATION_MALE -> Text(text = "남성 재예약하기", color = Color.Black, fontSize = 15.sp)
         QuickCardType.MY_DESIGNER -> Text(text = "나의 단골 디자이너", color = Color.Black, fontSize = 15.sp)
         QuickCardType.MY_MENU -> Text(text = "최근 본 메뉴", color = Color.Black, fontSize = 15.sp)
-        QuickCardType.PROFILE_UPDATE -> Text(text = "기본", color = Color.Black, fontSize = 15.sp)
         QuickCardType.NORMAL -> Text(text = "프로필 업데이트", color = Color.Black, fontSize = 15.sp)
     }
 }
@@ -396,34 +393,11 @@ fun NormalCard() {
     }
 }
 
-@Composable
-fun UpdateProfileCard() {
-    Button(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 4.dp),
-        shape = RoundedCornerShape(4.dp),
-        colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF666DC5)),
-        onClick = {}
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Spacer(modifier = Modifier.height(56.dp))
-            Image(painter = painterResource(id = R.mipmap.img_default_profile_card_foreground), contentDescription = "리뷰 아이콘", modifier = Modifier.size(48.dp))
-            Spacer(modifier = Modifier.size(12.dp))
-            Text(text = "프로필 업데이트 하고\n스타일 추천 받기!", fontSize = 15.sp, color = Color.White)
-            Spacer(modifier = Modifier.weight(1f))
-            Image(painter = painterResource(id = R.drawable.ic_arrow_right), contentDescription = "다음으로 가기", modifier = Modifier.size(20.dp))
-        }
-    }
-}
-
 
 enum class QuickCardType {
     WELCOME, RESERVATION, D_DAY, BEFORE_REVIEW, AFTER_REVIEW,
     RE_RESERVATION_FEMALE, RE_RESERVATION_MALE, MY_DESIGNER, MY_MENU,
-    NORMAL, PROFILE_UPDATE
+    NORMAL
 }
 
 enum class FavoriteType {
