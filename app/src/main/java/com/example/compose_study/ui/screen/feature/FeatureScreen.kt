@@ -18,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.compose_study.ui.screen.feature.component.EventBannerScreen
+import com.example.compose_study.ui.screen.feature.component.NewShopScreen
 import com.example.compose_study.ui.screen.feature.component.QuickCardScreen
 import com.example.compose_study.ui.screen.feature.component.QuickLinkScreen
 import com.example.compose_study.ui.screen.feature.component.ReReservationScreen
@@ -64,6 +65,8 @@ fun FeatureScreen(
         RecommendNailScreen()
         ContentsDivider()
         StyleBookScreen()
+        ContentsDivider()
+        NewShopScreen()
         ContentsDivider()
     }
 }
