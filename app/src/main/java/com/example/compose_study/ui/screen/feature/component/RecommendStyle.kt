@@ -115,10 +115,7 @@ fun RecommendStyleScreen() {
 
 @Composable
 fun RecommendStyleTitle() {
-    Row {
-        Spacer(modifier = Modifier.size(16.dp))
-        Text(text = "시에나님을 위한 스타일 추천", fontSize = 20.sp)
-    }
+    Text(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp), text = "시에나님을 위한 스타일 추천", fontSize = 20.sp)
 }
 
 @Composable

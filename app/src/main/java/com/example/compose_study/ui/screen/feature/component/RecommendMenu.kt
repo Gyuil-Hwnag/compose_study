@@ -99,8 +99,7 @@ fun RecommendMenuScreen() {
 
 @Composable
 fun RecommendMenuTitle() {
-    Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.Bottom) {
-        Spacer(modifier = Modifier.size(16.dp))
+    Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp), verticalAlignment = Alignment.Bottom) {
         Text(text = "시에나님을 위한 추천 메뉴", fontSize = 20.sp)
         Image(painter = painterResource(id = R.drawable.ic_info), contentDescription = "")
     }

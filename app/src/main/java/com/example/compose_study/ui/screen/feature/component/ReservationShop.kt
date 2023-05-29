@@ -111,10 +111,7 @@ fun ReservationShopScreen() {
 
 @Composable
 fun ReservationTitle() {
-    Row {
-        Spacer(modifier = Modifier.size(16.dp))
-        Text(text = "우리 동네 예약 가능한 매장", fontSize = 20.sp)
-    }
+    Text(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp), text = "우리 동네 예약 가능한 매장", fontSize = 20.sp)
 }
 
 @Composable
