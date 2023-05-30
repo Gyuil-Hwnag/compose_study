@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.compose_study.R
+import com.example.compose_study.ui.screen.feature.ContentsDivider
 import com.example.compose_study.ui.theme.Compose_studyTheme
 
 @Composable
@@ -74,7 +75,9 @@ fun RecommendMenuScreen() {
     val menus = listOf<Menu>(menu1, menu2, menu3, menu4, menu1, menu2, menu3, menu4)
 
     var selectIndex by remember { mutableStateOf(0) }
-    Column(modifier = Modifier.fillMaxWidth().background(Color.White)) {
+    Column(
+        modifier = Modifier.fillMaxWidth().background(Color.White)
+    ) {
         RecommendMenuTitle()
         Tab(
             tabs = tabs,
@@ -94,6 +97,7 @@ fun RecommendMenuScreen() {
                 Spacer(modifier = Modifier.size(10.dp))
             }
         }
+        ContentsDivider()
     }
 }
 

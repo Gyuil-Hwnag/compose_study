@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.compose_study.R
+import com.example.compose_study.ui.screen.feature.ContentsDivider
 import com.example.compose_study.ui.theme.Compose_studyTheme
 
 @Composable
@@ -92,6 +93,7 @@ fun RecommendNailScreen() {
             }
         }
         RecommendNailMore()
+        ContentsDivider()
     }
 }
 

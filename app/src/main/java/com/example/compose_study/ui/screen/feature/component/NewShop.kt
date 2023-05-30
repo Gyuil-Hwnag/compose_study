@@ -21,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.example.compose_study.ui.screen.feature.ContentsDivider
 import com.example.compose_study.ui.theme.Compose_studyTheme
 
 @Composable
@@ -31,7 +32,9 @@ fun NewShopScreen() {
         shopDescription = "역삼역 3번출구 도보 5분, 스타타워뒷길"
     )
 
-    Column(modifier = Modifier.fillMaxWidth().background(Color.White)) {
+    Column(
+        modifier = Modifier.fillMaxWidth().background(Color.White)
+    ) {
         NewShopTitle()
         LazyRow(
             modifier = Modifier.fillMaxWidth().padding(vertical = 18.dp),
@@ -41,6 +44,7 @@ fun NewShopScreen() {
                 NewShopItem(item = it)
             }
         }
+        ContentsDivider()
     }
 }
 

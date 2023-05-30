@@ -16,6 +16,9 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
@@ -48,6 +51,7 @@ fun FeatureScreen(
     viewModel: FeatureViewModel = hiltViewModel()
 ) {
     val scrollState = rememberScrollState()
+    val appBarOffset = remember { derivedStateOf { scrollState.value > 0 } }
     Scaffold(
         topBar = {},
     ) { paddingValues ->
@@ -55,7 +59,7 @@ fun FeatureScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(scrollState)
-                .padding(paddingValues)
+                .padding(paddingValues),
         ) {
             TopBannerScreen()
             Box(modifier = Modifier.offset(y = (-20).dp)) {
@@ -65,29 +69,18 @@ fun FeatureScreen(
                 }
             }
             UpdateLocationScreen()
-            ContentsDivider()
             RecommendMenuScreen()
-            ContentsDivider()
             ReReservationScreen()
-            ContentsDivider()
             RecommendStyleScreen()
-            ContentsDivider()
             EventBannerScreen()
-            ContentsDivider()
             ReservationShopScreen()
-            ContentsDivider()
             RecommendNailScreen()
-            ContentsDivider()
             StyleBookScreen()
-            ContentsDivider()
             NewShopScreen()
-            ContentsDivider()
             UpdateProfileCard()
-            ContentsDivider()
             RecentStyleScreen()
-            ContentsDivider()
         }
-        if (scrollState.value > 0) ToolBarScreen()
+        if (appBarOffset.value) ToolBarScreen()
     }
 }
 
@@ -100,7 +93,6 @@ fun ContentsDivider() {
             .background(Color.White)
     )
 }
-
 
 @Preview
 @Composable

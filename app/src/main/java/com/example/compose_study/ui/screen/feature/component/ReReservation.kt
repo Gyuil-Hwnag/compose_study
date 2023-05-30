@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.compose_study.R
+import com.example.compose_study.ui.screen.feature.ContentsDivider
 import com.example.compose_study.ui.theme.Compose_studyTheme
 import com.example.compose_study.ui.theme.Shapes
 
@@ -70,7 +71,9 @@ fun ReReservationScreen() {
     )
     var selectIndex by remember { mutableStateOf(0) }
 
-    Column(modifier = Modifier.fillMaxWidth().background(Color.White)) {
+    Column(
+        modifier = Modifier.fillMaxWidth().background(Color.White)
+    ) {
         ReReservationTitle()
         Tab(
             tabs = tabs,
@@ -85,6 +88,7 @@ fun ReReservationScreen() {
                 ReReservationItem(item = it)
             }
         }
+        ContentsDivider()
     }
 }
 

@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.compose_study.R
+import com.example.compose_study.ui.screen.feature.ContentsDivider
 import com.example.compose_study.ui.theme.Compose_studyTheme
 
 @Composable
@@ -40,7 +41,9 @@ fun RecentStyleScreen() {
         modifier = Modifier.fillMaxWidth()
     ) {
         RecentStyleTitle()
-        Spacer(modifier = Modifier.fillMaxWidth().height(11.dp))
+        Spacer(modifier = Modifier
+            .fillMaxWidth()
+            .height(11.dp))
         LazyRow(
             modifier = Modifier.fillMaxWidth(),
             contentPadding = PaddingValues(start = 10.dp)
@@ -49,6 +52,7 @@ fun RecentStyleScreen() {
                 RecentStyleItem(item = it)
             }
         }
+        ContentsDivider()
     }
 }
 
