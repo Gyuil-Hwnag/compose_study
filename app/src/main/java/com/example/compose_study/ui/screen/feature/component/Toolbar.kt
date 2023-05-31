@@ -17,10 +17,10 @@ import com.example.compose_study.ui.theme.Compose_studyTheme
 
 @Composable
 fun ToolBarScreen(offset: Float = 200f) {
-    val offsetNum = offset - 100f
+    val appBarOffset = (offset - 100f) / 100
     TopAppBar(
         title = {
-            Text(text = "kakaohairshop", color = Color.Black, fontSize = 14.sp, modifier = Modifier.alpha((offsetNum/100).coerceIn(0f..1f)))
+            Text(text = "kakaohairshop", color = Color.Black, fontSize = 14.sp, modifier = Modifier.alpha(appBarOffset.coerceIn(0f..1f)))
         },
         actions = {
             TopAppBarActionButton(
@@ -32,9 +32,9 @@ fun ToolBarScreen(offset: Float = 200f) {
                 description = "Lock"
             ) {}
         },
-        backgroundColor = Color.White.copy(alpha = (offsetNum/100).coerceIn(0f..1f)),
-        contentColor = Color.Transparent,
-        elevation = 0.dp
+        backgroundColor = Color.White.copy(alpha = appBarOffset.coerceIn(0f..1f)),
+        contentColor = if (appBarOffset > 0.3f) Color.Black else Color.White,
+        elevation = 0.dp,
     )
 }
 
