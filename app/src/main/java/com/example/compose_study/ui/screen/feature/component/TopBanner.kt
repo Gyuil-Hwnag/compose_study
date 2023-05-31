@@ -47,7 +47,7 @@ fun TopBannerScreen() {
     val banner2 = TopBanner(imageUri = "https://cdn.travie.com/news/photo/first/201710/img_19975_1.jpg", title = "네일 스타일의 모든것\nBOBBED NAIL STYLE", description = "요즘 유행하는 네일 스타일")
     val banner3 = TopBanner(imageUri = "https://mblogthumb-phinf.pstatic.net/MjAxODA2MjZfMTMw/MDAxNTMwMDE0NDk2Mzcz.7re42MA5wqJxZlJ8J5FzfDKEEqugtVuhg49bSFYUuYsg.0Y0kjwH4oi1LXXpqrcGaVBch_4eQsyKyVTRsNtg7fCMg.JPEG.ichufs/%EC%82%AC%EC%A7%84%EC%8C%A4%EC%9A%B0%EC%93%B0%EB%9D%BC_3_0%EC%9D%B8%ED%8A%B8%EB%A1%9C.jpg?type=w800", title = "에스테틱의 모든것\nBOBBED ESTHETIC STYLE", description = "요즘 유행하는 에스테틱 스타일")
 
-    val banners = listOf(banner3, banner1, banner2, banner3, banner1, banner2, banner3, banner1)
+    val banners = listOf(banner1, banner2, banner3, banner1, banner2, banner3)
 
     TopBannerSlider(banners)
 }
@@ -55,26 +55,12 @@ fun TopBannerScreen() {
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun TopBannerSlider(banners: List<TopBanner>) {
-    val pagerState = rememberPagerState()
+    val pagerState = rememberPagerState(initialPage = banners.infiniteLoopInitPage())
     val isDragged by pagerState.interactionSource.collectIsDraggedAsState()
     var pageSize by remember { mutableStateOf(IntSize.Zero) }
 
-    LaunchedEffect(key1 = Unit) {
-        pagerState.scrollToPage(1)
-    }
-
     if (!isDragged) {
         LaunchedEffect(key1 = pagerState.currentPage) {
-            when (pagerState.currentPage) {
-                banners.size - 1 -> {
-                    pagerState.scrollToPage(1)
-                    return@LaunchedEffect
-                }
-                0 -> {
-                    pagerState.scrollToPage(banners.size - 2)
-                    return@LaunchedEffect
-                }
-            }
             delay(3000)
             pagerState.animateScrollBy(
                 value = pageSize.width.toFloat(),
@@ -88,12 +74,12 @@ fun TopBannerSlider(banners: List<TopBanner>) {
     ) {
         HorizontalPager(
             state = pagerState,
-            count = banners.size,
+            count = Int.MAX_VALUE,
             modifier = Modifier.fillMaxWidth()
         ) { page ->
             TopBannerItem(
                 modifier = Modifier.onSizeChanged { pageSize = it },
-                banner = banners[page]
+                banner = banners[page % banners.size]
             )
         }
 
@@ -104,7 +90,7 @@ fun TopBannerSlider(banners: List<TopBanner>) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 20.dp),
-                text = banners[pagerState.currentPage].title,
+                text = banners[pagerState.currentPage % banners.size].title,
                 color = Color.White,
                 fontSize = 22.sp
             )
@@ -113,12 +99,12 @@ fun TopBannerSlider(banners: List<TopBanner>) {
                 Text(
                     modifier = Modifier
                         .padding(top = 8.dp, start = 20.dp),
-                    text = banners[pagerState.currentPage].description,
+                    text = banners[pagerState.currentPage % banners.size].description,
                     color = Color.White,
                     fontSize = 14.sp
                 )
                 Spacer(modifier = Modifier.weight(1f))
-                BannerIndicator(current = pagerState.currentPage, totalCount = banners.size - 2)
+                BannerIndicator(current = (pagerState.currentPage % banners.size) + 1, totalCount = banners.size)
             }
             Spacer(modifier = Modifier.size(44.dp))
         }
