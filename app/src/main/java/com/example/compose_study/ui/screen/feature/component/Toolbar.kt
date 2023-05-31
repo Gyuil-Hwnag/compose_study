@@ -5,18 +5,22 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.compose_study.R
 import com.example.compose_study.ui.theme.Compose_studyTheme
 
 @Composable
-fun ToolBarScreen() {
+fun ToolBarScreen(offset: Int) {
+    val offsetNum = offset - 100f
     TopAppBar(
         title = {
-            Text(text = "kakaohairshop", color = Color.Black, fontSize = 14.sp)
+            Text(text = "kakaohairshop", color = Color.Black, fontSize = 14.sp, modifier = Modifier.alpha((offsetNum/100).coerceIn(0f..1f)))
         },
         actions = {
             TopAppBarActionButton(
@@ -28,8 +32,9 @@ fun ToolBarScreen() {
                 description = "Lock"
             ) {}
         },
-        backgroundColor = Color.White,
-        contentColor = Color.Transparent
+        backgroundColor = Color.White.copy(alpha = (offsetNum/100).coerceIn(0f..1f)),
+        contentColor = Color.Transparent,
+        elevation = 0.dp
     )
 }
 
@@ -50,6 +55,6 @@ fun TopAppBarActionButton(
 @Composable
 fun ToolBarPreview() {
     Compose_studyTheme {
-        ToolBarScreen()
+        ToolBarScreen(0)
     }
 }
