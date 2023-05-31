@@ -1,8 +1,11 @@
 package com.example.compose_study.ui.screen.feature.component
 
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.animateScrollBy
+import androidx.compose.foundation.interaction.collectIsDraggedAsState
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -18,13 +21,19 @@ import androidx.compose.material.Text
 import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
@@ -41,8 +50,6 @@ import kotlin.math.absoluteValue
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun StyleBookScreen() {
-    val state = rememberPagerState()
-
     val styleBook1 = StyleBook(
         imgUri = "https://mud-kage.kakao.com/dn/bQyU8I/btr4tNoBsRJ/l2cZnFKF006eMgY2wmwauk/img_750.jpg",
         title = "선선한 지금 날씨에 어울리는\n산뜻한 커플 헤어 스타일",
@@ -70,27 +77,25 @@ fun StyleBookScreen() {
     )
     val styleBooks = listOf(styleBook5, styleBook1, styleBook2, styleBook3, styleBook4, styleBook5, styleBook1)
 
-    LaunchedEffect(key1 = Unit) {
-        state.scrollToPage(1)
-    }
+    val pagerState = rememberPagerState(initialPage = 1)
+    var pageSize by remember { mutableStateOf(IntSize.Zero) }
 
-    LaunchedEffect(key1 = state.currentPage) {
-        when (state.currentPage) {
+    LaunchedEffect(key1 = pagerState.currentPage) {
+        when (pagerState.currentPage) {
             styleBooks.size - 1 -> {
-                state.scrollToPage(1)
+                pagerState.scrollToPage(1)
                 return@LaunchedEffect
             }
-
             0 -> {
-                state.scrollToPage(styleBooks.size - 2)
+                pagerState.scrollToPage(styleBooks.size - 2)
                 return@LaunchedEffect
             }
         }
         delay(3000)
-        var newPosition = state.currentPage + 1
-        if (newPosition > styleBooks.size - 1) newPosition = 0
-        // scrolling to the new position.
-        state.animateScrollToPage(newPosition)
+        pagerState.animateScrollBy(
+            value = pageSize.width.toFloat(),
+            animationSpec = tween(durationMillis = 1400)
+        )
     }
 
     Column(
@@ -100,7 +105,7 @@ fun StyleBookScreen() {
     ) {
         StyleBookTitle()
         HorizontalPager(
-            state = state,
+            state = pagerState,
             count = styleBooks.size,
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
@@ -126,7 +131,10 @@ fun StyleBookScreen() {
                 shape = RoundedCornerShape(6.dp),
                 border = BorderStroke(1.dp, Color(0xFFEEEEEE)),
             ) {
-                StyleBookItem(item = styleBooks[page])
+                StyleBookItem(
+                    modifier = Modifier.onSizeChanged { pageSize = it },
+                    item = styleBooks[page]
+                )
             }
         }
         Spacer(
@@ -136,10 +144,10 @@ fun StyleBookScreen() {
         )
         Indicator(
             totalDots = styleBooks.size - 2,
-            selectedIndex = when (state.currentPage) {
+            selectedIndex = when (pagerState.currentPage) {
                 styleBooks.size - 1 -> 0
                 0 -> styleBooks.size - 2
-                else -> state.currentPage - 1
+                else -> pagerState.currentPage - 1
             }
         )
         ContentsDivider()
@@ -164,28 +172,27 @@ fun StyleBookTitle() {
 }
 
 @Composable
-fun StyleBookItem(item: StyleBook) {
+fun StyleBookItem(modifier: Modifier, item: StyleBook) {
     Surface(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
     ) {
-        Column(modifier = Modifier.fillMaxWidth()) {
+        Column(modifier = modifier.fillMaxWidth()) {
             AsyncImage(
-                modifier = Modifier
+                modifier = modifier
                     .fillMaxWidth()
                     .aspectRatio(1f),
                 model = item.imgUri,
                 contentDescription = "스타일북 이미지",
                 contentScale = ContentScale.Crop,
             )
-            Row(modifier = Modifier.offset(y = (-10).dp)) {
-                Spacer(modifier = Modifier.size(18.dp))
+            Row(modifier = modifier.offset(y = (-10).dp)) {
+                Spacer(modifier = modifier.size(18.dp))
                 Surface(
                     color = Color.Black,
                     shape = RoundedCornerShape(2.dp)
                 ) {
                     Text(
-                        modifier = Modifier
-                            .padding(vertical = 4.dp, horizontal = 8.dp),
+                        modifier = modifier.padding(vertical = 4.dp, horizontal = 8.dp),
                         text = "#스타일추천",
                         color = Color.White,
                         fontSize = 11.sp
@@ -193,7 +200,7 @@ fun StyleBookItem(item: StyleBook) {
                 }
             }
             Text(
-                modifier = Modifier
+                modifier = modifier
                     .fillMaxWidth()
                     .padding(vertical = 12.dp, horizontal = 20.dp),
                 text = item.title,
@@ -201,14 +208,14 @@ fun StyleBookItem(item: StyleBook) {
                 fontSize = 18.sp
             )
             Text(
-                modifier = Modifier
+                modifier = modifier
                     .fillMaxWidth()
                     .padding(horizontal = 20.dp),
                 text = item.descrption,
                 color = Color(0xFFAAAAAA),
                 fontSize = 13.sp
             )
-            Spacer(modifier = Modifier.size(24.dp))
+            Spacer(modifier = modifier.size(24.dp))
         }
 
     }
