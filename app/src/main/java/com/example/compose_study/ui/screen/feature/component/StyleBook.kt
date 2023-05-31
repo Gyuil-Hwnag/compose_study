@@ -78,24 +78,12 @@ fun StyleBookScreen() {
     val styleBooks = listOf(styleBook5, styleBook1, styleBook2, styleBook3, styleBook4, styleBook5, styleBook1)
 
     val pagerState = rememberPagerState(initialPage = 1)
-    var pageSize by remember { mutableStateOf(IntSize.Zero) }
 
     LaunchedEffect(key1 = pagerState.currentPage) {
         when (pagerState.currentPage) {
-            styleBooks.size - 1 -> {
-                pagerState.scrollToPage(1)
-                return@LaunchedEffect
-            }
-            0 -> {
-                pagerState.scrollToPage(styleBooks.size - 2)
-                return@LaunchedEffect
-            }
+            styleBooks.size - 1 -> { pagerState.scrollToPage(1) }
+            0 -> { pagerState.scrollToPage(styleBooks.size - 2) }
         }
-        delay(3000)
-        pagerState.animateScrollBy(
-            value = pageSize.width.toFloat(),
-            animationSpec = tween(durationMillis = 1400)
-        )
     }
 
     Column(
@@ -132,7 +120,6 @@ fun StyleBookScreen() {
                 border = BorderStroke(1.dp, Color(0xFFEEEEEE)),
             ) {
                 StyleBookItem(
-                    modifier = Modifier.onSizeChanged { pageSize = it },
                     item = styleBooks[page]
                 )
             }
@@ -172,27 +159,27 @@ fun StyleBookTitle() {
 }
 
 @Composable
-fun StyleBookItem(modifier: Modifier, item: StyleBook) {
+fun StyleBookItem(item: StyleBook) {
     Surface(
-        modifier = modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth(),
     ) {
-        Column(modifier = modifier.fillMaxWidth()) {
+        Column(modifier = Modifier.fillMaxWidth()) {
             AsyncImage(
-                modifier = modifier
+                modifier = Modifier
                     .fillMaxWidth()
                     .aspectRatio(1f),
                 model = item.imgUri,
                 contentDescription = "스타일북 이미지",
                 contentScale = ContentScale.Crop,
             )
-            Row(modifier = modifier.offset(y = (-10).dp)) {
-                Spacer(modifier = modifier.size(18.dp))
+            Row(modifier = Modifier.offset(y = (-10).dp)) {
+                Spacer(modifier = Modifier.size(18.dp))
                 Surface(
                     color = Color.Black,
                     shape = RoundedCornerShape(2.dp)
                 ) {
                     Text(
-                        modifier = modifier.padding(vertical = 4.dp, horizontal = 8.dp),
+                        modifier = Modifier.padding(vertical = 4.dp, horizontal = 8.dp),
                         text = "#스타일추천",
                         color = Color.White,
                         fontSize = 11.sp
@@ -200,7 +187,7 @@ fun StyleBookItem(modifier: Modifier, item: StyleBook) {
                 }
             }
             Text(
-                modifier = modifier
+                modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 12.dp, horizontal = 20.dp),
                 text = item.title,
@@ -208,14 +195,14 @@ fun StyleBookItem(modifier: Modifier, item: StyleBook) {
                 fontSize = 18.sp
             )
             Text(
-                modifier = modifier
+                modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 20.dp),
                 text = item.descrption,
                 color = Color(0xFFAAAAAA),
                 fontSize = 13.sp
             )
-            Spacer(modifier = modifier.size(24.dp))
+            Spacer(modifier = Modifier.size(24.dp))
         }
 
     }
