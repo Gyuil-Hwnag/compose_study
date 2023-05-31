@@ -75,14 +75,14 @@ fun StyleBookScreen() {
         title = "선선한 지금 날씨에 어울리는\n산뜻한 커플 헤어 스타일",
         descrption = "데이트 하기 좋은 헤어스타일"
     )
-    val styleBooks = listOf(styleBook5, styleBook1, styleBook2, styleBook3, styleBook4, styleBook5, styleBook1)
+    val styleBooks = listOf(styleBook4, styleBook5, styleBook1, styleBook2, styleBook3, styleBook4, styleBook5, styleBook1, styleBook2)
 
-    val pagerState = rememberPagerState(initialPage = 1)
+    val pagerState = rememberPagerState(initialPage = 2)
 
     LaunchedEffect(key1 = pagerState.currentPage) {
         when (pagerState.currentPage) {
-            styleBooks.size - 1 -> { pagerState.scrollToPage(1) }
-            0 -> { pagerState.scrollToPage(styleBooks.size - 2) }
+            styleBooks.size - 2 -> { pagerState.scrollToPage(2) }
+            1 -> { pagerState.scrollToPage(styleBooks.size - 3) }
         }
     }
 
@@ -119,9 +119,7 @@ fun StyleBookScreen() {
                 shape = RoundedCornerShape(6.dp),
                 border = BorderStroke(1.dp, Color(0xFFEEEEEE)),
             ) {
-                StyleBookItem(
-                    item = styleBooks[page]
-                )
+                StyleBookItem(item = styleBooks[page])
             }
         }
         Spacer(
@@ -130,11 +128,11 @@ fun StyleBookScreen() {
                 .size(24.dp)
         )
         Indicator(
-            totalDots = styleBooks.size - 2,
+            totalDots = styleBooks.size - 4,
             selectedIndex = when (pagerState.currentPage) {
-                styleBooks.size - 1 -> 0
-                0 -> styleBooks.size - 2
-                else -> pagerState.currentPage - 1
+                styleBooks.size - 2 -> 0
+                1 -> styleBooks.size - 2
+                else -> pagerState.currentPage - 2
             }
         )
         ContentsDivider()
