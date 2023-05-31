@@ -2,9 +2,11 @@
 
 package com.example.compose_study.ui.screen.feature.component
 
-import android.media.metrics.Event
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.animateScrollBy
+import androidx.compose.foundation.interaction.collectIsDraggedAsState
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -18,12 +20,18 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
@@ -38,7 +46,6 @@ import kotlinx.coroutines.delay
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun EventBannerScreen() {
-    val state = rememberPagerState()
     val banner1 = EventBanner(
         bannerUri = "https://blog.imqa.io/content/images/2022/08/IMQALITE_------------_-----------.jpg"
     )
@@ -48,29 +55,20 @@ fun EventBannerScreen() {
     val banner3 = EventBanner(
         bannerUri = "https://png.pngtree.com/thumb_back/fh260/background/20201019/pngtree-abstract-black-friday-event-banner-with-colorful-ornament-image_424224.jpg"
     )
-    val banners = listOf(banner3, banner1, banner2, banner3, banner1)
+    val banners = listOf(banner1, banner2, banner3)
 
-    LaunchedEffect(key1 = Unit) {
-        state.scrollToPage(1)
-    }
+    val pagerState = rememberPagerState(initialPage = banners.infiniteLoopInitPage())
+    val isDragged by pagerState.interactionSource.collectIsDraggedAsState()
+    var pageSize by remember { mutableStateOf(IntSize.Zero) }
 
-    LaunchedEffect(key1 = state.currentPage) {
-        when (state.currentPage) {
-            banners.size - 1 -> {
-                state.scrollToPage(1)
-                return@LaunchedEffect
-            }
-
-            0 -> {
-                state.scrollToPage(banners.size - 2)
-                return@LaunchedEffect
-            }
+    if (!isDragged) {
+        LaunchedEffect(key1 = pagerState.currentPage) {
+            delay(3000)
+            pagerState.animateScrollBy(
+                value = pageSize.width.toFloat(),
+                animationSpec = tween(durationMillis = 1400)
+            )
         }
-        delay(3000)
-        var newPosition = state.currentPage + 1
-        if (newPosition > banners.size - 1) newPosition = 0
-        // scrolling to the new position.
-        state.animateScrollToPage(newPosition)
     }
 
     Column(
@@ -80,13 +78,16 @@ fun EventBannerScreen() {
     ) {
         EventBannerTitle()
         HorizontalPager(
-            state = state,
-            count = banners.size,
+            state = pagerState,
+            count = Int.MAX_VALUE,
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
             contentPadding = PaddingValues(end = 12.dp, start = 12.dp)
         ) { page ->
-            EventBannerItem(item = banners[page])
+            EventBannerItem(
+                modifier = Modifier.onSizeChanged { pageSize = it },
+                item = banners[page % banners.size]
+            )
         }
         Spacer(
             modifier = Modifier
@@ -94,12 +95,8 @@ fun EventBannerScreen() {
                 .size(24.dp)
         )
         Indicator(
-            totalDots = banners.size - 2,
-            selectedIndex = when (state.currentPage) {
-                banners.size - 1 -> 0
-                0 -> banners.size - 2
-                else -> state.currentPage - 1
-            }
+            totalDots = banners.size,
+            selectedIndex = pagerState.currentPage % banners.size
         )
         ContentsDivider()
     }
@@ -120,9 +117,9 @@ fun EventBannerTitle() {
 }
 
 @Composable
-fun EventBannerItem(item: EventBanner) {
+fun EventBannerItem(modifier: Modifier, item: EventBanner) {
     Surface(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 6.dp),
         shape = RoundedCornerShape(4.dp)
