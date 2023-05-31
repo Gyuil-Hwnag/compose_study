@@ -16,7 +16,7 @@ import com.example.compose_study.R
 import com.example.compose_study.ui.theme.Compose_studyTheme
 
 @Composable
-fun ToolBarScreen(offset: Int) {
+fun ToolBarScreen(offset: Float = 200f) {
     val offsetNum = offset - 100f
     TopAppBar(
         title = {
@@ -55,6 +55,6 @@ fun TopAppBarActionButton(
 @Composable
 fun ToolBarPreview() {
     Compose_studyTheme {
-        ToolBarScreen(0)
+        ToolBarScreen()
     }
 }

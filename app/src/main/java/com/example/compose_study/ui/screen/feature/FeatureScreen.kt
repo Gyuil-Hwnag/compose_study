@@ -13,6 +13,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
@@ -42,6 +44,7 @@ fun FeatureScreen(
     viewModel: FeatureViewModel = hiltViewModel()
 ) {
     val scrollState = rememberScrollState()
+    val appBarVisible = remember { derivedStateOf { scrollState.value > 200f } }
     Scaffold(
         topBar = {},
     ) { paddingValues ->
@@ -70,7 +73,8 @@ fun FeatureScreen(
             UpdateProfileCard()
             RecentStyleScreen()
         }
-        ToolBarScreen(scrollState.value)
+        if (!appBarVisible.value) ToolBarScreen(scrollState.value.toFloat())
+        else ToolBarScreen()
     }
 }
 
