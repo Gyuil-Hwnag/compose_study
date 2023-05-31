@@ -2,6 +2,7 @@ package com.example.compose_study.ui.screen.feature.component
 
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.gestures.animateScrollBy
+import androidx.compose.foundation.interaction.collectIsDraggedAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -36,6 +37,9 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.delay
 
+/**
+ * Scroll Delay 관련 : https://github.com/google/accompanist/issues/1261
+ **/
 @ExperimentalPagerApi
 @Composable
 fun TopBannerScreen() {
@@ -51,36 +55,39 @@ fun TopBannerScreen() {
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun TopBannerSlider(banners: List<TopBanner>) {
-    val state = rememberPagerState()
+    val pagerState = rememberPagerState()
+    val isDragged by pagerState.interactionSource.collectIsDraggedAsState()
     var pageSize by remember { mutableStateOf(IntSize.Zero) }
 
     LaunchedEffect(key1 = Unit) {
-        state.scrollToPage(1)
+        pagerState.scrollToPage(1)
     }
 
-    LaunchedEffect(key1 = state.currentPage) {
-        when (state.currentPage) {
-            banners.size - 1 -> {
-                state.scrollToPage(1)
-                return@LaunchedEffect
+    if (!isDragged) {
+        LaunchedEffect(key1 = pagerState.currentPage) {
+            when (pagerState.currentPage) {
+                banners.size - 1 -> {
+                    pagerState.scrollToPage(1)
+                    return@LaunchedEffect
+                }
+                0 -> {
+                    pagerState.scrollToPage(banners.size - 2)
+                    return@LaunchedEffect
+                }
             }
-            0 -> {
-                state.scrollToPage(banners.size - 2)
-                return@LaunchedEffect
-            }
+            delay(3000)
+            pagerState.animateScrollBy(
+                value = pageSize.width.toFloat(),
+                animationSpec = tween(durationMillis = 1400)
+            )
         }
-        delay(3000)
-        state.animateScrollBy(
-            value = pageSize.width.toFloat(),
-            animationSpec = tween(durationMillis = 1400)
-        )
     }
 
     Box(
         contentAlignment = Alignment.BottomStart
     ) {
         HorizontalPager(
-            state = state,
+            state = pagerState,
             count = banners.size,
             modifier = Modifier.fillMaxWidth()
         ) { page ->
@@ -97,7 +104,7 @@ fun TopBannerSlider(banners: List<TopBanner>) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 20.dp),
-                text = banners[state.currentPage].title,
+                text = banners[pagerState.currentPage].title,
                 color = Color.White,
                 fontSize = 22.sp
             )
@@ -106,12 +113,12 @@ fun TopBannerSlider(banners: List<TopBanner>) {
                 Text(
                     modifier = Modifier
                         .padding(top = 8.dp, start = 20.dp),
-                    text = banners[state.currentPage].description,
+                    text = banners[pagerState.currentPage].description,
                     color = Color.White,
                     fontSize = 14.sp
                 )
                 Spacer(modifier = Modifier.weight(1f))
-                BannerIndicator(current = state.currentPage, totalCount = banners.size - 2)
+                BannerIndicator(current = pagerState.currentPage, totalCount = banners.size - 2)
             }
             Spacer(modifier = Modifier.size(44.dp))
         }
