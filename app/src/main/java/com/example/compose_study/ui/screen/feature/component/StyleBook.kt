@@ -1,8 +1,11 @@
 package com.example.compose_study.ui.screen.feature.component
 
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.animateScrollBy
+import androidx.compose.foundation.interaction.collectIsDraggedAsState
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -18,13 +21,19 @@ import androidx.compose.material.Text
 import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
@@ -41,8 +50,6 @@ import kotlin.math.absoluteValue
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun StyleBookScreen() {
-    val state = rememberPagerState()
-
     val styleBook1 = StyleBook(
         imgUri = "https://mud-kage.kakao.com/dn/bQyU8I/btr4tNoBsRJ/l2cZnFKF006eMgY2wmwauk/img_750.jpg",
         title = "선선한 지금 날씨에 어울리는\n산뜻한 커플 헤어 스타일",
@@ -68,29 +75,15 @@ fun StyleBookScreen() {
         title = "선선한 지금 날씨에 어울리는\n산뜻한 커플 헤어 스타일",
         descrption = "데이트 하기 좋은 헤어스타일"
     )
-    val styleBooks = listOf(styleBook5, styleBook1, styleBook2, styleBook3, styleBook4, styleBook5, styleBook1)
+    val styleBooks = listOf(styleBook4, styleBook5, styleBook1, styleBook2, styleBook3, styleBook4, styleBook5, styleBook1, styleBook2)
 
-    LaunchedEffect(key1 = Unit) {
-        state.scrollToPage(1)
-    }
+    val pagerState = rememberPagerState(initialPage = 2)
 
-    LaunchedEffect(key1 = state.currentPage) {
-        when (state.currentPage) {
-            styleBooks.size - 1 -> {
-                state.scrollToPage(1)
-                return@LaunchedEffect
-            }
-
-            0 -> {
-                state.scrollToPage(styleBooks.size - 2)
-                return@LaunchedEffect
-            }
+    LaunchedEffect(key1 = pagerState.currentPage) {
+        when (pagerState.currentPage) {
+            styleBooks.size - 2 -> { pagerState.scrollToPage(2) }
+            1 -> { pagerState.scrollToPage(styleBooks.size - 3) }
         }
-        delay(3000)
-        var newPosition = state.currentPage + 1
-        if (newPosition > styleBooks.size - 1) newPosition = 0
-        // scrolling to the new position.
-        state.animateScrollToPage(newPosition)
     }
 
     Column(
@@ -100,7 +93,7 @@ fun StyleBookScreen() {
     ) {
         StyleBookTitle()
         HorizontalPager(
-            state = state,
+            state = pagerState,
             count = styleBooks.size,
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
@@ -135,11 +128,11 @@ fun StyleBookScreen() {
                 .size(24.dp)
         )
         Indicator(
-            totalDots = styleBooks.size - 2,
-            selectedIndex = when (state.currentPage) {
-                styleBooks.size - 1 -> 0
-                0 -> styleBooks.size - 2
-                else -> state.currentPage - 1
+            totalDots = styleBooks.size - 4,
+            selectedIndex = when (pagerState.currentPage) {
+                styleBooks.size - 2 -> 0
+                1 -> styleBooks.size - 2
+                else -> pagerState.currentPage - 2
             }
         )
         ContentsDivider()
@@ -184,8 +177,7 @@ fun StyleBookItem(item: StyleBook) {
                     shape = RoundedCornerShape(2.dp)
                 ) {
                     Text(
-                        modifier = Modifier
-                            .padding(vertical = 4.dp, horizontal = 8.dp),
+                        modifier = Modifier.padding(vertical = 4.dp, horizontal = 8.dp),
                         text = "#스타일추천",
                         color = Color.White,
                         fontSize = 11.sp
