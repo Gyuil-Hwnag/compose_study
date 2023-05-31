@@ -39,6 +39,8 @@ import kotlinx.coroutines.delay
 
 /**
  * Scroll Delay 관련 : https://github.com/google/accompanist/issues/1261
+ * accompanist-pager version > 0.25.01 : https://stackoverflow.com/questions/73714228/accompanist-pager-animatescrolltopage-doesnt-scroll-to-next-page-correctly
+ * pagerState.currentPage 관련 에러
  **/
 @ExperimentalPagerApi
 @Composable
