@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
@@ -48,11 +49,12 @@ fun FeatureScreen(
     Scaffold(
         topBar = {},
     ) { paddingValues ->
+        paddingValues
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(scrollState)
-                .padding(paddingValues),
+                .statusBarsPadding(),
         ) {
             TopBannerScreen()
             Box(modifier = Modifier.offset(y = (-20).dp)) {
