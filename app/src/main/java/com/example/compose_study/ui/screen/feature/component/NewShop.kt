@@ -4,10 +4,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -55,7 +57,11 @@ fun NewShopTitle() {
 
 @Composable
 fun NewShopItem(item: NewShop) {
-    Column(modifier = Modifier.padding(6.dp)) {
+    Column(
+        modifier = Modifier
+            .width(331.dp)
+            .padding(6.dp)
+    ) {
         Surface(
             shape = RoundedCornerShape(4.dp)
         ) {
@@ -65,7 +71,7 @@ fun NewShopItem(item: NewShop) {
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(221.dp),
+                    .aspectRatio(1.49f),
             )
         }
         Spacer(modifier = Modifier.size(16.dp))

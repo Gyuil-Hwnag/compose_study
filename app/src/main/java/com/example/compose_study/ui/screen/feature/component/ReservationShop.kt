@@ -8,10 +8,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -118,7 +120,11 @@ fun ReservationTitle() {
 
 @Composable
 fun ShopItem(item: ReReservation) {
-    Column(modifier = Modifier.padding(6.dp)) {
+    Column(
+        modifier = Modifier
+            .width(331.dp)
+            .padding(6.dp)
+    ) {
         Surface(
             shape = RoundedCornerShape(4.dp)
         ) {
@@ -128,7 +134,7 @@ fun ShopItem(item: ReReservation) {
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(221.dp),
+                    .aspectRatio(1.5f),
             )
         }
         Spacer(modifier = Modifier.size(16.dp))
