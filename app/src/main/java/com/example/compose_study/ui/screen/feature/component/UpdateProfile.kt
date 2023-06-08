@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -27,15 +28,14 @@ fun UpdateProfileCard() {
     Column(
         modifier = Modifier.fillMaxWidth()
     ) {
-        Button(
+        Surface(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp),
+                .fillMaxWidth(),
             shape = RoundedCornerShape(4.dp),
-            colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF666DC5)),
-            onClick = {}
+            color = Color(0xFF666DC5)
         ) {
             Row(
+                modifier = Modifier.padding(16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Spacer(modifier = Modifier.height(56.dp))
