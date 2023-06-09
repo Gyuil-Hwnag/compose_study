@@ -1,5 +1,8 @@
 package com.example.compose_study.ui.screen.feature.component
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.Tab
 import androidx.compose.material.TabRowDefaults
 import androidx.compose.material.Text
@@ -27,6 +30,7 @@ fun Tab(
     }
 
     ScrollableTabRow(
+        modifier = Modifier.padding(8.dp),
         selectedTabIndex = selectedTabIndex,
         edgePadding = 0.dp,
         backgroundColor = Color.Transparent,
@@ -43,19 +47,14 @@ fun Tab(
         divider = {}
     ) {
         tabs.forEachIndexed { index, tab ->
-            Tab(
-                selected = index == selectedTabIndex,
-                onClick = { onTabClicked(index, tab) },
-                text = {
-                    Text(
-                        text = tab.name,
-                        onTextLayout = { textLayoutResult ->
-                            tabWidths[index] = with(density) { textLayoutResult.size.width.toDp() }
-                        },
-                        color = Color.Black,
-                        fontSize = 15.sp
-                    )
-                }
+            Text(
+                modifier = Modifier.padding(8.dp).clickable { onTabClicked(index, tab) },
+                text = tab.name,
+                onTextLayout = { textLayoutResult ->
+                    tabWidths[index] = with(density) { textLayoutResult.size.width.toDp() }
+                },
+                color = Color.Black,
+                fontSize = 15.sp
             )
         }
     }
