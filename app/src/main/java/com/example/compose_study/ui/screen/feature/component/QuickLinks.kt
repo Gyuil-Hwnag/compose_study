@@ -97,7 +97,7 @@ fun MainQuickLinkItems(quickLink: QuickLink) {
                     model = quickLink.imageUri,
                     contentDescription = "배너 이미지",
                     contentScale = ContentScale.Crop,
-                    modifier = Modifier.size(77.dp)
+                    modifier = Modifier.size(70.dp)
                 )
             }
         }
