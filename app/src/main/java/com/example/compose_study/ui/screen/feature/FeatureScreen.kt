@@ -46,7 +46,7 @@ fun FeatureScreen(
     viewModel: FeatureViewModel = hiltViewModel()
 ) {
     val scrollState = rememberScrollState()
-    val appBarVisible = remember { derivedStateOf { scrollState.value > 200f } }
+    val isExpanded = remember { derivedStateOf { scrollState.value > 200f } }
 
     lateinit var adapter: ConcatAdapter
     val adapterConfig = ConcatAdapter.Config.Builder()
@@ -59,7 +59,10 @@ fun FeatureScreen(
     )
 
     Scaffold(
-        topBar = {},
+        topBar = {
+            if (!isExpanded.value) ToolBarScreen(scrollState.value.toFloat())
+            else ToolBarScreen()
+        }
     ) { paddingValues ->
         paddingValues
         Column(
@@ -88,8 +91,6 @@ fun FeatureScreen(
             RecentStyleScreen()
             BottomAndroidView(adapter = adapter)
         }
-        if (!appBarVisible.value) ToolBarScreen(scrollState.value.toFloat())
-        else ToolBarScreen()
     }
 }
 
