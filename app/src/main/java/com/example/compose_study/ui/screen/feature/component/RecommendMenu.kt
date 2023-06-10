@@ -2,6 +2,7 @@ package com.example.compose_study.ui.screen.feature.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -85,16 +86,11 @@ fun RecommendMenuScreen() {
             onTabClicked = { tabIndex, _ -> selectIndex = tabIndex }
         )
         LazyRow(
-            modifier = Modifier.padding(vertical = 18.dp),
+            modifier = Modifier.padding(vertical = 12.dp),
+            horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            item {
-                Spacer(modifier = Modifier.size(10.dp))
-            }
             items(menus) {
                 MenuItem(menu = it)
-            }
-            item {
-                Spacer(modifier = Modifier.size(10.dp))
             }
         }
         ContentsDivider()
@@ -111,7 +107,7 @@ fun RecommendMenuTitle() {
 
 @Composable
 fun MenuItem(menu: Menu) {
-    Column(modifier = Modifier.padding(6.dp)) {
+    Column {
         Surface(
             shape = RoundedCornerShape(4.dp)
         ) {
