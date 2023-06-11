@@ -30,6 +30,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -82,7 +83,8 @@ fun ReReservationScreen() {
         )
         LazyRow(
             modifier = Modifier.fillMaxWidth().padding(vertical = 18.dp),
-            contentPadding = PaddingValues(start = 10.dp)
+            contentPadding = PaddingValues(start = 10.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             items(listOf(reservation, reservation, reservation)) {
                 ReReservationItem(item = it)
@@ -99,7 +101,7 @@ fun ReReservationTitle() {
 
 @Composable
 fun ReReservationItem(item: ReReservation) {
-    Column(modifier = Modifier.padding(6.dp)) {
+    Column {
         Surface(
             shape = RoundedCornerShape(4.dp)
         ) {
@@ -113,9 +115,23 @@ fun ReReservationItem(item: ReReservation) {
             )
         }
         Spacer(modifier = Modifier.size(16.dp))
-        Text(text = item.shopName, color = Color.Black, fontSize = 16.sp)
+        Text(
+            modifier = Modifier.fillMaxWidth(),
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            text = item.shopName,
+            color = Color.Black,
+            fontSize = 16.sp
+        )
         Spacer(modifier = Modifier.size(4.dp))
-        Text(text = item.shopDescription, color = Color(0xFF888888), fontSize = 12.sp)
+        Text(
+            modifier = Modifier.fillMaxWidth(),
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            text = item.shopDescription,
+            color = Color(0xFF888888),
+            fontSize = 12.sp
+        )
         Spacer(modifier = Modifier.size(12.dp))
         Row(verticalAlignment = Alignment.CenterVertically) {
             Image(painter = painterResource(id = R.drawable.ic_star), contentDescription = "평점 이미지")
@@ -155,7 +171,13 @@ fun PickMenuItem(item: PickMenu) {
             }
             Spacer(modifier = Modifier.size(12.dp))
             Column(verticalArrangement = Arrangement.Center) {
-                Text(text = item.menuName, fontSize = 13.sp, color = Color.Black)
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    text = item.menuName,
+                    fontSize = 13.sp, color = Color.Black
+                )
                 Spacer(modifier = Modifier.size(6.dp))
                 Row {
                     Text(text = item.saleRatio, fontSize = 13.sp, color = Color.Red)

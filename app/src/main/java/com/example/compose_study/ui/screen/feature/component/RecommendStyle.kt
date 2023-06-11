@@ -159,7 +159,6 @@ fun StyleTag(item: String) {
                 color = Color.Black
             )
         }
-        Spacer(modifier = Modifier.size(4.dp))
     }
 }
 

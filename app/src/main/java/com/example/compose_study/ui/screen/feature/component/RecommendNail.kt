@@ -59,17 +59,18 @@ fun RecommendNailScreen() {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp)
+                .padding(horizontal = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             Row(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 Surface(
                     modifier = Modifier.weight(1f)
                 ) {
                     RecommendNailItem(item = style1)
                 }
-                Spacer(modifier = Modifier.size(12.dp))
                 Surface(
                     modifier = Modifier.weight(1f)
                 ) {
@@ -84,7 +85,6 @@ fun RecommendNailScreen() {
                 ) {
                     RecommendNailItem(item = style3)
                 }
-                Spacer(modifier = Modifier.size(12.dp))
                 Surface(
                     modifier = Modifier.weight(1f)
                 ) {
@@ -138,9 +138,10 @@ fun RecommendNailTitle() {
 
 @Composable
 fun RecommendNailItem(item: RecommendStyle) {
-    Column(modifier = Modifier
-        .fillMaxWidth()
-        .padding(vertical = 12.dp)) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+    ) {
         Surface(
             shape = RoundedCornerShape(4.dp)
         ) {
@@ -153,7 +154,11 @@ fun RecommendNailItem(item: RecommendStyle) {
                 contentScale = ContentScale.Crop,
             )
         }
-        Row(modifier = Modifier.padding(vertical = 6.dp)) {
+        Row(
+            modifier = Modifier
+                .padding(vertical = 6.dp),
+            horizontalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
             item.tag.forEach {
                 StyleTag(item = it)
             }

@@ -96,7 +96,8 @@ fun ReservationShopScreen() {
             count = reservations.size,
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
-            contentPadding = PaddingValues(end = 12.dp, start = 12.dp)
+            contentPadding = PaddingValues(end = 12.dp, start = 12.dp),
+            itemSpacing = 6.dp
         ) { page ->
             ShopItem(item = reservations[page])
         }
@@ -123,7 +124,6 @@ fun ShopItem(item: ReReservation) {
     Column(
         modifier = Modifier
             .width(331.dp)
-            .padding(6.dp)
     ) {
         Surface(
             shape = RoundedCornerShape(4.dp)
