@@ -1,12 +1,12 @@
 package com.example.compose_study.ui.screen.feature.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -40,7 +40,8 @@ fun NewShopScreen() {
         NewShopTitle()
         LazyRow(
             modifier = Modifier.fillMaxWidth().padding(vertical = 18.dp),
-            contentPadding = PaddingValues(start = 10.dp)
+            contentPadding = PaddingValues(start = 10.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             items(listOf(reservation, reservation, reservation)) {
                 NewShopItem(item = it)
@@ -60,7 +61,6 @@ fun NewShopItem(item: NewShop) {
     Column(
         modifier = Modifier
             .width(331.dp)
-            .padding(6.dp)
     ) {
         Surface(
             shape = RoundedCornerShape(4.dp)

@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalPagerApi::class)
-
 package com.example.compose_study.ui.screen.feature.component
 
 import androidx.compose.animation.core.tween

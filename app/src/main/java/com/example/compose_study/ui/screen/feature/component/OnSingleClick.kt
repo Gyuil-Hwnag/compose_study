@@ -8,7 +8,6 @@ import androidx.compose.ui.composed
 import androidx.compose.ui.platform.debugInspectorInfo
 import androidx.compose.ui.semantics.Role
 
-
 internal interface MultipleEventsCutter {
     fun processEvent(event: () -> Unit)
 
