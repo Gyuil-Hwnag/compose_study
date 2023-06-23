@@ -68,8 +68,7 @@ fun FeatureScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(scrollState)
-                .statusBarsPadding(),
+                .verticalScroll(scrollState),
         ) {
             TopBannerScreen()
             Box(modifier = Modifier.offset(y = (-20).dp)) {
