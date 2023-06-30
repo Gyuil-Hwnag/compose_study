@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
+import com.example.compose_study.part2.ui.ContentScreen
 import com.example.compose_study.ui.screen.main.BottomNavigationScreen
 import com.example.compose_study.ui.theme.Compose_studyTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,7 +21,7 @@ class ContentActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             Compose_studyTheme {
-                MainScreenView()
+                ContentScreen(intent.getIntExtra("id",0))
             }
         }
     }
