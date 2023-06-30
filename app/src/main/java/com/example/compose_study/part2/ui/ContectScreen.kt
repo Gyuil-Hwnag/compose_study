@@ -67,6 +67,9 @@ private fun Body(
     }
 }
 
+/**
+ * chap1 : 람다로 전달받기
+ **/
 @Composable
 private fun Title(memoText: String, scrollProvider: () -> Int) {
     val maxOffset = with(LocalDensity.current) { MaxTitleOffset.toPx() }

@@ -19,8 +19,10 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -29,6 +31,9 @@ import com.example.compose_study.part2.model.Memo
 import com.example.compose_study.part2.model.memos
 import com.example.compose_study.ui.theme.Compose_studyTheme
 
+/**
+ * chap3 : sortedBy등 연산 작업 시 에는 remember 내부 에서 실행 하기
+ **/
 @Composable
 fun HomeScreen(homeState: HomeState) {
     Compose_studyTheme {
@@ -55,6 +60,7 @@ fun HomeScreen(homeState: HomeState) {
 @Composable
 fun AddMemo(memoList: SnapshotStateList<Memo>) {
     val inputValue = remember { mutableStateOf("") }
+    var count by remember { mutableStateOf(0) }
 
     Row(
         modifier = Modifier
@@ -76,16 +82,28 @@ fun AddMemo(memoList: SnapshotStateList<Memo>) {
                     Memo(memoList.size, inputValue.value)
                 )
                 inputValue.value = ""
+                count++
             },
             modifier = Modifier
                 .wrapContentWidth()
                 .fillMaxHeight()
         ) {
-            Text("ADD")
+            /**
+             * chap4
+             * 무한 Recompose 코드
+             * onClick -> count++ -> recompose -> count++ -> recompose -> ...
+             * 역방향 쓰기X
+             * **/
+            Text("ADD\n${count}")
+            count++
         }
     }
 }
 
+/**
+ * chap2 : LazyColumn 사용시 Key값 지정하기
+ * Columns 에서는 key(memo.id)로 지정하기
+ **/
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ColumnScope.MemoList(onClickAction: (Int) -> Unit, memoList: SnapshotStateList<Memo>) {
