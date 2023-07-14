@@ -1,7 +1,6 @@
 package com.example.compose_study.ui.screen.feature.component
 
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.gestures.animateScrollBy
 import androidx.compose.foundation.interaction.collectIsDraggedAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column

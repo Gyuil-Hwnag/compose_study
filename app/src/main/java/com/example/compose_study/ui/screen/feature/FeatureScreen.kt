@@ -94,16 +94,6 @@ fun FeatureScreen(
     }
 }
 
-@Composable
-fun ContentsDivider() {
-    Spacer(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(40.dp)
-            .background(Color.White)
-    )
-}
-
 @Preview
 @Composable
 fun FeaturePreview() {
