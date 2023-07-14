@@ -1,5 +1,6 @@
 package com.example.compose_study.ui.screen.feature
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -40,6 +41,7 @@ import com.example.compose_study.ui.screen.feature.component.UpdateProfileCard
 import com.example.compose_study.ui.theme.Compose_studyTheme
 import com.google.accompanist.pager.ExperimentalPagerApi
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun FeatureScreen(
@@ -63,8 +65,7 @@ fun FeatureScreen(
             if (!isExpanded.value) ToolBarScreen(scrollState.value.toFloat())
             else ToolBarScreen()
         }
-    ) { paddingValues ->
-        paddingValues
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
