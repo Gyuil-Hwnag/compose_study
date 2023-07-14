@@ -57,15 +57,17 @@ fun EventBannerScreen() {
 
     val pagerState = rememberPagerState(initialPage = banners.infiniteLoopInitPage())
     val isDragged by pagerState.interactionSource.collectIsDraggedAsState()
+    var nextPage by remember { mutableStateOf(banners.infiniteLoopInitPage()) }
     var pageSize by remember { mutableStateOf(IntSize.Zero) }
 
     if (!isDragged) {
         LaunchedEffect(key1 = pagerState.currentPage) {
             delay(3000)
-            pagerState.animateScrollBy(
-                value = pageSize.width.toFloat(),
-                animationSpec = tween(durationMillis = 1400)
+            tween<Float>(durationMillis = 1400)
+            pagerState.animateScrollToPage(
+                page = pagerState.currentPage + 1
             )
+            nextPage = pagerState.currentPage + 1
         }
     }
 
