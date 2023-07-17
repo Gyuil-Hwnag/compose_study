@@ -14,7 +14,9 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -50,15 +52,16 @@ fun FeatureScreen(
     val scrollState = rememberScrollState()
     val isExpanded = remember { derivedStateOf { scrollState.value > 200f } }
 
-    lateinit var adapter: ConcatAdapter
     val adapterConfig = ConcatAdapter.Config.Builder()
         .setIsolateViewTypes(true)
         .setStableIdMode(ConcatAdapter.Config.StableIdMode.SHARED_STABLE_IDS)
         .build()
 
-    adapter = ConcatAdapter(
-        adapterConfig
-    )
+    val adapter: ConcatAdapter by lazy { ConcatAdapter(adapterConfig) }
+
+    val banners by viewModel.banners.collectAsState()
+    val quickLinks by viewModel.quickLinks.collectAsState()
+    val quickCards by viewModel.quickCards.collectAsState()
 
     Scaffold(
         topBar = {
@@ -71,11 +74,14 @@ fun FeatureScreen(
                 .fillMaxSize()
                 .verticalScroll(scrollState),
         ) {
-            TopBannerScreen()
+            if (banners.isNotEmpty()) {
+                TopBannerScreen(banners)
+            }
+
             Box(modifier = Modifier.offset(y = (-20).dp)) {
                 Column {
-                    QuickLinkScreen()
-                    QuickCardScreen()
+                    QuickLinkScreen(quickLinks)
+                    QuickCardScreen(quickCards)
                 }
             }
             UpdateLocationScreen()

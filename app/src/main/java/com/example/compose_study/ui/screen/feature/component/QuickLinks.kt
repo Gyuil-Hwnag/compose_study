@@ -30,17 +30,9 @@ import com.example.compose_study.R
 import com.example.compose_study.ui.theme.Compose_studyTheme
 
 @Composable
-fun QuickLinkScreen() {
-    val hairQuickLink = QuickLink(title = "헤어샵", description = "컷/펌/염색\n스타일링\n메이크업", imageUri = R.mipmap.ic_quick_hair_foreground)
-    val nailQuickLink = QuickLink(title = "네일샵", description = "케어\n네일", imageUri = R.mipmap.ic_quick_nail_foreground)
-    val estheticQuickLink = QuickLink(title = "에스테틱", description = "왁싱\n브로우", imageUri = R.mipmap.ic_quick_esthetic_foreground)
-
-    val subLink1 = QuickLink(title = "\uD83C\uDFE0 첫방문 기획전", description = "")
-    val subLink2 = QuickLink(title = "\uD83C\uDFC6 어워즈", description = "")
-    val subLink3 = QuickLink(title = "⭐️ 리뷰별점높은샵", description = "")
-    val subLink4 = QuickLink(title = "\uD83D\uDC87 스타일TIP", description = "")
-    val subQuickLinks = listOf<QuickLink>(subLink1, subLink2, subLink3, subLink4, subLink1, subLink2, subLink3, subLink4)
-
+fun QuickLinkScreen(
+    quickLinks: List<QuickLink>
+) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Row(
             modifier = Modifier
@@ -51,20 +43,20 @@ fun QuickLinkScreen() {
             horizontalArrangement = Arrangement.Center
         ) {
             Box(modifier = Modifier.weight(weight = 1f, fill = true)) {
-                MainQuickLinkItems(quickLink = hairQuickLink)
+                MainQuickLinkItems(quickLink = quickLinks[0])
             }
             Spacer(modifier = Modifier.size(12.dp))
             Column(modifier = Modifier.weight(weight = 1f, fill = true)) {
-                SubQuickLinkItems(quickLink = nailQuickLink)
+                SubQuickLinkItems(quickLink = quickLinks[1])
                 Spacer(modifier = Modifier.size(8.dp))
-                SubQuickLinkItems(quickLink = estheticQuickLink)
+                SubQuickLinkItems(quickLink = quickLinks[2])
             }
         }
         LazyRow {
             item {
                 Spacer(modifier = Modifier.width(12.dp))
             }
-            items(subQuickLinks) { quickLink ->
+            items(quickLinks.subList(0, 2)) { quickLink ->
                 QuickLinkItems(quickLink)
             }
             item {
@@ -161,10 +153,10 @@ data class QuickLink(
     val imageUri: Int = 0
 )
 
-@Preview
-@Composable
-fun QuickLinkPreview() {
-    Compose_studyTheme {
-        QuickLinkScreen()
-    }
-}
+//@Preview
+//@Composable
+//fun QuickLinkPreview() {
+//    Compose_studyTheme {
+//        QuickLinkScreen()
+//    }
+//}

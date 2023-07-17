@@ -45,20 +45,9 @@ import com.google.accompanist.pager.rememberPagerState
 
 @ExperimentalPagerApi
 @Composable
-fun QuickCardScreen() {
-    val quickCards = listOf<QuickCardType>(
-        QuickCardType.WELCOME,
-        QuickCardType.RESERVATION,
-        QuickCardType.D_DAY,
-        QuickCardType.BEFORE_REVIEW,
-        QuickCardType.AFTER_REVIEW,
-        QuickCardType.RE_RESERVATION_FEMALE,
-        QuickCardType.RE_RESERVATION_MALE,
-        QuickCardType.MY_DESIGNER,
-        QuickCardType.MY_MENU,
-        QuickCardType.NORMAL
-    )
-
+fun QuickCardScreen(
+    quickCards: List<QuickCardType>
+) {
     val state = rememberPagerState()
     Column(
         modifier = Modifier.fillMaxWidth()
@@ -404,11 +393,11 @@ enum class FavoriteType {
     DESIGNER, MENU
 }
 
-@OptIn(ExperimentalPagerApi::class)
-@Preview
-@Composable
-fun UserCardPreview() {
-    Compose_studyTheme {
-        QuickCardScreen()
-    }
-}
+//@OptIn(ExperimentalPagerApi::class)
+//@Preview
+//@Composable
+//fun UserCardPreview() {
+//    Compose_studyTheme {
+//        QuickCardScreen()
+//    }
+//}

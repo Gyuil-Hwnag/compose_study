@@ -43,13 +43,9 @@ import kotlinx.coroutines.delay
  **/
 @ExperimentalPagerApi
 @Composable
-fun TopBannerScreen() {
-    val banner1 = TopBanner(imageUri = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcToWctFQXH8UDrKh45hZk7toE2r-Yocs7ys6g&usqp=CAU", title = "헤어 스타일의 모든것\nBOBBED HAIR STYLE", description = "요즘 유행하는 스타일")
-    val banner2 = TopBanner(imageUri = "https://cdn.travie.com/news/photo/first/201710/img_19975_1.jpg", title = "네일 스타일의 모든것\nBOBBED NAIL STYLE", description = "요즘 유행하는 네일 스타일")
-    val banner3 = TopBanner(imageUri = "https://mblogthumb-phinf.pstatic.net/MjAxODA2MjZfMTMw/MDAxNTMwMDE0NDk2Mzcz.7re42MA5wqJxZlJ8J5FzfDKEEqugtVuhg49bSFYUuYsg.0Y0kjwH4oi1LXXpqrcGaVBch_4eQsyKyVTRsNtg7fCMg.JPEG.ichufs/%EC%82%AC%EC%A7%84%EC%8C%A4%EC%9A%B0%EC%93%B0%EB%9D%BC_3_0%EC%9D%B8%ED%8A%B8%EB%A1%9C.jpg?type=w800", title = "에스테틱의 모든것\nBOBBED ESTHETIC STYLE", description = "요즘 유행하는 에스테틱 스타일")
-
-    val banners = listOf(banner1, banner2, banner3, banner1, banner2, banner3)
-
+fun TopBannerScreen(
+    banners: List<TopBanner>
+) {
     TopBannerSlider(banners)
 }
 
@@ -143,7 +139,7 @@ fun BannerIndicator(current: Int, totalCount: Int) {
 @Composable
 fun TopBannerPreview() {
     Compose_studyTheme {
-        TopBannerScreen()
+        TopBannerScreen(emptyList())
     }
 }
 
