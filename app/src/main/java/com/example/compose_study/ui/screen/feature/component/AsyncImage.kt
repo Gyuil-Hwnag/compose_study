@@ -15,14 +15,15 @@ import com.example.compose_study.R
 
 @Stable
 @Composable
-fun AsyncGifCrop(
+fun AsyncGif(
     modifier: Modifier,
-    imageUrl: String
+    imageUrl: String,
+    contentScale: ContentScale
 ) {
     val context = LocalContext.current
     AsyncImage(
         modifier = modifier,
-        contentScale = ContentScale.Crop,
+        contentScale = contentScale,
         imageLoader = ImageLoader.Builder(context)
             .components {
                 if (SDK_INT >= 28) add(ImageDecoderDecoder.Factory())
@@ -42,57 +43,14 @@ fun AsyncGifCrop(
 
 @Stable
 @Composable
-fun AsyncGifFillBounds(
+fun AsyncImage(
     modifier: Modifier,
-    imageUrl: String
+    imageUrl: String,
+    contentScale: ContentScale
 ) {
     AsyncImage(
         modifier = modifier,
-        contentScale = ContentScale.FillBounds,
-        imageLoader = ImageLoader.Builder(LocalContext.current)
-            .components {
-                if (SDK_INT >= 28) add(ImageDecoderDecoder.Factory())
-                else add(GifDecoder.Factory())
-            }
-            .placeholder(R.drawable.shape_solid_n8_rectangle)
-            .error(R.drawable.shape_solid_n8_rectangle)
-            .build(),
-        model = ImageRequest.Builder(LocalContext.current)
-            .data(imageUrl)
-            .placeholder(R.drawable.shape_solid_n8_rectangle)
-            .error(R.drawable.shape_solid_n8_rectangle)
-            .build(),
-        contentDescription = "이미지"
-    )
-}
-
-@Stable
-@Composable
-fun AsyncImageCrop(
-    modifier: Modifier,
-    imageUrl: String
-) {
-    AsyncImage(
-        modifier = modifier,
-        contentScale = ContentScale.Crop,
-        model = ImageRequest.Builder(LocalContext.current)
-            .data(imageUrl)
-            .placeholder(R.drawable.shape_solid_n8_rectangle)
-            .error(R.drawable.shape_solid_n8_rectangle)
-            .build(),
-        contentDescription = "이미지"
-    )
-}
-
-@Stable
-@Composable
-fun AsyncImageFillBounds(
-    modifier: Modifier,
-    imageUrl: String
-) {
-    AsyncImage(
-        modifier = modifier,
-        contentScale = ContentScale.FillBounds,
+        contentScale = contentScale,
         model = ImageRequest.Builder(LocalContext.current)
             .data(imageUrl)
             .placeholder(R.drawable.shape_solid_n8_rectangle)
