@@ -46,8 +46,7 @@ import androidx.core.content.ContextCompat
 @Composable
 fun PermissionScreen() {
     val context = LocalContext.current
-    val cameraPermission = arrayOf(Manifest.permission.CAMERA)
-    val galleyPermission = arrayOf(Manifest.permission.READ_MEDIA_IMAGES)
+    val galleyPermission = if (Build.VERSION.SDK_INT >= 33) arrayOf(Manifest.permission.READ_MEDIA_IMAGES) else arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
 
     var imageUri by remember { mutableStateOf<Uri?>(null) }
     val bitmap =  remember { mutableStateOf<Bitmap?>(null) }
