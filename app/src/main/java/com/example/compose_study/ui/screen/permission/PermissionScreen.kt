@@ -46,7 +46,10 @@ import androidx.core.content.ContextCompat
 @Composable
 fun PermissionScreen() {
     val context = LocalContext.current
-    val galleyPermission = if (Build.VERSION.SDK_INT >= 33) arrayOf(Manifest.permission.READ_MEDIA_IMAGES) else arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
+    val galleyPermission =
+        if (Build.VERSION.SDK_INT >= 34) arrayOf(Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED, Manifest.permission.READ_MEDIA_IMAGES)
+        else if (Build.VERSION.SDK_INT >= 33) arrayOf(Manifest.permission.READ_MEDIA_IMAGES)
+        else arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
 
     var imageUri by remember { mutableStateOf<Uri?>(null) }
     val bitmap =  remember { mutableStateOf<Bitmap?>(null) }
@@ -54,16 +57,26 @@ fun PermissionScreen() {
         imageUri = uri
     }
 
+//    val imagePickerLauncher = rememberLauncherForActivityResult(contract = ActivityResultContracts.PickVisualMedia()) { uri ->
+//        if (uri != null) {
+//            imageUri = uri
+//        } else {
+//            Log.d("PhotoPicker", "No media selected")
+//        }
+//    }
+
     val launcherMultiplePermissions = rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissionsMap ->
         val areGranted = permissionsMap.values.reduce { acc, next -> acc && next }
-        if (areGranted) {
+        if (permissionsMap[Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED] == true) {
+//            imagePickerLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+            Log.d("test", "사진을 일부 허용 하였습니다.")
+        } else if (areGranted) {
             galleryLauncher.launch("image/*")
-            Log.d("test", "권한이 동의되었습니다.")
         } else {
-            Log.d("test", "권한이 거부되었습니다.")
             openAppSettings(context)
         }
     }
+
     Scaffold(
         modifier = Modifier.fillMaxSize()
     ) { paddingValues ->
@@ -94,12 +107,12 @@ fun PermissionScreen() {
                 )
             }
 
-            Spacer(modifier = Modifier.height(12.dp).wrapContentWidth())
+            Spacer(modifier = Modifier
+                .height(12.dp)
+                .wrapContentWidth())
             imageUri?.let {
                 if (Build.VERSION.SDK_INT < 28) {
-                    bitmap.value = MediaStore.Images
-                        .Media.getBitmap(context.contentResolver,it)
-
+                    bitmap.value = MediaStore.Images.Media.getBitmap(context.contentResolver,it)
                 } else {
                     val source = ImageDecoder.createSource(context.contentResolver,it)
                     bitmap.value = ImageDecoder.decodeBitmap(source)
@@ -123,13 +136,23 @@ fun checkAndRequestPermissions(
     launcher: ManagedActivityResultLauncher<Array<String>, Map<String, Boolean>>,
     galleryLauncher: ManagedActivityResultLauncher<String, Uri?>
 ) {
-    if (permissions.all {
-            ContextCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED
-        }) {
-        galleryLauncher.launch("image/*")
-    } else {
+    if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED) == PackageManager.PERMISSION_GRANTED) {
+        Log.d("test", "사진을 일부 허용 하였습니다.")
         launcher.launch(permissions)
-        Log.d("test", "권한을 요청하였습니다.")
+    } else {
+        if (
+            permissions.all {
+                ContextCompat.checkSelfPermission(
+                    context,
+                    it
+                ) == PackageManager.PERMISSION_GRANTED
+            }
+        ) {
+            galleryLauncher.launch("image/*")
+        } else {
+            launcher.launch(permissions)
+            Log.d("test", "권한을 요청하였습니다.")
+        }
     }
 }
 
