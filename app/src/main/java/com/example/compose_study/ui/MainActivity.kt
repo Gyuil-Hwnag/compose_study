@@ -27,13 +27,16 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MainScreenView(){
-    val navController = rememberNavController ()
+fun MainScreenView() {
+    val navController = rememberNavController()
     Scaffold (
         modifier = Modifier.fillMaxSize(),
         bottomBar = { BottomNavigationScreen(navController = navController) }
     ) { contentPadding ->
-        NavigationGraph(navController = navController, modifier = Modifier.padding(contentPadding))
+        NavigationGraph(
+            navController = navController,
+            modifier = Modifier.padding(contentPadding)
+        )
     }
 }
 

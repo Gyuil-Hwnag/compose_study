@@ -15,13 +15,17 @@ import com.example.compose_study.ui.screen.dialog.CustomDialogScreen
 import com.example.compose_study.ui.screen.feature.FeatureScreen
 import com.example.compose_study.ui.screen.home.HomeScreen
 import com.example.compose_study.ui.screen.more.More
+import com.example.compose_study.ui.screen.permission.PermissionScreen
 import com.example.compose_study.ui.screen.slider.SliderScreen
 import com.example.compose_study.ui.screen.todo.TodoScreen
 import com.example.compose_study.ui.screen.viewpager.ViewpagerScreen
 import com.example.compose_study.ui.screen.viewpagerwithtabbar.ViewPagerWithTabBarScreen
 
 @Composable
-fun NavigationGraph(modifier: Modifier, navController: NavHostController) {
+fun NavigationGraph(
+    modifier: Modifier,
+    navController: NavHostController
+) {
     val (value: String, setValue: (String) -> Unit) = remember { mutableStateOf("") }
 
     NavHost(
@@ -72,6 +76,10 @@ fun NavigationGraph(modifier: Modifier, navController: NavHostController) {
         }
         composable(BottomNavItem.Feature.screenRoute) {
             FeatureScreen()
+        }
+
+        composable(BottomNavItem.Permission.screenRoute) {
+            PermissionScreen()
         }
     }
 }
