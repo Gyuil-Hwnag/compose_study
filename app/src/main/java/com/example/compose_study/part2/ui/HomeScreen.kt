@@ -29,14 +29,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.compose_study.part2.model.Memo
 import com.example.compose_study.part2.model.memos
-import com.example.compose_study.ui.theme.Compose_studyTheme
+import com.example.compose_study.ui.theme.ComposeStudyTheme
 
 /**
  * chap3 : sortedBy등 연산 작업 시 에는 remember 내부 에서 실행 하기
  **/
 @Composable
 fun HomeScreen(homeState: HomeState) {
-    Compose_studyTheme {
+    ComposeStudyTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = Color.White

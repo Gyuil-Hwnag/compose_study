@@ -1,6 +1,5 @@
 package com.example.compose_study.ui.theme
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
@@ -28,7 +27,7 @@ private val LightColorPalette = lightColors(
 )
 
 @Composable
-fun Compose_studyTheme(
+fun ComposeStudyTheme(
     darkTheme: Boolean = false,
     content: @Composable () -> Unit
 ) {

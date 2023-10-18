@@ -16,7 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.compose_study.R
-import com.example.compose_study.ui.theme.Compose_studyTheme
+import com.example.compose_study.ui.theme.ComposeStudyTheme
 
 @Composable
 fun ToolBarScreen(offset: Float = 200f) {
@@ -63,7 +63,7 @@ fun TopAppBarActionButton(
 @Preview
 @Composable
 fun ToolBarPreview() {
-    Compose_studyTheme {
+    ComposeStudyTheme {
         ToolBarScreen()
     }
 }

@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.compose_study.R
-import com.example.compose_study.ui.theme.Compose_studyTheme
+import com.example.compose_study.ui.theme.ComposeStudyTheme
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
@@ -140,7 +140,7 @@ data class EventBanner(
 @Preview
 @Composable
 fun EventBannerPreview() {
-    Compose_studyTheme {
+    ComposeStudyTheme {
         EventBannerScreen()
     }
 }

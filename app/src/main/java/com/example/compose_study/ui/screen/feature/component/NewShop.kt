@@ -23,7 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.example.compose_study.ui.theme.Compose_studyTheme
+import com.example.compose_study.ui.theme.ComposeStudyTheme
 
 @Composable
 fun NewShopScreen() {
@@ -89,7 +89,7 @@ data class NewShop(
 @Preview
 @Composable
 fun NewShopPreview() {
-    Compose_studyTheme {
+    ComposeStudyTheme {
         NewShopScreen()
     }
 }

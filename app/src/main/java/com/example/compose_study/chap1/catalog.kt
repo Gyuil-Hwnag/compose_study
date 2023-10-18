@@ -16,7 +16,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.example.compose_study.ui.theme.Compose_studyTheme
+import com.example.compose_study.ui.theme.ComposeStudyTheme
 
 
 @Composable
@@ -79,7 +79,7 @@ fun Item(itemData: ItemData) {
 @Preview(showBackground = true)
 @Composable
 fun CatalogPreview() {
-    Compose_studyTheme {
+    ComposeStudyTheme {
         CatalogScreen()
     }
 }

@@ -21,7 +21,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.example.compose_study.ui.theme.Compose_studyTheme
+import com.example.compose_study.ui.theme.ComposeStudyTheme
 
 
 @Composable
@@ -92,7 +92,7 @@ fun CardExample(cardData: CardData) {
 @Preview(showBackground = true)
 @Composable
 fun ProfileCardPreview() {
-    Compose_studyTheme {
+    ComposeStudyTheme {
         ProfileCardScreen()
     }
 }

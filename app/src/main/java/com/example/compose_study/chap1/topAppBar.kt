@@ -16,7 +16,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.compose_study.ui.theme.Compose_studyTheme
+import com.example.compose_study.ui.theme.ComposeStudyTheme
 
 
 @Composable
@@ -66,7 +66,7 @@ fun TopAppBarExample() {
 @Preview(showBackground = true)
 @Composable
 fun TopAppBarPreview() {
-    Compose_studyTheme {
+    ComposeStudyTheme {
         TopAppBarScreen()
     }
 }

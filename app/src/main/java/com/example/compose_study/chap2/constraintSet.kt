@@ -12,7 +12,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
-import com.example.compose_study.ui.theme.Compose_studyTheme
+import com.example.compose_study.ui.theme.ComposeStudyTheme
 
 
 @Composable
@@ -82,7 +82,7 @@ fun ConstraintSetExample() {
 @Preview(showBackground = true)
 @Composable
 fun ConstraintSetPreview() {
-    Compose_studyTheme {
+    ComposeStudyTheme {
         ConstraintSetScreen()
     }
 }

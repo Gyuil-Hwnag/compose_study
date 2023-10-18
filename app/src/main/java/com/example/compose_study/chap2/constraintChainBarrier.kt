@@ -13,7 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.example.compose_study.ui.theme.Compose_studyTheme
+import com.example.compose_study.ui.theme.ComposeStudyTheme
 
 
 @Composable
@@ -76,7 +76,7 @@ fun ConstraintChainBarrierExample() {
 @Preview(showBackground = true)
 @Composable
 fun ConstraintChainBarrierPreview() {
-    Compose_studyTheme {
+    ComposeStudyTheme {
         ConstraintChainBarrierScreen()
     }
 }

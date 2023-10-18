@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.compose_study.R
-import com.example.compose_study.ui.theme.Compose_studyTheme
+import com.example.compose_study.ui.theme.ComposeStudyTheme
 
 @Composable
 fun RecommendMenuScreen() {
@@ -141,7 +141,7 @@ data class Menu(
 @Preview
 @Composable
 fun RecommendMenuPreview() {
-    Compose_studyTheme {
+    ComposeStudyTheme {
         RecommendMenuScreen()
     }
 }

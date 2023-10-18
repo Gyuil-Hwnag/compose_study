@@ -18,7 +18,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.compose_study.ui.theme.Compose_studyTheme
+import com.example.compose_study.ui.theme.ComposeStudyTheme
 import kotlinx.coroutines.launch
 
 @Composable
@@ -97,7 +97,7 @@ fun BottomAppBarExample() {
 @Preview(showBackground = true)
 @Composable
 fun BottomAppBarPreview() {
-    Compose_studyTheme {
+    ComposeStudyTheme {
         BottomAppBarScreen()
     }
 }
