@@ -26,6 +26,7 @@ fun BottomNavigationScreen(navController: NavController) {
         BottomNavItem.Slider,
         BottomNavItem.Todo,
         BottomNavItem.Feature,
+        BottomNavItem.Permission
         BottomNavItem.Draw
     )
     BottomNavigation(
@@ -44,8 +45,8 @@ fun BottomNavigationScreen(navController: NavController) {
                 selected = currentRoute == item.screenRoute,
                 onClick = {
                     navController.navigate(item.screenRoute) {
-                        navController.graph.startDestinationRoute?.let { screen_route ->
-                            popUpTo(screen_route) {
+                        navController.graph.startDestinationRoute?.let { route ->
+                            popUpTo(route) {
                                 saveState = true
                             }
                         }
