@@ -19,7 +19,7 @@ import com.example.compose_study.ui.screen.feature.FeatureScreen
 import com.example.compose_study.ui.screen.home.HomeScreen
 import com.example.compose_study.ui.screen.more.More
 import com.example.compose_study.ui.screen.permission.PermissionScreen
-import com.example.compose_study.ui.screen.permission.PhotoScreen
+import com.example.compose_study.ui.screen.photo.PhotoScreen
 import com.example.compose_study.ui.screen.slider.SliderScreen
 import com.example.compose_study.ui.screen.viewpager.ViewpagerScreen
 import com.example.compose_study.ui.screen.viewpagerwithtabbar.ViewPagerWithTabBarScreen
@@ -83,7 +83,9 @@ fun NavigationGraph(
         }
 
         composable(BottomNavItem.Permission.screenRoute) {
-            PermissionScreen()
+            PermissionScreen(
+                toPhotoPicker = { navController.navigate(PHOTO) }
+            )
         }
         composable(BottomNavItem.Draw.screenRoute) {
             DrawScreen()
