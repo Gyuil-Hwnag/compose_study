@@ -31,6 +31,7 @@ fun NavigationGraph(
     navController: NavHostController
 ) {
     val (value: String, setValue: (String) -> Unit) = remember { mutableStateOf("") }
+    val (selectPhoto: String, setSelectPhoto: (String) -> Unit) = remember { mutableStateOf("") }
 
     NavHost(
         navController = navController,
@@ -84,7 +85,8 @@ fun NavigationGraph(
 
         composable(BottomNavItem.Permission.screenRoute) {
             PermissionScreen(
-                toPhotoPicker = { navController.navigate(PHOTO) }
+                toPhotoPicker = { navController.navigate(PHOTO) },
+                selectedPhoto = selectPhoto
             )
         }
         composable(BottomNavItem.Draw.screenRoute) {
@@ -92,7 +94,11 @@ fun NavigationGraph(
         }
         composable(PHOTO) {
             PhotoScreen(
-                toBack = { navController.popBackStack() }
+                toBack = { navController.popBackStack() },
+                selectPhoto = {
+                    navController.popBackStack()
+                    setSelectPhoto(it)
+                }
             )
         }
     }

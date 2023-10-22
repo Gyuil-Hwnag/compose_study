@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
@@ -21,26 +20,28 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
+import coil.compose.AsyncImage
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 fun PermissionScreen(
     toPhotoPicker: () -> Unit,
+    selectedPhoto: String = ""
 ) {
     val context = LocalContext.current
     val galleyPermission =
@@ -49,9 +50,6 @@ fun PermissionScreen(
             (Build.VERSION.SDK_INT >= 33) -> arrayOf(Manifest.permission.READ_MEDIA_IMAGES)
             else -> arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
         }
-
-    var imageUri by remember { mutableStateOf<Uri?>(null) }
-    val bitmap =  remember { mutableStateOf<Bitmap?>(null) }
 
     val launcherMultiplePermissions = rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissionsMap ->
         val areGranted = permissionsMap.values.reduce { acc, next -> acc && next }
@@ -93,6 +91,16 @@ fun PermissionScreen(
                 )
             }
             Spacer(modifier = Modifier.height(12.dp).wrapContentWidth())
+            if (selectedPhoto.isNotBlank()) {
+                AsyncImage(
+                    modifier = Modifier
+                        .size(256.dp)
+                        .clip(shape = RoundedCornerShape(8.dp)),
+                    model = selectedPhoto,
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                )
+            }
         }
     }
 }

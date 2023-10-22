@@ -32,6 +32,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun PhotoScreen(
     toBack: () -> Unit,
+    selectPhoto: (imageUrl: String) -> Unit,
     viewModel: PhotoViewModel = hiltViewModel()
 ) {
     val photos = viewModel.pagingData.collectAsLazyPagingItems()
@@ -81,7 +82,8 @@ fun PhotoScreen(
                 count = photos.itemCount
             ) { index ->
                 GalleryPhotoItem(
-                    photoListItem = photos[index] ?: throw Throwable(message = "Invalid Photo Gallery")
+                    photoListItem = photos[index] ?: throw Throwable(message = "Invalid Photo Gallery"),
+                    onSelected = { selectPhoto(photos[index]?.imageUrl ?: throw Throwable(message = "Invalid Pick Photo")) }
                 )
             }
         }
