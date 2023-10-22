@@ -25,7 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.compose_study.R
-import com.example.compose_study.ui.theme.Compose_studyTheme
+import com.example.compose_study.ui.theme.ComposeStudyTheme
 
 @Composable
 fun UpdateLocationScreen() {
@@ -98,7 +98,7 @@ fun Location() {
 @Preview
 @Composable
 fun UpdateLocationPreview() {
-    Compose_studyTheme {
+    ComposeStudyTheme {
         UpdateLocationScreen()
     }
 }

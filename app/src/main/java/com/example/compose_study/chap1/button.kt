@@ -7,9 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
@@ -23,11 +21,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.compose_study.ui.theme.Compose_studyTheme
+import com.example.compose_study.ui.theme.ComposeStudyTheme
 
 @Composable
 fun ButtonScreen(context: Context) {
-    Compose_studyTheme {
+    ComposeStudyTheme {
         ButtonExample(onButtonClicked = {
             Toast.makeText(context, "Send Clicked.", Toast.LENGTH_SHORT).show()
         })
@@ -103,7 +101,7 @@ fun ButtonExample(onButtonClicked: () -> Unit) {
 @Preview(showBackground = true)
 @Composable
 fun ButtonPreview() {
-    Compose_studyTheme {
+    ComposeStudyTheme {
         ButtonExample(onButtonClicked = {})
     }
 }

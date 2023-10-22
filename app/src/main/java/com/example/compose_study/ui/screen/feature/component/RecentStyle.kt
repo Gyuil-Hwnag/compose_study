@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.compose_study.R
-import com.example.compose_study.ui.theme.Compose_studyTheme
+import com.example.compose_study.ui.theme.ComposeStudyTheme
 
 @Composable
 fun RecentStyleScreen() {
@@ -92,7 +92,7 @@ fun RecentStyleItem(item: String) {
 @Preview
 @Composable
 fun RecentStylePreview() {
-    Compose_studyTheme {
+    ComposeStudyTheme {
         RecentStyleScreen()
     }
 }

@@ -12,7 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.compose_study.ui.theme.Compose_studyTheme
+import com.example.compose_study.ui.theme.ComposeStudyTheme
 
 
 @Composable
@@ -77,7 +77,7 @@ fun ColumnExample() {
 @Preview(showBackground = true)
 @Composable
 fun ColumnPreview() {
-    Compose_studyTheme {
+    ComposeStudyTheme {
         ColumnScreen()
     }
 }

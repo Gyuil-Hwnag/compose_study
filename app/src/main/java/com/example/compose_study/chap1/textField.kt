@@ -16,7 +16,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.compose_study.ui.theme.Compose_studyTheme
+import com.example.compose_study.ui.theme.ComposeStudyTheme
 
 
 @Composable
@@ -58,7 +58,7 @@ fun TextFieldExample() {
 @Preview(showBackground = true)
 @Composable
 fun TextFieldPreview() {
-    Compose_studyTheme {
+    ComposeStudyTheme {
         TextFieldScreen()
     }
 }

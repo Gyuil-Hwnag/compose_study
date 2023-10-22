@@ -1,6 +1,5 @@
 package com.example.compose_study.chap1
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,7 +15,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.compose_study.ui.theme.Compose_studyTheme
+import com.example.compose_study.ui.theme.ComposeStudyTheme
 
 
 @Composable
@@ -82,7 +81,7 @@ fun CheckBoxExample() {
 @Preview(showBackground = true)
 @Composable
 fun CheckBoxPreview() {
-    Compose_studyTheme {
+    ComposeStudyTheme {
         CheckBoxScreen()
     }
 }

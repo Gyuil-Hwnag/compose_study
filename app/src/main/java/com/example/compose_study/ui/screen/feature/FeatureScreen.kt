@@ -1,15 +1,10 @@
 package com.example.compose_study.ui.screen.feature
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
@@ -19,7 +14,6 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -40,7 +34,7 @@ import com.example.compose_study.ui.screen.feature.component.ToolBarScreen
 import com.example.compose_study.ui.screen.feature.component.TopBannerScreen
 import com.example.compose_study.ui.screen.feature.component.UpdateLocationScreen
 import com.example.compose_study.ui.screen.feature.component.UpdateProfileCard
-import com.example.compose_study.ui.theme.Compose_studyTheme
+import com.example.compose_study.ui.theme.ComposeStudyTheme
 import com.google.accompanist.pager.ExperimentalPagerApi
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -103,7 +97,7 @@ fun FeatureScreen(
 @Preview
 @Composable
 fun FeaturePreview() {
-    Compose_studyTheme {
+    ComposeStudyTheme {
         FeatureScreen()
     }
 }

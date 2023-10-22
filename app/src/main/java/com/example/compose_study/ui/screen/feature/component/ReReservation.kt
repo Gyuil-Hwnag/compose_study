@@ -35,7 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.compose_study.R
-import com.example.compose_study.ui.theme.Compose_studyTheme
+import com.example.compose_study.ui.theme.ComposeStudyTheme
 
 @Composable
 fun ReReservationScreen() {
@@ -208,7 +208,7 @@ data class PickMenu(
 @Preview
 @Composable
 fun ReReservationPreview() {
-    Compose_studyTheme {
+    ComposeStudyTheme {
         ReReservationScreen()
     }
 }

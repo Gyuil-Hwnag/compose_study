@@ -1,24 +1,18 @@
 package com.example.compose_study.chap1
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.widthIn
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.compose.rememberImagePainter
 import com.example.compose_study.R
-import com.example.compose_study.ui.theme.Compose_studyTheme
+import com.example.compose_study.ui.theme.ComposeStudyTheme
 
 
 @Composable
@@ -45,7 +39,7 @@ fun ImageExample() {
 @Preview(showBackground = true)
 @Composable
 fun ImagePreview() {
-    Compose_studyTheme {
+    ComposeStudyTheme {
         ImageScreen()
     }
 }

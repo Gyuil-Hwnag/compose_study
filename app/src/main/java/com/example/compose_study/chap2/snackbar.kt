@@ -1,8 +1,6 @@
 package com.example.compose_study.chap2
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Button
 import androidx.compose.material.Scaffold
 import androidx.compose.material.SnackbarDuration
@@ -15,9 +13,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.compose_study.ui.theme.Compose_studyTheme
+import com.example.compose_study.ui.theme.ComposeStudyTheme
 import kotlinx.coroutines.launch
 
 
@@ -60,7 +57,7 @@ fun SnackBarExample() {
 @Preview(showBackground = true)
 @Composable
 fun SnackBarPreview() {
-    Compose_studyTheme {
+    ComposeStudyTheme {
         SnackBarScreen()
     }
 }

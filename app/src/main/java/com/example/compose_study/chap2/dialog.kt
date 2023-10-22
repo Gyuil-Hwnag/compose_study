@@ -10,7 +10,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.compose_study.ui.theme.Compose_studyTheme
+import com.example.compose_study.ui.theme.ComposeStudyTheme
 
 
 @Composable
@@ -59,7 +59,7 @@ fun DialogExample() {
 @Preview(showBackground = true)
 @Composable
 fun DialogPreview() {
-    Compose_studyTheme {
+    ComposeStudyTheme {
         DialogScreen()
     }
 }
