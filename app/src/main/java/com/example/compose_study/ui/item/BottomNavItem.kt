@@ -13,7 +13,6 @@ sealed class BottomNavItem(
     object Slider : BottomNavItem(title = R.string.slider, icon = R.drawable.ic_slider, screenRoute = SLIDER)
     object Todo : BottomNavItem(title = R.string.todo, icon = R.drawable.ic_todo, screenRoute = TODO)
     object Feature : BottomNavItem(title = R.string.feature, icon = R.drawable.ic_feature, screenRoute = FEATURE)
-    object Draw : BottomNavItem(title = R.string.draw, icon = R.drawable.ic_draw, screenRoute = DRAW)
     object Permission : BottomNavItem(title = R.string.permission, icon = R.drawable.ic_permission, screenRoute = PERMISSION)
 	object Draw : BottomNavItem(title = R.string.draw, icon = R.drawable.ic_draw, screenRoute = DRAW)
 }
@@ -28,3 +27,5 @@ const val COLLAPSING = "COLLAPSING"
 const val SLIDER = "SLIDER"
 const val FEATURE = "FEATURE"
 const val PERMISSION = "PERMISSION"
+const val DRAW = "DRAW"
+const val PHOTO = "PHOTO"
