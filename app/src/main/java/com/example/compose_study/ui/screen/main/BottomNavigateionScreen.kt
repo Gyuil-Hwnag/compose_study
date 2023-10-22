@@ -26,7 +26,7 @@ fun BottomNavigationScreen(navController: NavController) {
         BottomNavItem.Slider,
         BottomNavItem.Todo,
         BottomNavItem.Feature,
-        BottomNavItem.Permission
+        BottomNavItem.Permission,
         BottomNavItem.Draw
     )
     BottomNavigation(

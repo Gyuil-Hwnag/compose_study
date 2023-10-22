@@ -1,5 +1,7 @@
 package com.example.compose_study.ui
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -17,17 +19,19 @@ import com.example.compose_study.ui.screen.feature.FeatureScreen
 import com.example.compose_study.ui.screen.home.HomeScreen
 import com.example.compose_study.ui.screen.more.More
 import com.example.compose_study.ui.screen.permission.PermissionScreen
+import com.example.compose_study.ui.screen.photo.PhotoScreen
 import com.example.compose_study.ui.screen.slider.SliderScreen
-import com.example.compose_study.ui.screen.todo.TodoScreen
 import com.example.compose_study.ui.screen.viewpager.ViewpagerScreen
 import com.example.compose_study.ui.screen.viewpagerwithtabbar.ViewPagerWithTabBarScreen
 
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 fun NavigationGraph(
     modifier: Modifier,
     navController: NavHostController
 ) {
     val (value: String, setValue: (String) -> Unit) = remember { mutableStateOf("") }
+    val (selectPhoto: String, setSelectPhoto: (String) -> Unit) = remember { mutableStateOf("") }
 
     NavHost(
         navController = navController,
@@ -80,10 +84,22 @@ fun NavigationGraph(
         }
 
         composable(BottomNavItem.Permission.screenRoute) {
-            PermissionScreen()
+            PermissionScreen(
+                toPhotoPicker = { navController.navigate(PHOTO) },
+                selectedPhoto = selectPhoto
+            )
         }
         composable(BottomNavItem.Draw.screenRoute) {
             DrawScreen()
+        }
+        composable(PHOTO) {
+            PhotoScreen(
+                toBack = { navController.popBackStack() },
+                selectPhoto = {
+                    navController.popBackStack()
+                    setSelectPhoto(it)
+                }
+            )
         }
     }
 }
