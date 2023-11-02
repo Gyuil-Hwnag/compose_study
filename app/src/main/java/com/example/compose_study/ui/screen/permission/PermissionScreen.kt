@@ -7,7 +7,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
-import android.util.Log
+import android.widget.Toast
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -52,12 +52,11 @@ fun PermissionScreen(
         }
 
     val launcherMultiplePermissions = rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissionsMap ->
-        val areGranted = permissionsMap.values.reduce { acc, next -> acc && next }
-
-        when {
-            (permissionsMap[Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED] == true) -> toPhotoPicker()
-            areGranted -> toPhotoPicker()
-            else -> openAppSettings(context = context)
+        val areGranted = permissionsMap.values.reduce { acc, next -> acc || next }
+        if (areGranted) {
+            toPhotoPicker()
+        } else {
+            openAppSettings(context = context)
         }
     }
 
@@ -111,15 +110,20 @@ fun checkAndRequestPermissions(
     launcher: ManagedActivityResultLauncher<Array<String>, Map<String, Boolean>>,
     toPhotoPicker: () -> Unit,
 ) {
-    if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED) == PackageManager.PERMISSION_GRANTED) {
-        Log.d("test", "사진을 일부 허용 하였습니다.")
-        launcher.launch(permissions)
-    } else {
-        if (permissions.all { ContextCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED }) {
+    when (PackageManager.PERMISSION_GRANTED) {
+        ContextCompat.checkSelfPermission(context, Manifest.permission.READ_MEDIA_IMAGES) -> {
+            Toast.makeText(context, "사진 전체 허용 하였습니다.", Toast.LENGTH_SHORT).show()
             toPhotoPicker()
-        } else {
+        }
+
+        ContextCompat.checkSelfPermission(context, Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED) -> {
+            Toast.makeText(context, "사진 일부 허용 하였습니다.", Toast.LENGTH_SHORT).show()
             launcher.launch(permissions)
-            Log.d("test", "권한을 요청하였습니다.")
+        }
+
+        else -> {
+            Toast.makeText(context, "권한을 요청 하였습니다.", Toast.LENGTH_SHORT).show()
+            launcher.launch(permissions)
         }
     }
 }
