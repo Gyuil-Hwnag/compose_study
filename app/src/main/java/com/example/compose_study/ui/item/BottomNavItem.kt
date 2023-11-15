@@ -15,6 +15,7 @@ sealed class BottomNavItem(
     object Feature : BottomNavItem(title = R.string.feature, icon = R.drawable.ic_feature, screenRoute = FEATURE)
     object Permission : BottomNavItem(title = R.string.permission, icon = R.drawable.ic_permission, screenRoute = PERMISSION)
 	object Draw : BottomNavItem(title = R.string.draw, icon = R.drawable.ic_draw, screenRoute = DRAW)
+	object Vibrate : BottomNavItem(title = R.string.vibrate, icon = R.drawable.ic_vibrate, screenRoute = VIBRATE)
 }
 
 const val PAGING = "PAGING"
@@ -28,4 +29,5 @@ const val SLIDER = "SLIDER"
 const val FEATURE = "FEATURE"
 const val PERMISSION = "PERMISSION"
 const val DRAW = "DRAW"
+const val VIBRATE = "VIBRATE"
 const val PHOTO = "PHOTO"

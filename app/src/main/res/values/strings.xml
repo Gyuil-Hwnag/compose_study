@@ -11,6 +11,7 @@
     <string name="feature">Feature</string>
     <string name="permission">Permission</string>
     <string name="draw">Draw</string>
+    <string name="vibrate">Vibrate</string>
     <string name="photo">Photo</string>
 
     <string name="title_profile">프로필</string>

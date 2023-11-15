@@ -92,6 +92,9 @@ fun NavigationGraph(
         composable(BottomNavItem.Draw.screenRoute) {
             DrawScreen()
         }
+        composable(BottomNavItem.Vibrate.screenRoute) {
+            DrawScreen()
+        }
         composable(PHOTO) {
             PhotoScreen(
                 toBack = { navController.popBackStack() },
