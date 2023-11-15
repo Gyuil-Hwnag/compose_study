@@ -27,7 +27,8 @@ fun BottomNavigationScreen(navController: NavController) {
         BottomNavItem.Todo,
         BottomNavItem.Feature,
         BottomNavItem.Permission,
-        BottomNavItem.Draw
+        BottomNavItem.Draw,
+        BottomNavItem.Vibrate
     )
     BottomNavigation(
         backgroundColor = Color.Blue,
