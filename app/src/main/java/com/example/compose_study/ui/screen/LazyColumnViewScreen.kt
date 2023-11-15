@@ -40,15 +40,12 @@ fun PhotoLazyColumn(
     val scrollState = rememberLazyListState()
 
     val lifecycle = LocalLifecycleOwner.current.lifecycle
-    val coroutineScope = rememberCoroutineScope()
 
     LaunchedEffect(key1 = Unit) {
         lifecycle.repeatOnLifecycle(state = Lifecycle.State.STARTED) {
             launch {
                 viewModel.scrollToTopEvent.collectLatest {
-                    coroutineScope.launch {
-                        scrollState.animateScrollToItem(0)
-                    }
+                    scrollState.animateScrollToItem(0)
                 }
             }
         }
