@@ -75,11 +75,24 @@ fun PermissionScreen(
                 modifier = Modifier
                     .background(color = Color.Black)
                     .padding(vertical = 12.dp, horizontal = 16.dp)
-                    .clickable { checkInstagramAppLink(context = context) }
+                    .clickable { checkInstagramAppLink(context = context, url = "https://www.instagram.com/duru_hgi/") }
             ) {
                 Text(
                     modifier = Modifier.background(color = Color.Black),
-                    text = "Instagram",
+                    text = "Instagram 프로필",
+                    color = Color.White
+                )
+            }
+            Spacer(modifier = Modifier.fillMaxWidth().height(12.dp))
+            Surface(
+                modifier = Modifier
+                    .background(color = Color.Black)
+                    .padding(vertical = 12.dp, horizontal = 16.dp)
+                    .clickable { checkInstagramAppLink(context = context, url = "https://www.instagram.com/p/CfhDRMLPeHZ/?utm_source=ig_web_copy_link&igshid=MzRlODBiNWFlZA==") }
+            ) {
+                Text(
+                    modifier = Modifier.background(color = Color.Black),
+                    text = "Instagram 피드",
                     color = Color.White
                 )
             }
@@ -120,7 +133,7 @@ fun PermissionScreen(
 
 fun checkInstagramAppLink(
     context: Context,
-    url: String = "https://www.instagram.com/p/Cy4uMOtLaTY/"
+    url: String
 ): Boolean {
     val uri = Uri.parse(url)
     val isInstagramUri = uri.host?.endsWith("instagram.com") == true
