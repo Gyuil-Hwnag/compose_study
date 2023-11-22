@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -74,6 +75,19 @@ fun PermissionScreen(
                 modifier = Modifier
                     .background(color = Color.Black)
                     .padding(vertical = 12.dp, horizontal = 16.dp)
+                    .clickable { checkInstagramAppLink(context = context) }
+            ) {
+                Text(
+                    modifier = Modifier.background(color = Color.Black),
+                    text = "Instagram",
+                    color = Color.White
+                )
+            }
+            Spacer(modifier = Modifier.fillMaxWidth().height(12.dp))
+            Surface(
+                modifier = Modifier
+                    .background(color = Color.Black)
+                    .padding(vertical = 12.dp, horizontal = 16.dp)
                     .clickable {
                         checkAndRequestPermissions(
                             context = context,
@@ -102,6 +116,24 @@ fun PermissionScreen(
             }
         }
     }
+}
+
+fun checkInstagramAppLink(
+    context: Context,
+    url: String = "https://www.instagram.com/p/Cy4uMOtLaTY/"
+): Boolean {
+    val uri = Uri.parse(url)
+    val isInstagramUri = uri.host?.endsWith("instagram.com") == true
+    val hasInstagramApp: Boolean = context.packageManager?.getLaunchIntentForPackage("com.instagram.android") != null
+
+    if (isInstagramUri && hasInstagramApp) {
+        val intent = Intent(Intent.ACTION_VIEW, uri).apply {
+            setPackage("com.instagram.android")
+        }
+        context.startActivity(intent)
+        return true
+    }
+    return false
 }
 
 fun checkAndRequestPermissions(
