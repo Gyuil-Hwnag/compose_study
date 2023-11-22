@@ -75,6 +75,12 @@ fun VibrateScreen(
                 onClicked = { haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove) }
             )
         }
+        item {
+            HapticButton(
+                type = "EffectClick(실제 사용 FIX)",
+                onClicked = { vibrator.vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK)) }
+            )
+        }
         items(vibrates) {
             VibrateButton(
                 milliseconds = it.first,
