@@ -1,6 +1,12 @@
 package com.example.compose_study.ui.screen.feature.component
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.ContentTransform
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
 import androidx.compose.foundation.interaction.collectIsDraggedAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -85,22 +91,33 @@ fun TopBannerSlider(banners: List<TopBanner>) {
         Column(
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text(
+
+            BannerAnimatedText(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 20.dp),
-                text = banners[pagerState.currentPage % banners.size].title,
-                color = Color.White,
-                fontSize = 22.sp
+                targetText = banners[pagerState.currentPage % banners.size].title,
+                content = {
+                    Text(
+                        text = it,
+                        color = Color.White,
+                        fontSize = 22.sp
+                    )
+                }
             )
 
+
             Row {
-                Text(
-                    modifier = Modifier
-                        .padding(top = 8.dp, start = 20.dp),
-                    text = banners[pagerState.currentPage % banners.size].description,
-                    color = Color.White,
-                    fontSize = 14.sp
+                BannerAnimatedText(
+                    modifier = Modifier.padding(top = 8.dp, start = 20.dp),
+                    targetText = banners[pagerState.currentPage % banners.size].description,
+                    content = {
+                        Text(
+                            text = it,
+                            color = Color.White,
+                            fontSize = 14.sp
+                        )
+                    }
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 BannerIndicator(current = (pagerState.currentPage % banners.size) + 1, totalCount = banners.size)
@@ -134,6 +151,27 @@ fun BannerIndicator(current: Int, totalCount: Int) {
     }
 }
 
+@OptIn(ExperimentalAnimationApi::class)
+@Composable
+fun BannerAnimatedText(
+    modifier: Modifier,
+    content: @Composable (text: String) -> Unit,
+    targetText: String
+) {
+    AnimatedContent(
+        modifier = modifier,
+        targetState = targetText,
+        transitionSpec = {
+            ContentTransform(
+                targetContentEnter = slideInHorizontally { width -> width } + fadeIn(animationSpec = tween(durationMillis = BANNER_TITLE_ANIMATED_TIME)),
+                initialContentExit = fadeOut(animationSpec = tween(durationMillis = 0))
+            )
+        }
+    ) { text ->
+        content(text)
+    }
+}
+
 @ExperimentalPagerApi
 @Preview
 @Composable
@@ -148,3 +186,5 @@ data class TopBanner(
     val title: String,
     val description: String
 )
+
+const val BANNER_TITLE_ANIMATED_TIME = 1500
