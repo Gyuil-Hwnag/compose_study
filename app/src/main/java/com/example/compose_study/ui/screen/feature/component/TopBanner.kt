@@ -10,10 +10,14 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
@@ -32,7 +36,6 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -54,7 +57,7 @@ fun TopBannerScreen(
     TopBannerSlider(banners)
 }
 
-@OptIn(ExperimentalPagerApi::class, ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun TopBannerSlider(banners: List<TopBanner>) {
 //    val pagerState = rememberPagerState(initialPage = banners.infiniteLoopInitPage())
@@ -73,57 +76,6 @@ fun TopBannerSlider(banners: List<TopBanner>) {
 //        }
 //    }
 
-//    Box(
-//        contentAlignment = Alignment.BottomStart
-//    ) {
-//        HorizontalPager(
-//            state = pagerState,
-//            count = Int.MAX_VALUE,
-//            modifier = Modifier.fillMaxWidth()
-//        ) { page ->
-//            TopBannerItem(
-//                modifier = Modifier.onSizeChanged { pageSize = it },
-//                banner = banners[page % banners.size]
-//            )
-//        }
-//
-//        Column(
-//            modifier = Modifier.fillMaxWidth()
-//        ) {
-//
-//            BannerAnimatedText(
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .padding(start = 20.dp),
-//                targetText = banners[pagerState.currentPage % banners.size].title,
-//                content = {
-//                    Text(
-//                        text = it,
-//                        color = Color.White,
-//                        fontSize = 22.sp
-//                    )
-//                }
-//            )
-//
-//
-//            Row {
-//                BannerAnimatedText(
-//                    modifier = Modifier.padding(top = 8.dp, start = 20.dp),
-//                    targetText = banners[pagerState.currentPage % banners.size].description,
-//                    content = {
-//                        Text(
-//                            text = it,
-//                            color = Color.White,
-//                            fontSize = 14.sp
-//                        )
-//                    }
-//                )
-//                Spacer(modifier = Modifier.weight(1f))
-//                BannerIndicator(current = (pagerState.currentPage % banners.size) + 1, totalCount = banners.size)
-//            }
-//            Spacer(modifier = Modifier.size(44.dp))
-//        }
-//    }
     val swipeableState = rememberSwipeableState(0)
     var widthSize = 0f
     val nextDragBehavior by remember {
@@ -147,12 +99,14 @@ fun TopBannerSlider(banners: List<TopBanner>) {
                     anchors = anchors,
                     thresholds = { _, _ -> FractionalThreshold(0.5f) },
                     orientation = Orientation.Horizontal,
-                )
+                ),
+            contentAlignment = Alignment.BottomStart
         ) {
             val currentIndex = swipeableState.currentValue
             val nextIndex = swipeableState.progress.to
             Box(
-                modifier = Modifier.graphicsLayer { translationX = 0f }
+                modifier = Modifier
+                    .graphicsLayer { translationX = 0f }
                     .drawBehind { widthSize = size.width },
             ) {
                 // 뒤에 보이는 그림
@@ -160,43 +114,76 @@ fun TopBannerSlider(banners: List<TopBanner>) {
                     Modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
                 ) {
-                    TopBannerItem(
-                        modifier = Modifier.onSizeChanged { },
-                        banner = if (!nextDragBehavior) banners[nextIndex % banners.size] else banners[nextIndex % banners.size]
-                    )
+                    TopBannerItem(banner = banners[nextIndex % banners.size])
                 }
             }
             Box(
                 modifier = Modifier.graphicsLayer {
-                        translationX = if (!nextDragBehavior) {
-                            - (swipeableState.progress.fraction) * widthSize
-                        } else {
-                            (swipeableState.progress.fraction) * widthSize
-                        }
-                    },
+                    translationX = if (!nextDragBehavior) {
+                        -(swipeableState.progress.fraction) * widthSize
+                    } else {
+                        (swipeableState.progress.fraction) * widthSize
+                    }
+                },
             ) {
                 // 앞에 그림
                 Box(
                     Modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
                 ) {
-                    TopBannerItem(
-                        modifier = Modifier.onSizeChanged { },
-                        banner = banners[currentIndex % banners.size]
+                    TopBannerItem(banner = banners[currentIndex % banners.size])
+                }
+            }
+            Column(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+
+                BannerAnimatedText(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 20.dp),
+                    targetText = banners[currentIndex % banners.size].title,
+                    content = {
+                        Text(
+                            text = it,
+                            color = Color.White,
+                            fontSize = 22.sp
+                        )
+                    }
+                )
+
+
+                Row {
+                    BannerAnimatedText(
+                        modifier = Modifier.padding(top = 8.dp, start = 20.dp),
+                        targetText = banners[currentIndex % banners.size].description,
+                        content = {
+                            Text(
+                                text = it,
+                                color = Color.White,
+                                fontSize = 14.sp
+                            )
+                        }
+                    )
+                    Spacer(modifier = Modifier.weight(1f))
+                    BannerIndicator(
+                        current = (currentIndex % banners.size) + 1,
+                        totalCount = banners.size
                     )
                 }
+                Spacer(modifier = Modifier.size(44.dp))
             }
         }
     }
 }
 
 @Composable
-fun TopBannerItem(modifier: Modifier, banner: TopBanner) {
+fun TopBannerItem(banner: TopBanner) {
     AsyncImage(
         model = banner.imageUri,
         contentDescription = "배너 이미지",
         contentScale = ContentScale.Crop,
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
             .aspectRatio(1f)
@@ -210,7 +197,12 @@ fun BannerIndicator(current: Int, totalCount: Int) {
         shape = RoundedCornerShape(11.dp),
         color = Color(0x4D111111)
     ) {
-        Text(modifier = Modifier.padding(vertical = 4.dp, horizontal = 10.dp), text = "$current / $totalCount", fontSize = 11.sp, color = Color.White)
+        Text(
+            modifier = Modifier.padding(vertical = 4.dp, horizontal = 10.dp),
+            text = "$current / $totalCount",
+            fontSize = 11.sp,
+            color = Color.White
+        )
     }
 }
 
@@ -226,7 +218,11 @@ fun BannerAnimatedText(
         targetState = targetText,
         transitionSpec = {
             ContentTransform(
-                targetContentEnter = slideInHorizontally { width -> width } + fadeIn(animationSpec = tween(durationMillis = BANNER_TITLE_ANIMATED_TIME)),
+                targetContentEnter = slideInHorizontally { width -> width } + fadeIn(
+                    animationSpec = tween(
+                        durationMillis = BANNER_TITLE_ANIMATED_TIME
+                    )
+                ),
                 initialContentExit = fadeOut(animationSpec = tween(durationMillis = 0))
             )
         }
