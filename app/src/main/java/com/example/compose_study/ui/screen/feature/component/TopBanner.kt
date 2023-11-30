@@ -53,10 +53,8 @@ import coil.compose.AsyncImage
 import com.example.compose_study.ui.theme.ComposeStudyTheme
 import com.example.compose_study.utils.endOffsetForPage
 import com.example.compose_study.utils.offsetForPage
-import com.example.compose_study.utils.startOffsetForPage
 import kotlinx.coroutines.delay
 import kotlin.math.absoluteValue
-import kotlin.math.sqrt
 
 /**
  * Scroll Delay 관련 : https://github.com/google/accompanist/issues/1261
@@ -83,10 +81,10 @@ fun TopBannerSlider(banners: List<TopBanner>) {
         LaunchedEffect(key1 = pagerState.currentPage) {
             delay(3000)
             tween<Float>(durationMillis = 1400)
-            pagerState.animateScrollToPage(
-                page = pagerState.currentPage + 1
-            )
-            nextPage = pagerState.currentPage + 1
+//            pagerState.animateScrollToPage(
+//                page = pagerState.currentPage + 1
+//            )
+//            nextPage = pagerState.currentPage + 1
         }
     }
 
@@ -109,15 +107,13 @@ fun TopBannerSlider(banners: List<TopBanner>) {
                     .graphicsLayer {
                         val pageOffset = pagerState.offsetForPage(page)
                         val endOffset = pagerState.endOffsetForPage(page)
-                        val startOffset = pagerState.startOffsetForPage(page)
 
                         translationX = size.width * pageOffset
-                        shape = CirclePath(
+                        shape = RectPath(
                             progress = 1f - endOffset.absoluteValue,
-                            origin = Offset(size.width, offsetY)
+                            origin = Offset(size.width, size.height)
                         )
                         clip = true
-                        alpha = (2f - startOffset) / 2f
                     }
             ) {
                 TopBannerItem(banner = banners[page % banners.size])
@@ -209,21 +205,25 @@ fun BannerAnimatedText(
     }
 }
 
-class CirclePath(private val progress: Float, private val origin: Offset = Offset(0f, 0f)) : Shape {
+class RectPath(private val progress: Float, private val origin: Offset = Offset(0f, 0f)): Shape {
     override fun createOutline(
         size: Size, layoutDirection: LayoutDirection, density: Density
     ): Outline {
 
-        val center = Offset(
-            x = size.center.x - ((size.center.x - origin.x) * (1f - progress)),
-            y = size.center.y - ((size.center.y - origin.y) * (1f - progress)),
+        val startOffset = Offset(
+            x = (size.center.x - (size.center.x - origin.x)) * (1f - progress),
+            y = 0f
         )
-        val radius = (sqrt(size.height * size.height + size.width * size.width) * .5f) * progress
+
+        val boxSize = Size(
+            width = (size.width * size.width * .5f) * progress,
+            height = origin.y
+        )
         return Outline.Generic(Path().apply {
-            addOval(
+            addRect(
                 Rect(
-                    center = center,
-                    radius = radius,
+                    offset = startOffset,
+                    size = boxSize
                 )
             )
         })
