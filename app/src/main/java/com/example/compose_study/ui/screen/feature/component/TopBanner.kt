@@ -44,8 +44,10 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -76,15 +78,16 @@ fun TopBannerSlider(banners: List<TopBanner>) {
     val isDragged by pagerState.interactionSource.collectIsDraggedAsState()
     var nextPage by remember { mutableStateOf(banners.infiniteLoopInitPage()) }
     var offsetY by remember { mutableStateOf(0f) }
+    var pageSize by remember { mutableStateOf(IntSize.Zero) }
 
     if (!isDragged) {
-        LaunchedEffect(key1 = pagerState.currentPage) {
+        LaunchedEffect(key1 = nextPage) {
             delay(3000)
             tween<Float>(durationMillis = 1400)
-//            pagerState.animateScrollToPage(
-//                page = pagerState.currentPage + 1
-//            )
-//            nextPage = pagerState.currentPage + 1
+            pagerState.animateScrollToPage(
+                page = pagerState.currentPage + 1
+            )
+            nextPage = pagerState.currentPage + 1
         }
     }
 
@@ -97,7 +100,7 @@ fun TopBannerSlider(banners: List<TopBanner>) {
                 .pointerInteropFilter {
                     offsetY = it.y
                     false
-                },
+                }.onSizeChanged { pageSize = it },
             state = pagerState,
             pageCount = if (banners.size > 1) Int.MAX_VALUE else 1
         ) { page ->
