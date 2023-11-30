@@ -3,6 +3,10 @@ package com.example.compose_study.utils
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.pager.PagerState
 
+/**
+ * 참고 : https://www.sinasamaki.com/pager-animations/
+ **/
+
 // ACTUAL OFFSET
 @OptIn(ExperimentalFoundationApi::class)
 fun PagerState.offsetForPage(page: Int) = (currentPage - page) + currentPageOffsetFraction
