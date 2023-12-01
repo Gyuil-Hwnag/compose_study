@@ -117,47 +117,38 @@ fun TopBannerSlider(banners: List<TopBanner>) {
                             origin = Offset(size.width, size.height)
                         )
                         clip = true
-                    }
+                    },
+                contentAlignment = Alignment.BottomStart
             ) {
                 TopBannerItem(banner = banners[page % banners.size])
-            }
-        }
 
-        Column(
-            modifier = Modifier.fillMaxWidth()
-        ) {
+                Column(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
 
-            BannerAnimatedText(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 20.dp),
-                targetText = banners[pagerState.currentPage % banners.size].title,
-                content = {
                     Text(
-                        text = it,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 20.dp),
+                        text = banners[pagerState.currentPage % banners.size].title,
                         color = Color.White,
                         fontSize = 22.sp
                     )
-                }
-            )
 
 
-            Row {
-                BannerAnimatedText(
-                    modifier = Modifier.padding(top = 8.dp, start = 20.dp),
-                    targetText = banners[pagerState.currentPage % banners.size].description,
-                    content = {
+                    Row {
                         Text(
-                            text = it,
+                            modifier = Modifier.padding(top = 8.dp, start = 20.dp),
+                            text = banners[pagerState.currentPage % banners.size].description,
                             color = Color.White,
                             fontSize = 14.sp
                         )
+                        Spacer(modifier = Modifier.weight(1f))
+                        BannerIndicator(current = (pagerState.currentPage % banners.size) + 1, totalCount = banners.size)
                     }
-                )
-                Spacer(modifier = Modifier.weight(1f))
-                BannerIndicator(current = (pagerState.currentPage % banners.size) + 1, totalCount = banners.size)
+                    Spacer(modifier = Modifier.size(44.dp))
+                }
             }
-            Spacer(modifier = Modifier.size(44.dp))
         }
     }
 }
