@@ -31,9 +31,9 @@ class FeatureViewModel @Inject constructor(
     }
 
     fun loadTopBanners() {
-        val banner1 = TopBanner(imageUri = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcToWctFQXH8UDrKh45hZk7toE2r-Yocs7ys6g&usqp=CAU", title = "헤어 스타일의 모든것\nBOBBED HAIR STYLE", description = "요즘 유행하는 스타일")
-        val banner2 = TopBanner(imageUri = "https://cdn.travie.com/news/photo/first/201710/img_19975_1.jpg", title = "네일 스타일의 모든것\nBOBBED NAIL STYLE", description = "요즘 유행하는 네일 스타일")
-        val banner3 = TopBanner(imageUri = "https://mblogthumb-phinf.pstatic.net/MjAxODA2MjZfMTMw/MDAxNTMwMDE0NDk2Mzcz.7re42MA5wqJxZlJ8J5FzfDKEEqugtVuhg49bSFYUuYsg.0Y0kjwH4oi1LXXpqrcGaVBch_4eQsyKyVTRsNtg7fCMg.JPEG.ichufs/%EC%82%AC%EC%A7%84%EC%8C%A4%EC%9A%B0%EC%93%B0%EB%9D%BC_3_0%EC%9D%B8%ED%8A%B8%EB%A1%9C.jpg?type=w800", title = "에스테틱의 모든것\nBOBBED ESTHETIC STYLE", description = "요즘 유행하는 에스테틱 스타일")
+        val banner1 = TopBanner(imageUri = "https://mud-kage.kakao.com/dn/blIWAg/btsrNmiPTFm/Mg2IrGwlU7k00p2EzZxH4K/img_750.jpg", title = "요즘 헤어 추구미\n일상에서도 유니크하게", description = "유니크한 헤어 스타일")
+        val banner2 = TopBanner(imageUri = "https://mud-kage.kakao.com/dn/1paLT/btsyFoGNEqm/m7kIsrwvVCg7qHmKkVeLm1/img_750.jpg", title = "남자들의 워너비 헤어\n장발 추천 스타일 모음", description = "남자들의 워너비 장발 스타일")
+        val banner3 = TopBanner(imageUri = "https://mud-kage.kakao.com/dn/9iUwt/btsA20Q4Jq1/KjS7h8paKvYvBnTqFXMIkK/img_750.jpg", title = "비슷해 보여도 달라요!\n알고 쓰면 좋은 홈케어 사용법", description = "홈케어 사용방법")
         _banners.value = listOf(banner1, banner2, banner3, banner1, banner2, banner3)
     }
 
