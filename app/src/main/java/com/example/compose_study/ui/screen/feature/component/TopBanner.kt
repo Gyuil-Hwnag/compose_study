@@ -104,13 +104,12 @@ fun TopBannerSlider(banners: List<TopBanner>) {
             state = pagerState,
             pageCount = if (banners.size > 1) Int.MAX_VALUE else 1
         ) { page ->
+            val pageOffset = pagerState.offsetForPage(page)
+            val endOffset = pagerState.endOffsetForPage(page)
             Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .graphicsLayer {
-                        val pageOffset = pagerState.offsetForPage(page)
-                        val endOffset = pagerState.endOffsetForPage(page)
-
                         translationX = size.width * pageOffset
                         shape = RectPath(
                             progress = 1f - endOffset.absoluteValue,
@@ -120,26 +119,7 @@ fun TopBannerSlider(banners: List<TopBanner>) {
                     },
                 contentAlignment = Alignment.BottomStart
             ) {
-                TopBannerItem(banner = banners[page % banners.size])
-                Column(
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 20.dp),
-                        text = banners[pagerState.currentPage % banners.size].title,
-                        color = Color.White,
-                        fontSize = 22.sp
-                    )
-                    Text(
-                        modifier = Modifier.fillMaxWidth().padding(top = 8.dp, start = 20.dp),
-                        text = banners[pagerState.currentPage % banners.size].description,
-                        color = Color.White,
-                        fontSize = 14.sp
-                    )
-                    Spacer(modifier = Modifier.size(44.dp))
-                }
+                TopBannerItem(banner = banners[page % banners.size], pageOffset = pageOffset)
             }
         }
 
@@ -158,7 +138,7 @@ fun TopBannerSlider(banners: List<TopBanner>) {
 }
 
 @Composable
-fun TopBannerItem(banner: TopBanner) {
+fun TopBannerItem(banner: TopBanner, pageOffset: Float) {
     AsyncImage(
         model = banner.imageUri,
         contentDescription = "배너 이미지",
@@ -168,6 +148,28 @@ fun TopBannerItem(banner: TopBanner) {
             .wrapContentHeight()
             .aspectRatio(1f)
     )
+    Column(
+        modifier = Modifier.fillMaxWidth()
+            .graphicsLayer {
+                translationX = - size.width * pageOffset
+            }
+    ) {
+        Text(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 20.dp),
+            text = banner.title,
+            color = Color.White,
+            fontSize = 22.sp
+        )
+        Text(
+            modifier = Modifier.fillMaxWidth().padding(top = 8.dp, start = 20.dp),
+            text = banner.description,
+            color = Color.White,
+            fontSize = 14.sp
+        )
+        Spacer(modifier = Modifier.size(44.dp))
+    }
 }
 
 @Composable
