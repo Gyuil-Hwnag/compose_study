@@ -40,29 +40,29 @@ import kotlin.math.absoluteValue
 @Composable
 fun StyleBookScreen() {
     val styleBook1 = StyleBook(
-        imgUri = "https://mud-kage.kakao.com/dn/bQyU8I/btr4tNoBsRJ/l2cZnFKF006eMgY2wmwauk/img_750.jpg",
-        title = "선선한 지금 날씨에 어울리는\n산뜻한 커플 헤어 스타일",
-        descrption = "데이트 하기 좋은 헤어스타일"
+        imgUri = "https://mud-kage.kakao.com/dn/L9UdN/btsAJH5wAeB/EtTetfFHsKohELIwNsMlk1/img_750.jpg",
+        title = "요즘 헤어 추구미\n일상에서도 유니크하게",
+        description = "#처피뱅 #해쉬컷 #발레야쥬"
     )
     val styleBook2 = StyleBook(
-        imgUri = "https://mud-kage.kakao.com/dn/dYUUdr/btr4s3evFe6/zHEtmTZtFiPfa1heMkqRG1/img_750.jpg",
-        title = "선선한 지금 날씨에 어울리는\n산뜻한 커플 헤어 스타일",
-        descrption = "데이트 하기 좋은 헤어스타일"
+        imgUri = "https://mud-kage.kakao.com/dn/b7Z4VW/btsz6gGx68s/SOpIKTYerfjzdMCbg52Rvk/img_750.jpg",
+        title = "요즘 헤어 추구미\n러블리 & 페미닌 무드 스타일",
+        description = "#히피펌 #숏컷 #리프컷"
     )
     val styleBook3 = StyleBook(
-        imgUri = "https://mud-kage.kakao.com/dn/bwex7I/btsg1eOUjKe/ewCCw8X4mIB0kfepA3MKOk/img_750.jpg",
-        title = "선선한 지금 날씨에 어울리는\n산뜻한 커플 헤어 스타일",
-        descrption = "데이트 하기 좋은 헤어스타일"
+        imgUri = "https://mud-kage.kakao.com/dn/1paLT/btsyFoGNEqm/m7kIsrwvVCg7qHmKkVeLm1/img_750.jpg",
+        title = "남자들의 워너비 헤어\n장발 추천 스타일 모음",
+        description = "장발로 기를 때 하기 좋은 머리"
     )
     val styleBook4 = StyleBook(
-        imgUri = "https://mud-kage.kakao.com/dn/J5572/btseOiTG9bW/7uZc29XeCaJUR0C56Xi5m1/img_750.jpg",
-        title = "선선한 지금 날씨에 어울리는\n산뜻한 커플 헤어 스타일",
-        descrption = "데이트 하기 좋은 헤어스타일"
+        imgUri = "https://mud-kage.kakao.com/dn/9iUwt/btsA20Q4Jq1/KjS7h8paKvYvBnTqFXMIkK/img_750.jpg",
+        title = "비슷해 보여도 달라요!\n알고 쓰면 좋은 홈케어 사용법",
+        description = "트린트먼트 vs 린스, 뭐가 다를까?"
     )
     val styleBook5 = StyleBook(
-        imgUri = "https://mud-kage.kakao.com/dn/c9hNrZ/btsdGQ4n6TH/ntJH2Z22k5fEkbqwi1xX50/img_750.jpg",
-        title = "선선한 지금 날씨에 어울리는\n산뜻한 커플 헤어 스타일",
-        descrption = "데이트 하기 좋은 헤어스타일"
+        imgUri = "https://mud-kage.kakao.com/dn/b7t8zw/btsAmsOpz89/O7tu3eQUNLEkTyl0bQroIK/img_750.jpg",
+        title = "나에게 딱 맞는\n가을 헤어 컬러는?",
+        description = "피부 톤 찰떡 염색 컬러 추천"
     )
     val styleBooks = listOf(styleBook4, styleBook5, styleBook1, styleBook2, styleBook3, styleBook4, styleBook5, styleBook1, styleBook2)
 
@@ -88,13 +88,13 @@ fun StyleBookScreen() {
             verticalAlignment = Alignment.CenterVertically,
             contentPadding = PaddingValues(end = 40.dp, start = 40.dp)
         ) { page ->
+            // Calculate the absolute offset for the current page from the
+            // scroll position. We use the absolute value which allows us to mirror
+            // any effects for both directions
+            val pageOffset = calculateCurrentOffsetForPage(page).absoluteValue
+            val alphaOffset = (1.3f) * calculateCurrentOffsetForPage(page).absoluteValue
             Card(
-                Modifier.graphicsLayer {
-                        // Calculate the absolute offset for the current page from the
-                        // scroll position. We use the absolute value which allows us to mirror
-                        // any effects for both directions
-                        val pageOffset = calculateCurrentOffsetForPage(page).absoluteValue
-
+                modifier = Modifier.graphicsLayer {
                         // We animate the scaleX + scaleY, between 85% and 100%
                         lerp(
                             start = 0.85f,
@@ -108,7 +108,7 @@ fun StyleBookScreen() {
                 shape = RoundedCornerShape(6.dp),
                 border = BorderStroke(1.dp, Color(0xFFEEEEEE)),
             ) {
-                StyleBookItem(item = styleBooks[page])
+                StyleBookItem(item = styleBooks[page], pageOffset = pageOffset, alphaOffset = (1f - alphaOffset.coerceIn(0f, 1f)))
             }
         }
         Spacer(
@@ -146,11 +146,13 @@ fun StyleBookTitle() {
 }
 
 @Composable
-fun StyleBookItem(item: StyleBook) {
+fun StyleBookItem(item: StyleBook, pageOffset: Float, alphaOffset: Float) {
     Surface(
         modifier = Modifier.fillMaxWidth(),
     ) {
-        Column(modifier = Modifier.fillMaxWidth()) {
+        Column(
+            modifier = Modifier.fillMaxWidth()
+        ) {
             AsyncImage(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -159,7 +161,9 @@ fun StyleBookItem(item: StyleBook) {
                 contentDescription = "스타일북 이미지",
                 contentScale = ContentScale.Crop,
             )
-            Row(modifier = Modifier.offset(y = (-10).dp)) {
+            Row(
+                modifier = Modifier.offset(y = (-10).dp)
+            ) {
                 Spacer(modifier = Modifier.size(18.dp))
                 Surface(
                     color = Color.Black,
@@ -173,22 +177,30 @@ fun StyleBookItem(item: StyleBook) {
                     )
                 }
             }
-            Text(
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 12.dp, horizontal = 20.dp),
-                text = item.title,
-                color = Color.Black,
-                fontSize = 18.sp
-            )
-            Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp),
-                text = item.descrption,
-                color = Color(0xFFAAAAAA),
-                fontSize = 13.sp
-            )
+                    .graphicsLayer {
+                        translationY = size.height * pageOffset
+                    }
+            ) {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 12.dp, horizontal = 20.dp),
+                    text = item.title,
+                    color = Color.Black.copy(alpha = alphaOffset),
+                    fontSize = 18.sp
+                )
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp),
+                    text = item.description,
+                    color = Color(0xFFAAAAAA).copy(alpha = alphaOffset),
+                    fontSize = 13.sp
+                )
+            }
             Spacer(modifier = Modifier.size(24.dp))
         }
 
@@ -198,7 +210,7 @@ fun StyleBookItem(item: StyleBook) {
 data class StyleBook(
     val imgUri: String,
     val title: String,
-    val descrption: String
+    val description: String
 )
 
 @Preview
