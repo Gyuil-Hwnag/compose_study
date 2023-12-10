@@ -139,6 +139,8 @@ fun TopBannerSlider(banners: List<TopBanner>) {
 
 @Composable
 fun TopBannerItem(banner: TopBanner, pageOffset: Float) {
+    val fastParallax = (2 * pageOffset)
+    val defaultParallax = (pageOffset)
     AsyncImage(
         model = banner.imageUri,
         contentDescription = "배너 이미지",
@@ -150,20 +152,25 @@ fun TopBannerItem(banner: TopBanner, pageOffset: Float) {
     )
     Column(
         modifier = Modifier.fillMaxWidth()
-            .graphicsLayer {
-                translationX = - size.width * pageOffset
-            }
     ) {
         Text(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 20.dp),
+                .padding(start = 20.dp)
+                .graphicsLayer {
+                    translationX = - size.width * fastParallax
+                },
             text = banner.title,
             color = Color.White,
             fontSize = 22.sp
         )
         Text(
-            modifier = Modifier.fillMaxWidth().padding(top = 8.dp, start = 20.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 8.dp, start = 20.dp)
+                .graphicsLayer {
+                    translationX = - size.width * defaultParallax
+                },
             text = banner.description,
             color = Color.White,
             fontSize = 14.sp
