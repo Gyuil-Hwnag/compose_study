@@ -88,13 +88,13 @@ fun StyleBookScreen() {
             verticalAlignment = Alignment.CenterVertically,
             contentPadding = PaddingValues(end = 40.dp, start = 40.dp)
         ) { page ->
+            // Calculate the absolute offset for the current page from the
+            // scroll position. We use the absolute value which allows us to mirror
+            // any effects for both directions
+            val pageOffset = calculateCurrentOffsetForPage(page).absoluteValue
+            val alphaOffset = (1.3f) * calculateCurrentOffsetForPage(page).absoluteValue
             Card(
-                Modifier.graphicsLayer {
-                        // Calculate the absolute offset for the current page from the
-                        // scroll position. We use the absolute value which allows us to mirror
-                        // any effects for both directions
-                        val pageOffset = calculateCurrentOffsetForPage(page).absoluteValue
-
+                modifier = Modifier.graphicsLayer {
                         // We animate the scaleX + scaleY, between 85% and 100%
                         lerp(
                             start = 0.85f,
@@ -108,7 +108,7 @@ fun StyleBookScreen() {
                 shape = RoundedCornerShape(6.dp),
                 border = BorderStroke(1.dp, Color(0xFFEEEEEE)),
             ) {
-                StyleBookItem(item = styleBooks[page])
+                StyleBookItem(item = styleBooks[page], pageOffset = pageOffset, alphaOffset = (1f - alphaOffset.coerceIn(0f, 1f)))
             }
         }
         Spacer(
@@ -146,11 +146,13 @@ fun StyleBookTitle() {
 }
 
 @Composable
-fun StyleBookItem(item: StyleBook) {
+fun StyleBookItem(item: StyleBook, pageOffset: Float, alphaOffset: Float) {
     Surface(
         modifier = Modifier.fillMaxWidth(),
     ) {
-        Column(modifier = Modifier.fillMaxWidth()) {
+        Column(
+            modifier = Modifier.fillMaxWidth()
+        ) {
             AsyncImage(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -159,7 +161,9 @@ fun StyleBookItem(item: StyleBook) {
                 contentDescription = "스타일북 이미지",
                 contentScale = ContentScale.Crop,
             )
-            Row(modifier = Modifier.offset(y = (-10).dp)) {
+            Row(
+                modifier = Modifier.offset(y = (-10).dp)
+            ) {
                 Spacer(modifier = Modifier.size(18.dp))
                 Surface(
                     color = Color.Black,
@@ -173,22 +177,30 @@ fun StyleBookItem(item: StyleBook) {
                     )
                 }
             }
-            Text(
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 12.dp, horizontal = 20.dp),
-                text = item.title,
-                color = Color.Black,
-                fontSize = 18.sp
-            )
-            Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp),
-                text = item.description,
-                color = Color(0xFFAAAAAA),
-                fontSize = 13.sp
-            )
+                    .graphicsLayer {
+                        translationY = size.height * pageOffset
+                    }
+            ) {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 12.dp, horizontal = 20.dp),
+                    text = item.title,
+                    color = Color.Black.copy(alpha = alphaOffset),
+                    fontSize = 18.sp
+                )
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp),
+                    text = item.description,
+                    color = Color(0xFFAAAAAA).copy(alpha = alphaOffset),
+                    fontSize = 13.sp
+                )
+            }
             Spacer(modifier = Modifier.size(24.dp))
         }
 
