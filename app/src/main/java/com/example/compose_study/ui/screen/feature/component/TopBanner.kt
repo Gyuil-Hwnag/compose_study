@@ -45,6 +45,8 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.IntSize
@@ -139,6 +141,8 @@ fun TopBannerSlider(banners: List<TopBanner>) {
 
 @Composable
 fun TopBannerItem(banner: TopBanner, pageOffset: Float) {
+    val fastParallax = (2 * pageOffset)
+    val defaultParallax = (pageOffset)
     AsyncImage(
         model = banner.imageUri,
         contentDescription = "배너 이미지",
@@ -150,23 +154,30 @@ fun TopBannerItem(banner: TopBanner, pageOffset: Float) {
     )
     Column(
         modifier = Modifier.fillMaxWidth()
-            .graphicsLayer {
-                translationX = - size.width * pageOffset
-            }
     ) {
         Text(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 20.dp),
+                .padding(start = 20.dp)
+                .graphicsLayer {
+                    translationX = - size.width * fastParallax
+                },
             text = banner.title,
             color = Color.White,
-            fontSize = 22.sp
+            fontSize = 22.sp,
+            fontWeight = FontWeight.Bold
         )
         Text(
-            modifier = Modifier.fillMaxWidth().padding(top = 8.dp, start = 20.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 8.dp, start = 20.dp)
+                .graphicsLayer {
+                    translationX = - size.width * defaultParallax
+                },
             text = banner.description,
             color = Color.White,
-            fontSize = 14.sp
+            fontSize = 14.sp,
+            fontWeight = FontWeight.Light
         )
         Spacer(modifier = Modifier.size(44.dp))
     }
