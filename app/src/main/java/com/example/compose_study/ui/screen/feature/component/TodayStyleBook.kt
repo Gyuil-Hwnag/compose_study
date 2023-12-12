@@ -20,7 +20,6 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -38,7 +37,7 @@ import kotlin.math.absoluteValue
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun StyleBookScreen() {
+fun TodayStyleBookScreen() {
     val styleBook1 = StyleBook(
         imgUri = "https://mud-kage.kakao.com/dn/L9UdN/btsAJH5wAeB/EtTetfFHsKohELIwNsMlk1/img_750.jpg",
         title = "요즘 헤어 추구미\n일상에서도 유니크하게",
@@ -73,7 +72,7 @@ fun StyleBookScreen() {
             .fillMaxWidth()
             .background(Color.White)
     ) {
-        StyleBookTitle()
+        TodayStyleBookTitle()
         HorizontalPager(
             state = pagerState,
             pageCount = Int.MAX_VALUE,
@@ -98,7 +97,7 @@ fun StyleBookScreen() {
                 shape = RoundedCornerShape(6.dp),
                 border = BorderStroke(1.dp, Color(0xFFEEEEEE)),
             ) {
-                StyleBookItem(item = styleBooks[page % styleBooks.size], pageOffset = pageOffset, alphaOffset = (1f - alphaOffset.coerceIn(0f, 1f)))
+                TodayStyleBookItem(item = styleBooks[page % styleBooks.size], pageOffset = pageOffset, alphaOffset = (1f - alphaOffset.coerceIn(0f, 1f)))
             }
         }
         Spacer(modifier = Modifier.fillMaxWidth().size(24.dp))
@@ -111,7 +110,7 @@ fun StyleBookScreen() {
 }
 
 @Composable
-fun StyleBookTitle() {
+fun TodayStyleBookTitle() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -128,7 +127,7 @@ fun StyleBookTitle() {
 }
 
 @Composable
-fun StyleBookItem(item: StyleBook, pageOffset: Float, alphaOffset: Float) {
+fun TodayStyleBookItem(item: StyleBook, pageOffset: Float, alphaOffset: Float) {
     Surface(
         modifier = Modifier.fillMaxWidth(),
     ) {
@@ -199,6 +198,6 @@ data class StyleBook(
 @Composable
 fun StyleBookPreview() {
     ComposeStudyTheme {
-        StyleBookScreen()
+        TodayStyleBookScreen()
     }
 }
