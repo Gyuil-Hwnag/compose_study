@@ -23,7 +23,9 @@ import com.example.compose_study.R
 @Composable
 fun UpdateProfileCard() {
     Column(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp)
     ) {
         Surface(
             modifier = Modifier
