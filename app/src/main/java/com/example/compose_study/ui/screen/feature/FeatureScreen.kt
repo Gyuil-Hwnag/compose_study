@@ -29,6 +29,7 @@ import com.example.compose_study.ui.screen.feature.component.RecommendMenuScreen
 import com.example.compose_study.ui.screen.feature.component.RecommendNailScreen
 import com.example.compose_study.ui.screen.feature.component.RecommendStyleScreen
 import com.example.compose_study.ui.screen.feature.component.ReservationShopScreen
+import com.example.compose_study.ui.screen.feature.component.StyleBookScreen
 import com.example.compose_study.ui.screen.feature.component.TodayStyleBookScreen
 import com.example.compose_study.ui.screen.feature.component.ToolBarScreen
 import com.example.compose_study.ui.screen.feature.component.TopBannerScreen
@@ -89,6 +90,7 @@ fun FeatureScreen(
             NewShopScreen()
             UpdateProfileCard()
             RecentStyleScreen()
+            StyleBookScreen()
             BottomAndroidView(adapter = adapter)
         }
     }

@@ -74,7 +74,7 @@ fun EventBannerScreen() {
             pageCount = Int.MAX_VALUE,
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
-            contentPadding = PaddingValues(end = 12.dp, start = 12.dp)
+            contentPadding = PaddingValues(horizontal = 12.dp)
         ) { page ->
             EventBannerItem(
                 modifier = Modifier.onSizeChanged { pageSize = it },
