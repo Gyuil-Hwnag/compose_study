@@ -86,7 +86,8 @@ fun TopBannerSlider(banners: List<TopBanner>) {
             delay(3000)
             tween<Float>(durationMillis = 1400)
             pagerState.animateScrollToPage(
-                page = pagerState.currentPage + 1
+                page = pagerState.currentPage + 1,
+                animationSpec = tween(durationMillis = 1400)
             )
             nextPage = pagerState.currentPage + 1
         }
