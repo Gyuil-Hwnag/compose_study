@@ -1,6 +1,7 @@
 package com.example.compose_study.ui.screen.feature.component
 
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.collectIsDraggedAsState
@@ -12,6 +13,8 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -34,12 +37,9 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.compose_study.R
 import com.example.compose_study.ui.theme.ComposeStudyTheme
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.delay
 
-@OptIn(ExperimentalPagerApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun EventBannerScreen() {
     val banner1 = EventBanner(
@@ -59,11 +59,11 @@ fun EventBannerScreen() {
     var pageSize by remember { mutableStateOf(IntSize.Zero) }
 
     if (!isDragged) {
-        LaunchedEffect(key1 = pagerState.currentPage) {
+        LaunchedEffect(key1 = nextPage) {
             delay(3000)
-            tween<Float>(durationMillis = 1400)
             pagerState.animateScrollToPage(
-                page = pagerState.currentPage + 1
+                page = pagerState.currentPage + 1,
+                animationSpec = tween(durationMillis = 1400)
             )
             nextPage = pagerState.currentPage + 1
         }
@@ -77,7 +77,7 @@ fun EventBannerScreen() {
         EventBannerTitle()
         HorizontalPager(
             state = pagerState,
-            count = Int.MAX_VALUE,
+            pageCount = Int.MAX_VALUE,
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
             contentPadding = PaddingValues(end = 12.dp, start = 12.dp)
