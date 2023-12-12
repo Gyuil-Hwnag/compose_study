@@ -42,15 +42,9 @@ import kotlinx.coroutines.delay
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun EventBannerScreen() {
-    val banner1 = EventBanner(
-        bannerUri = "https://blog.imqa.io/content/images/2022/08/IMQALITE_------------_-----------.jpg"
-    )
-    val banner2 = EventBanner(
-        bannerUri = "https://png.pngtree.com/thumb_back/fh260/background/20201020/pngtree-minimal-black-friday-event-banner-with-brown-ornament-image_427189.jpg"
-    )
-    val banner3 = EventBanner(
-        bannerUri = "https://png.pngtree.com/thumb_back/fh260/background/20201019/pngtree-abstract-black-friday-event-banner-with-colorful-ornament-image_424224.jpg"
-    )
+    val banner1 = EventBanner(bannerUri = "https://blog.imqa.io/content/images/2022/08/IMQALITE_------------_-----------.jpg")
+    val banner2 = EventBanner(bannerUri = "https://png.pngtree.com/thumb_back/fh260/background/20201020/pngtree-minimal-black-friday-event-banner-with-brown-ornament-image_427189.jpg")
+    val banner3 = EventBanner(bannerUri = "https://png.pngtree.com/thumb_back/fh260/background/20201019/pngtree-abstract-black-friday-event-banner-with-colorful-ornament-image_424224.jpg")
     val banners = listOf(banner1, banner2, banner3)
 
     val pagerState = rememberPagerState(initialPage = banners.infiniteLoopInitPage())
@@ -87,11 +81,7 @@ fun EventBannerScreen() {
                 item = banners[page % banners.size]
             )
         }
-        Spacer(
-            modifier = Modifier
-                .fillMaxWidth()
-                .size(24.dp)
-        )
+        Spacer(modifier = Modifier.fillMaxWidth().size(24.dp))
         Indicator(
             totalDots = banners.size,
             selectedIndex = pagerState.currentPage % banners.size
