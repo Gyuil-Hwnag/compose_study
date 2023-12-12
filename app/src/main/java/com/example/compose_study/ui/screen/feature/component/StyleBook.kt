@@ -1,6 +1,7 @@
 package com.example.compose_study.ui.screen.feature.component
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -12,6 +13,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -30,13 +33,10 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.compose_study.R
 import com.example.compose_study.ui.theme.ComposeStudyTheme
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.calculateCurrentOffsetForPage
-import com.google.accompanist.pager.rememberPagerState
+import com.example.compose_study.utils.offsetForPage
 import kotlin.math.absoluteValue
 
-@OptIn(ExperimentalPagerApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun StyleBookScreen() {
     val styleBook1 = StyleBook(
@@ -64,16 +64,9 @@ fun StyleBookScreen() {
         title = "나에게 딱 맞는\n가을 헤어 컬러는?",
         description = "피부 톤 찰떡 염색 컬러 추천"
     )
-    val styleBooks = listOf(styleBook4, styleBook5, styleBook1, styleBook2, styleBook3, styleBook4, styleBook5, styleBook1, styleBook2)
+    val styleBooks = listOf(styleBook1, styleBook2, styleBook3, styleBook4, styleBook5)
+    val pagerState = rememberPagerState(initialPage = styleBooks.infiniteLoopInitPage())
 
-    val pagerState = rememberPagerState(initialPage = 2)
-
-    LaunchedEffect(key1 = pagerState.currentPage) {
-        when (pagerState.currentPage) {
-            styleBooks.size - 2 -> { pagerState.scrollToPage(2) }
-            1 -> { pagerState.scrollToPage(styleBooks.size - 3) }
-        }
-    }
 
     Column(
         modifier = Modifier
@@ -83,16 +76,13 @@ fun StyleBookScreen() {
         StyleBookTitle()
         HorizontalPager(
             state = pagerState,
-            count = styleBooks.size,
+            pageCount = Int.MAX_VALUE,
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
             contentPadding = PaddingValues(end = 40.dp, start = 40.dp)
         ) { page ->
-            // Calculate the absolute offset for the current page from the
-            // scroll position. We use the absolute value which allows us to mirror
-            // any effects for both directions
-            val pageOffset = calculateCurrentOffsetForPage(page).absoluteValue
-            val alphaOffset = (1.3f) * calculateCurrentOffsetForPage(page).absoluteValue
+            val pageOffset = pagerState.offsetForPage(page = page).absoluteValue
+            val alphaOffset = (1.3f) * pagerState.offsetForPage(page = page).absoluteValue
             Card(
                 modifier = Modifier.graphicsLayer {
                         // We animate the scaleX + scaleY, between 85% and 100%
@@ -108,21 +98,13 @@ fun StyleBookScreen() {
                 shape = RoundedCornerShape(6.dp),
                 border = BorderStroke(1.dp, Color(0xFFEEEEEE)),
             ) {
-                StyleBookItem(item = styleBooks[page], pageOffset = pageOffset, alphaOffset = (1f - alphaOffset.coerceIn(0f, 1f)))
+                StyleBookItem(item = styleBooks[page % styleBooks.size], pageOffset = pageOffset, alphaOffset = (1f - alphaOffset.coerceIn(0f, 1f)))
             }
         }
-        Spacer(
-            modifier = Modifier
-                .fillMaxWidth()
-                .size(24.dp)
-        )
+        Spacer(modifier = Modifier.fillMaxWidth().size(24.dp))
         Indicator(
-            totalDots = styleBooks.size - 4,
-            selectedIndex = when (pagerState.currentPage) {
-                styleBooks.size - 2 -> 0
-                1 -> styleBooks.size - 2
-                else -> pagerState.currentPage - 2
-            }
+            totalDots = styleBooks.size,
+            selectedIndex = pagerState.currentPage % styleBooks.size
         )
         ContentsDivider()
     }
