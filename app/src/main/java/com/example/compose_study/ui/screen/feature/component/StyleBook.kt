@@ -1,9 +1,11 @@
 package com.example.compose_study.ui.screen.feature.component
 
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.interaction.collectIsDraggedAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,6 +22,7 @@ import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -38,12 +41,27 @@ import androidx.compose.ui.unit.sp
 import com.example.compose_study.ui.screen.feature.data.StyleBook
 import com.example.compose_study.ui.screen.feature.data.styleBooks
 import com.example.compose_study.utils.offsetForPage
+import kotlinx.coroutines.delay
 import kotlin.math.absoluteValue
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun StyleBookScreen() {
     val pagerState = rememberPagerState(initialPage = styleBooks.infiniteLoopInitPage())
+    val isDragged by pagerState.interactionSource.collectIsDraggedAsState()
+    var nextPage by remember { mutableStateOf(styleBooks.infiniteLoopInitPage()) }
+
+    if (!isDragged) {
+        LaunchedEffect(key1 = nextPage) {
+            delay(3000)
+            pagerState.animateScrollToPage(
+                page = pagerState.currentPage + 1,
+                animationSpec = tween(durationMillis = 1400)
+            )
+            nextPage = pagerState.currentPage + 1
+        }
+    }
+
     var pageOffset by remember { mutableStateOf(0f) }
     val alphaOffset by remember { derivedStateOf { (1.3f) * pageOffset } }
 
