@@ -135,7 +135,7 @@ fun StyleBookItem(item: StyleBook, pageOffset: Float, alphaOffset: Float) {
 @Composable
 fun StyleBookIndicator(pageOffset: Float, currentPage: Int, pageSize: Int) {
     val animatedProgress = animateFloatAsState(
-        targetValue = (pageOffset + currentPage) / pageSize,
+        targetValue = ((pageOffset + currentPage) / pageSize).coerceIn(0f .. 1f),
         label = ""
     ).value
 
