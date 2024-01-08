@@ -9,10 +9,9 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -35,6 +34,7 @@ import com.example.compose_study.ui.screen.feature.component.ToolBarScreen
 import com.example.compose_study.ui.screen.feature.component.TopBannerScreen
 import com.example.compose_study.ui.screen.feature.component.UpdateLocationScreen
 import com.example.compose_study.ui.screen.feature.component.UpdateProfileCard
+import com.example.compose_study.ui.screen.feature.component.loading.LoadingScreen
 import com.example.compose_study.ui.theme.ComposeStudyTheme
 import com.google.accompanist.pager.ExperimentalPagerApi
 
@@ -45,7 +45,6 @@ fun FeatureScreen(
     viewModel: FeatureViewModel = hiltViewModel()
 ) {
     val scrollState = rememberScrollState()
-    val isExpanded = remember { derivedStateOf { scrollState.value > 200f } }
 
     val adapterConfig = ConcatAdapter.Config.Builder()
         .setIsolateViewTypes(true)
@@ -57,12 +56,14 @@ fun FeatureScreen(
     val banners by viewModel.banners.collectAsState()
     val quickLinks by viewModel.quickLinks.collectAsState()
     val quickCards by viewModel.quickCards.collectAsState()
+    val isLoadingCompleted by viewModel.isLoadingCompleted.collectAsState()
+
+    LaunchedEffect(key1 = isLoadingCompleted) {
+        if (isLoadingCompleted) scrollState.scrollTo(value = 0)
+    }
 
     Scaffold(
-        topBar = {
-            if (!isExpanded.value) ToolBarScreen(scrollState.value.toFloat())
-            else ToolBarScreen()
-        }
+        modifier = Modifier.fillMaxSize()
     ) {
         Column(
             modifier = Modifier
@@ -75,8 +76,8 @@ fun FeatureScreen(
 
             Box(modifier = Modifier.offset(y = (-20).dp)) {
                 Column {
-                    QuickLinkScreen(quickLinks)
-                    QuickCardScreen(quickCards)
+                    if (quickLinks.size >= 3) QuickLinkScreen(quickLinks)
+                    if (quickCards.isNotEmpty()) QuickCardScreen(quickCards)
                 }
             }
             UpdateLocationScreen()
@@ -93,6 +94,8 @@ fun FeatureScreen(
             StyleBookScreen()
             BottomAndroidView(adapter = adapter)
         }
+        LoadingScreen(isLoadingCompleted = isLoadingCompleted, scrollState = scrollState)
+        ToolBarScreen(offset = scrollState.value.toFloat())
     }
 }
 

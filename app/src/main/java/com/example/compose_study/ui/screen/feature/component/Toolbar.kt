@@ -19,8 +19,10 @@ import com.example.compose_study.R
 import com.example.compose_study.ui.theme.ComposeStudyTheme
 
 @Composable
-fun ToolBarScreen(offset: Float = 200f) {
-    val appBarOffset = (offset - 100f) / 100
+fun ToolBarScreen(
+    offset: Float = 200f
+) {
+    val appBarOffset = if (offset >= 200f) 1.0f else (offset - 100f) / 100
     Surface(
         modifier = Modifier.fillMaxWidth(),
         color = Color.White.copy(alpha = appBarOffset.coerceIn(0f..1f))
@@ -28,7 +30,7 @@ fun ToolBarScreen(offset: Float = 200f) {
         TopAppBar(
             modifier = Modifier.fillMaxWidth().statusBarsPadding(),
             title = {
-                Text(text = "kakaohairshop", color = Color.Black, fontSize = 14.sp, modifier = Modifier.alpha(appBarOffset.coerceIn(0f..1f)))
+                Text(text = "FEATURE SCREEN", color = Color.Black, fontSize = 14.sp, modifier = Modifier.alpha(appBarOffset.coerceIn(0f..1f)))
             },
             actions = {
                 TopAppBarActionButton(
