@@ -56,7 +56,7 @@ fun FeatureScreen(
     val banners by viewModel.banners.collectAsState()
     val quickLinks by viewModel.quickLinks.collectAsState()
     val quickCards by viewModel.quickCards.collectAsState()
-    val isLoadingCompleted by viewModel.isLoadingCompleted.collectAsState(initial = false)
+    val isLoadingCompleted by viewModel.isLoadingCompleted.collectAsState()
 
     LaunchedEffect(key1 = isLoadingCompleted) {
         if (isLoadingCompleted) scrollState.scrollTo(value = 0)

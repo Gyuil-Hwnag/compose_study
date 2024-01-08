@@ -8,12 +8,11 @@ import com.example.compose_study.ui.screen.feature.component.TopBanner
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.shareIn
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -30,12 +29,12 @@ class FeatureViewModel @Inject constructor(
     private val _quickCards: MutableStateFlow<List<QuickCardType>> = MutableStateFlow(emptyList())
     val quickCards: StateFlow<List<QuickCardType>> = _quickCards.asStateFlow()
 
-    val isLoadingCompleted: SharedFlow<Boolean> = combine(banners, quickLinks, quickCards) { banners, quickLinks, quickCards ->
+    val isLoadingCompleted: StateFlow<Boolean> = combine(banners, quickLinks, quickCards) { banners, quickLinks, quickCards ->
         banners.isNotEmpty() && quickLinks.isNotEmpty() && quickCards.isNotEmpty()
-    }.shareIn(
+    }.stateIn(
         baseViewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
-        replay = 0
+        initialValue = false
     )
 
     init {
