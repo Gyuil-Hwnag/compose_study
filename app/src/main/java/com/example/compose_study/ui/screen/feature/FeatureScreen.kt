@@ -35,6 +35,7 @@ import com.example.compose_study.ui.screen.feature.component.ToolBarScreen
 import com.example.compose_study.ui.screen.feature.component.TopBannerScreen
 import com.example.compose_study.ui.screen.feature.component.UpdateLocationScreen
 import com.example.compose_study.ui.screen.feature.component.UpdateProfileCard
+import com.example.compose_study.ui.screen.feature.component.loading.LoadingScreen
 import com.example.compose_study.ui.theme.ComposeStudyTheme
 import com.google.accompanist.pager.ExperimentalPagerApi
 
@@ -57,6 +58,7 @@ fun FeatureScreen(
     val banners by viewModel.banners.collectAsState()
     val quickLinks by viewModel.quickLinks.collectAsState()
     val quickCards by viewModel.quickCards.collectAsState()
+    val isLoadingCompleted by viewModel.isLoadingCompleted.collectAsState(initial = false)
 
     Scaffold(
         topBar = {
@@ -75,8 +77,8 @@ fun FeatureScreen(
 
             Box(modifier = Modifier.offset(y = (-20).dp)) {
                 Column {
-                    QuickLinkScreen(quickLinks)
-                    QuickCardScreen(quickCards)
+                    if (quickLinks.size >= 3) QuickLinkScreen(quickLinks)
+                    if (quickCards.isNotEmpty()) QuickCardScreen(quickCards)
                 }
             }
             UpdateLocationScreen()
@@ -93,6 +95,7 @@ fun FeatureScreen(
             StyleBookScreen()
             BottomAndroidView(adapter = adapter)
         }
+        LoadingScreen(isLoadingCompleted = isLoadingCompleted, scrollState = scrollState)
     }
 }
 

@@ -6,9 +6,15 @@ import com.example.compose_study.ui.screen.feature.component.QuickCardType
 import com.example.compose_study.ui.screen.feature.component.QuickLink
 import com.example.compose_study.ui.screen.feature.component.TopBanner
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.shareIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,13 +30,24 @@ class FeatureViewModel @Inject constructor(
     private val _quickCards: MutableStateFlow<List<QuickCardType>> = MutableStateFlow(emptyList())
     val quickCards: StateFlow<List<QuickCardType>> = _quickCards.asStateFlow()
 
+    val isLoadingCompleted: SharedFlow<Boolean> = combine(banners, quickLinks, quickCards) { banners, quickLinks, quickCards ->
+        banners.isNotEmpty() && quickLinks.isNotEmpty() && quickCards.isNotEmpty()
+    }.shareIn(
+        baseViewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        replay = 0
+    )
+
     init {
-        loadTopBanners()
-        loadQuickLinks()
-        loadQuickCards()
+        baseViewModelScope.launch {
+            delay(3000L)
+            loadTopBanners()
+            loadQuickLinks()
+            loadQuickCards()
+        }
     }
 
-    fun loadTopBanners() {
+    private fun loadTopBanners() {
         val banner1 = TopBanner(imageUri = "https://mud-kage.kakao.com/dn/L9UdN/btsAJH5wAeB/EtTetfFHsKohELIwNsMlk1/img_750.jpg", title = "요즘 헤어 추구미\n일상에서도 유니크하게", description = "#처피뱅 #해쉬컷 #발레야쥬")
         val banner2 = TopBanner(imageUri = "https://mud-kage.kakao.com/dn/b7Z4VW/btsz6gGx68s/SOpIKTYerfjzdMCbg52Rvk/img_750.jpg", title = "요즘 헤어 추구미\n러블리 & 페미닌 무드 스타일", description = "#히피펌 #숏컷 #리프컷")
         val banner3 = TopBanner(imageUri = "https://mud-kage.kakao.com/dn/1paLT/btsyFoGNEqm/m7kIsrwvVCg7qHmKkVeLm1/img_750.jpg", title = "남자들의 워너비 헤어\n장발 추천 스타일 모음", description = "장발로 기를 때 하기 좋은 머리")
@@ -39,7 +56,7 @@ class FeatureViewModel @Inject constructor(
         _banners.value = listOf(banner1, banner2, banner3, banner4, banner5)
     }
 
-    fun loadQuickLinks() {
+    private fun loadQuickLinks() {
         val hairQuickLink = QuickLink(title = "헤어샵", description = "컷/펌/염색\n스타일링\n메이크업", imageUri = R.mipmap.ic_quick_hair_foreground)
         val nailQuickLink = QuickLink(title = "네일샵", description = "케어\n네일", imageUri = R.mipmap.ic_quick_nail_foreground)
         val estheticQuickLink = QuickLink(title = "에스테틱", description = "왁싱\n브로우", imageUri = R.mipmap.ic_quick_esthetic_foreground)
@@ -48,10 +65,11 @@ class FeatureViewModel @Inject constructor(
         val subLink2 = QuickLink(title = "\uD83C\uDFC6 어워즈", description = "")
         val subLink3 = QuickLink(title = "⭐️ 리뷰별점높은샵", description = "")
         val subLink4 = QuickLink(title = "\uD83D\uDC87 스타일TIP", description = "")
+
         _quickLists.value = listOf<QuickLink>(hairQuickLink, nailQuickLink, estheticQuickLink, subLink1, subLink2, subLink3, subLink4, subLink1, subLink2, subLink3, subLink4)
     }
 
-    fun loadQuickCards() {
+    private fun loadQuickCards() {
         _quickCards.value = listOf<QuickCardType>(
             QuickCardType.WELCOME,
             QuickCardType.RESERVATION,
