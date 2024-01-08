@@ -9,6 +9,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -56,6 +57,10 @@ fun FeatureScreen(
     val quickLinks by viewModel.quickLinks.collectAsState()
     val quickCards by viewModel.quickCards.collectAsState()
     val isLoadingCompleted by viewModel.isLoadingCompleted.collectAsState(initial = false)
+
+    LaunchedEffect(key1 = isLoadingCompleted) {
+        if (isLoadingCompleted) scrollState.scrollTo(value = 0)
+    }
 
     Scaffold(
         modifier = Modifier.fillMaxSize()
