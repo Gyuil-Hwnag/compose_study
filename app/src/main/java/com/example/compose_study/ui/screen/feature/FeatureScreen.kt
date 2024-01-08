@@ -10,9 +10,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -46,7 +44,6 @@ fun FeatureScreen(
     viewModel: FeatureViewModel = hiltViewModel()
 ) {
     val scrollState = rememberScrollState()
-    val isExpanded = remember { derivedStateOf { scrollState.value > 200f } }
 
     val adapterConfig = ConcatAdapter.Config.Builder()
         .setIsolateViewTypes(true)
@@ -61,10 +58,7 @@ fun FeatureScreen(
     val isLoadingCompleted by viewModel.isLoadingCompleted.collectAsState(initial = false)
 
     Scaffold(
-        topBar = {
-            if (!isExpanded.value) ToolBarScreen(scrollState.value.toFloat())
-            else ToolBarScreen()
-        }
+        modifier = Modifier.fillMaxSize()
     ) {
         Column(
             modifier = Modifier
@@ -96,6 +90,7 @@ fun FeatureScreen(
             BottomAndroidView(adapter = adapter)
         }
         LoadingScreen(isLoadingCompleted = isLoadingCompleted, scrollState = scrollState)
+        ToolBarScreen(offset = scrollState.value.toFloat())
     }
 }
 
