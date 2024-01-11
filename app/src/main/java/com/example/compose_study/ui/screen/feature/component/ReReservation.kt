@@ -38,12 +38,11 @@ import com.example.compose_study.R
 import com.example.compose_study.ui.theme.ComposeStudyTheme
 
 @Composable
-fun ReReservationScreen() {
-    val tabs = listOf<Category>(
-        Category("커트"),
-        Category("펌"),
-        Category("염색")
-    )
+fun ReReservationScreen(
+    tabs: List<Category>,
+    selectedTab: Int,
+    onTabClicked: (Int) -> Unit
+) {
     val menu1 = PickMenu(
         menuImg = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrKuHJGRWc9N7aSxp8Z9b_G1Ypu2ZDI7Bl1g&usqp=CAU",
         menuName = "엑스트라 신데렐라 케라틴 클리닉",
@@ -67,7 +66,6 @@ fun ReReservationScreen() {
         shopReviews = 21,
         pickMenus = listOf(menu1, menu2)
     )
-    var selectIndex by remember { mutableStateOf(0) }
 
     Column(
         modifier = Modifier.fillMaxWidth().background(Color.White)
@@ -75,8 +73,8 @@ fun ReReservationScreen() {
         ReReservationTitle()
         Tab(
             tabs = tabs,
-            selectedTabIndex = selectIndex,
-            onTabClicked = { tabIndex, _ -> selectIndex = tabIndex }
+            selectedTabIndex = selectedTab,
+            onTabClicked = { tabIndex, _ -> onTabClicked(tabIndex) }
         )
         LazyRow(
             modifier = Modifier.fillMaxWidth().padding(vertical = 18.dp),
@@ -209,6 +207,6 @@ data class PickMenu(
 @Composable
 fun ReReservationPreview() {
     ComposeStudyTheme {
-        ReReservationScreen()
+        ReReservationScreen(emptyList(), 0, { Unit })
     }
 }
