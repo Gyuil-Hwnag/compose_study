@@ -2,6 +2,7 @@ package com.example.compose_study.ui.screen.feature.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -32,7 +33,9 @@ import com.example.compose_study.R
 import com.example.compose_study.ui.theme.ComposeStudyTheme
 
 @Composable
-fun RecommendMenuScreen() {
+fun RecommendMenuScreen(
+    onMenuClicked: () -> Unit
+) {
 
     val tabs = listOf<Category>(
         Category("테슬컷"),
@@ -75,7 +78,7 @@ fun RecommendMenuScreen() {
 
     var selectIndex by remember { mutableStateOf(0) }
     Column(
-        modifier = Modifier.fillMaxWidth().background(Color.White)
+        modifier = Modifier.fillMaxWidth().background(Color.White).clickable{ onMenuClicked() }
     ) {
         RecommendMenuTitle()
         Tab(
@@ -142,6 +145,6 @@ data class Menu(
 @Composable
 fun RecommendMenuPreview() {
     ComposeStudyTheme {
-        RecommendMenuScreen()
+        RecommendMenuScreen({})
     }
 }

@@ -83,7 +83,10 @@ fun FeatureScreen(
                 }
             }
             UpdateLocationScreen()
-            RecommendMenuScreen()
+            RecommendMenuScreen {
+                // Tab 관련 테스트를 위한 클릭
+                viewModel.loadReReservationTabs()
+            }
             ReReservationScreen(
                 tabs = tabs,
                 selectedTab = selectedTab,

@@ -48,11 +48,11 @@ class FeatureViewModel @Inject constructor(
 
     init {
         baseViewModelScope.launch {
+            loadReReservationTabs()
             delay(3000L)
             loadTopBanners()
             loadQuickLinks()
             loadQuickCards()
-            loadReReservationTabs()
         }
     }
 
@@ -93,14 +93,14 @@ class FeatureViewModel @Inject constructor(
         )
     }
 
-    private fun loadReReservationTabs() {
+    fun loadReReservationTabs() {
         baseViewModelScope.launch {
+            _selectedTabs.value = 0
             _tabs.value = getRandomTabs()
         }
     }
 
     fun onSelectedTab(tabIndex: Int) = baseViewModelScope.launch {
-        loadReReservationTabs()
         _selectedTabs.value = tabIndex
     }
 }
