@@ -2,9 +2,11 @@ package com.example.compose_study.ui.screen.feature
 
 import com.example.compose_study.R
 import com.example.compose_study.ui.BaseViewModel
+import com.example.compose_study.ui.screen.feature.component.Category
 import com.example.compose_study.ui.screen.feature.component.QuickCardType
 import com.example.compose_study.ui.screen.feature.component.QuickLink
 import com.example.compose_study.ui.screen.feature.component.TopBanner
+import com.example.compose_study.ui.screen.feature.data.getRandomTabs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,6 +16,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import java.lang.Thread.State
 import javax.inject.Inject
 
 @HiltViewModel
@@ -29,6 +32,12 @@ class FeatureViewModel @Inject constructor(
     private val _quickCards: MutableStateFlow<List<QuickCardType>> = MutableStateFlow(emptyList())
     val quickCards: StateFlow<List<QuickCardType>> = _quickCards.asStateFlow()
 
+    private val _tabs: MutableStateFlow<List<Category>> = MutableStateFlow<List<Category>>(emptyList())
+    val tabs: StateFlow<List<Category>> = _tabs.asStateFlow()
+
+    private val _selectedTabs: MutableStateFlow<Int> = MutableStateFlow<Int>(0)
+    val selectedTabs: StateFlow<Int> = _selectedTabs.asStateFlow()
+
     val isLoadingCompleted: StateFlow<Boolean> = combine(banners, quickLinks, quickCards) { banners, quickLinks, quickCards ->
         banners.isNotEmpty() && quickLinks.isNotEmpty() && quickCards.isNotEmpty()
     }.stateIn(
@@ -39,6 +48,7 @@ class FeatureViewModel @Inject constructor(
 
     init {
         baseViewModelScope.launch {
+            loadReReservationTabs()
             delay(3000L)
             loadTopBanners()
             loadQuickLinks()
@@ -81,5 +91,16 @@ class FeatureViewModel @Inject constructor(
             QuickCardType.MY_MENU,
             QuickCardType.NORMAL
         )
+    }
+
+    fun loadReReservationTabs() {
+        baseViewModelScope.launch {
+            _selectedTabs.value = 0
+            _tabs.value = getRandomTabs()
+        }
+    }
+
+    fun onSelectedTab(tabIndex: Int) = baseViewModelScope.launch {
+        _selectedTabs.value = tabIndex
     }
 }

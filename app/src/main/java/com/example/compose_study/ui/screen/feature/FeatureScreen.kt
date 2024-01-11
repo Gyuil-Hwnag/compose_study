@@ -57,6 +57,8 @@ fun FeatureScreen(
     val quickLinks by viewModel.quickLinks.collectAsState()
     val quickCards by viewModel.quickCards.collectAsState()
     val isLoadingCompleted by viewModel.isLoadingCompleted.collectAsState()
+    val tabs by viewModel.tabs.collectAsState()
+    val selectedTab by viewModel.selectedTabs.collectAsState()
 
     LaunchedEffect(key1 = isLoadingCompleted) {
         if (isLoadingCompleted) scrollState.scrollTo(value = 0)
@@ -81,8 +83,15 @@ fun FeatureScreen(
                 }
             }
             UpdateLocationScreen()
-            RecommendMenuScreen()
-            ReReservationScreen()
+            RecommendMenuScreen {
+                // Tab 관련 테스트를 위한 클릭
+                viewModel.loadReReservationTabs()
+            }
+            ReReservationScreen(
+                tabs = tabs,
+                selectedTab = selectedTab,
+                onTabClicked = { viewModel.onSelectedTab(it) }
+            )
             RecommendStyleScreen()
             EventBannerScreen()
             ReservationShopScreen()
