@@ -43,6 +43,7 @@ fun Tab(
     /**
      * Error 코드
      * 내용 비교하면 사실상 같은 코드인데 정리하고 안하고 차이
+     * mutalbe 변수 -> mutable 변수로 수정(tabs가 변경이 되는 리스트 이므로)
      **/
 //    val tabWidths = remember {
 //        val tabWidthStateList = mutableStateListOf<Dp>()
