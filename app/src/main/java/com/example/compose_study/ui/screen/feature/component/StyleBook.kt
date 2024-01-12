@@ -88,9 +88,13 @@ fun StyleBookScreen() {
                 StyleBookItem(item = styleBooks[page % styleBooks.size], pageOffset = pageOffset, alphaOffset = (1f - alphaOffset.coerceIn(0f, 1f)))
             }
         }
-        Spacer(modifier = Modifier.fillMaxWidth().size(12.dp))
+        Spacer(modifier = Modifier
+            .fillMaxWidth()
+            .size(12.dp))
         StyleBookIndicator(pageOffset = pagerState.currentPageOffsetFraction, currentPage = (pagerState.currentPage % styleBooks.size) + 1, pageSize = styleBooks.size)
-        Spacer(modifier = Modifier.fillMaxWidth().size(24.dp))
+        Spacer(modifier = Modifier
+            .fillMaxWidth()
+            .size(24.dp))
         ContentsDivider()
     }
 }
@@ -152,8 +156,13 @@ fun StyleBookItem(item: StyleBook, pageOffset: Float, alphaOffset: Float) {
 
 @Composable
 fun StyleBookIndicator(pageOffset: Float, currentPage: Int, pageSize: Int) {
+    val progressTargetValue = when {
+        ((pageOffset + currentPage) / pageSize) > 1.0f -> ((pageOffset + currentPage) / pageSize) - 1.0f
+        else -> ((pageOffset + currentPage) / pageSize)
+    }.coerceIn(0f .. 1f)
+
     val animatedProgress = animateFloatAsState(
-        targetValue = ((pageOffset + currentPage) / pageSize).coerceIn(0f .. 1f),
+        targetValue = progressTargetValue,
         label = ""
     ).value
 
