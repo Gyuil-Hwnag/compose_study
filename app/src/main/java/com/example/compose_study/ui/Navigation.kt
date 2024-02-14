@@ -16,6 +16,7 @@ import com.example.compose_study.ui.screen.detail.DetailScreen
 import com.example.compose_study.ui.screen.dialog.CustomDialogScreen
 import com.example.compose_study.ui.screen.draw.DrawScreen
 import com.example.compose_study.ui.screen.feature.FeatureScreen
+import com.example.compose_study.ui.screen.foldable.FoldableScreen
 import com.example.compose_study.ui.screen.home.HomeScreen
 import com.example.compose_study.ui.screen.more.More
 import com.example.compose_study.ui.screen.permission.PermissionScreen
@@ -95,6 +96,9 @@ fun NavigationGraph(
         }
         composable(BottomNavItem.Vibrate.screenRoute) {
             VibrateScreen()
+        }
+        composable(BottomNavItem.Foldable.screenRoute) {
+            FoldableScreen()
         }
         composable(PHOTO) {
             PhotoScreen(
