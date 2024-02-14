@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,9 +28,11 @@ fun HomeScreen(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Column(modifier = Modifier
-                .fillMaxWidth()
-                .weight(8f)) {
+            Surface(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(8f)
+            ) {
                 PhotoLazyColumn(photoList = viewModel.photos, onClick = { toDetail(it) })
             }
             TextFieldItem(viewModel)

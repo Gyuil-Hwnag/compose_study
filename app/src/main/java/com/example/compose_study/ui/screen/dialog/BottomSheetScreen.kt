@@ -83,7 +83,7 @@ fun BottomSheetScreen(
                         onClick = {
                             coroutineScope.launch {
                                 if (modalSheetState.isVisible) modalSheetState.hide()
-                                else modalSheetState.animateTo(ModalBottomSheetValue.Expanded)
+                                else modalSheetState.show()
                             }
                         },
                     ) {

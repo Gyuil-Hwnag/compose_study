@@ -47,7 +47,7 @@ import kotlin.math.absoluteValue
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun StyleBookScreen() {
-    val pagerState = rememberPagerState(initialPage = styleBooks.infiniteLoopInitPage())
+    val pagerState = rememberPagerState(initialPage = styleBooks.infiniteLoopInitPage(), pageCount = { Int.MAX_VALUE })
     val isDragged by pagerState.interactionSource.collectIsDraggedAsState()
     var nextPage by remember { mutableStateOf(styleBooks.infiniteLoopInitPage()) }
 
@@ -73,7 +73,6 @@ fun StyleBookScreen() {
         StyleBookTitle()
         HorizontalPager(
             state = pagerState,
-            pageCount = Int.MAX_VALUE,
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) { page ->
