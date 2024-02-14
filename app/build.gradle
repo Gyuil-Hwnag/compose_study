@@ -121,6 +121,10 @@ dependencies {
     // TwoPane (Multi-Windows)
     def adaptive = "0.34.0"
     implementation("com.google.accompanist:accompanist-adaptive:$adaptive")
+
+    // WindowSize
+    def windowSize = "1.2.0"
+    implementation("androidx.compose.material3:material3-window-size-class:$windowSize")
 }
 kapt {
     correctErrorTypes true
