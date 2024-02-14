@@ -117,6 +117,10 @@ dependencies {
 
     // Compose
     implementation("androidx.compose.foundation:foundation:1.4.0-beta02")
+
+    // TwoPane (Multi-Windows)
+    def adaptive = "0.34.0"
+    implementation("com.google.accompanist:accompanist-adaptive:$adaptive")
 }
 kapt {
     correctErrorTypes true
