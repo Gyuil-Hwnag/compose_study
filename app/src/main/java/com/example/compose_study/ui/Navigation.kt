@@ -98,7 +98,12 @@ fun NavigationGraph(
             VibrateScreen()
         }
         composable(BottomNavItem.Foldable.screenRoute) {
-            FoldableScreen()
+            FoldableScreen(
+                toDetail = {
+                    setValue(it)
+                    navController.navigate(DETAIL)
+                }
+            )
         }
         composable(PHOTO) {
             PhotoScreen(

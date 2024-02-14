@@ -32,4 +32,10 @@ class DetailViewModel @Inject constructor(
             _photoState.value = getPhotoUseCase.invoke(id = id)
         }
     }
+
+    fun getEmptyView() {
+        baseViewModelScope.launch {
+            _photoState.value = null
+        }
+    }
 }

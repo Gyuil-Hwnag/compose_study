@@ -91,7 +91,7 @@ fun BottomSheetScreen(
                     }
                 }
 
-                if(showDialog) {
+                if (showDialog) {
                     CustomDialogScreen(
                         onDismiss = {
                             showDialog = false
