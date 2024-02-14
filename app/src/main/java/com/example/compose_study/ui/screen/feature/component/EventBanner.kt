@@ -47,7 +47,7 @@ fun EventBannerScreen() {
     val banner3 = EventBanner(bannerUri = "https://png.pngtree.com/thumb_back/fh260/background/20201019/pngtree-abstract-black-friday-event-banner-with-colorful-ornament-image_424224.jpg")
     val banners = listOf(banner1, banner2, banner3)
 
-    val pagerState = rememberPagerState(initialPage = banners.infiniteLoopInitPage())
+    val pagerState = rememberPagerState(initialPage = banners.infiniteLoopInitPage(), pageCount = { Int.MAX_VALUE })
     val isDragged by pagerState.interactionSource.collectIsDraggedAsState()
     var nextPage by remember { mutableStateOf(banners.infiniteLoopInitPage()) }
     var pageSize by remember { mutableStateOf(IntSize.Zero) }
@@ -71,7 +71,6 @@ fun EventBannerScreen() {
         EventBannerTitle()
         HorizontalPager(
             state = pagerState,
-            pageCount = Int.MAX_VALUE,
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
             contentPadding = PaddingValues(horizontal = 12.dp)

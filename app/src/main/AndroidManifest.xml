@@ -51,10 +51,8 @@
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode"
             android:exported="true"
             android:label="@string/app_name"
-            android:minAspectRatio="1.8"
-            android:screenOrientation="portrait"
             android:theme="@style/Theme.Compose_study"
-            tools:ignore="LockedOrientationActivity,RedundantLabel">
+            tools:ignore="RedundantLabel">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

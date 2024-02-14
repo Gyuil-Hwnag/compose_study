@@ -40,6 +40,11 @@ fun Loading() {
 }
 
 @Composable
+fun Empty() {
+    Box(modifier = Modifier.fillMaxSize().background(Color.White.copy(0.1f)),)
+}
+
+@Composable
 fun ScrollToTopButton(onClick: () -> Unit, modifier: Modifier) {
     Column(
         modifier = modifier
