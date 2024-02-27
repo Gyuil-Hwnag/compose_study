@@ -40,7 +40,7 @@ import kotlin.math.absoluteValue
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun TodayStyleBookScreen() {
-    val pagerState = rememberPagerState(initialPage = styleBooks.infiniteLoopInitPage(), pageCount = { Int.MAX_VALUE })
+    val pagerState = rememberPagerState(initialPage = styleBooks.infiniteLoopInitPage(), pageCount = { styleBooks.size })
 
 
     Column(
