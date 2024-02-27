@@ -17,6 +17,7 @@ sealed class BottomNavItem(
 	object Draw : BottomNavItem(title = R.string.draw, icon = R.drawable.ic_draw, screenRoute = DRAW)
 	object Vibrate : BottomNavItem(title = R.string.vibrate, icon = R.drawable.ic_vibrate, screenRoute = VIBRATE)
     object Foldable : BottomNavItem(title = R.string.foldable, icon = R.drawable.ic_foldable, screenRoute = FOLDABLE)
+    object StyleBook : BottomNavItem(title = R.string.stylebook, icon = R.drawable.ic_stylebook, screenRoute = STYLEBOOK)
 }
 
 const val PAGING = "PAGING"
@@ -33,3 +34,4 @@ const val DRAW = "DRAW"
 const val VIBRATE = "VIBRATE"
 const val PHOTO = "PHOTO"
 const val FOLDABLE = "FOLDABLE"
+const val STYLEBOOK = "STYLEBOOK"
