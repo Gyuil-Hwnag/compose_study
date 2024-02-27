@@ -1,4 +1,4 @@
-package com.example.compose_study.ui.screen.feature.component
+package com.example.compose_study.ui.screen.stylebook
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -38,6 +38,8 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.compose_study.ui.screen.feature.component.ContentsDivider
+import com.example.compose_study.ui.screen.feature.component.infiniteLoopInitPage
 import com.example.compose_study.ui.screen.feature.data.StyleBook
 import com.example.compose_study.ui.screen.feature.data.styleBooks
 import com.example.compose_study.utils.offsetForPage
@@ -46,7 +48,7 @@ import kotlin.math.absoluteValue
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun StyleBookScreen() {
+fun StyleBannerScreen() {
     val pagerState = rememberPagerState(initialPage = styleBooks.infiniteLoopInitPage(), pageCount = { Int.MAX_VALUE })
     val isDragged by pagerState.interactionSource.collectIsDraggedAsState()
     var nextPage by remember { mutableStateOf(styleBooks.infiniteLoopInitPage()) }
