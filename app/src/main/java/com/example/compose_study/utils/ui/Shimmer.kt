@@ -1,4 +1,4 @@
-package com.example.compose_study.utils
+package com.example.compose_study.utils.ui
 
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode

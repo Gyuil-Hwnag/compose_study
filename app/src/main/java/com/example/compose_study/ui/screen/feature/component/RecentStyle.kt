@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.compose_study.R
 import com.example.compose_study.ui.theme.ComposeStudyTheme
+import com.example.compose_study.utils.ContentsDivider
 
 @Composable
 fun RecentStyleScreen() {

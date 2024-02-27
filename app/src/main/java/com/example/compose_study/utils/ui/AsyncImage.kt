@@ -1,4 +1,4 @@
-package com.example.compose_study.ui.screen.feature.component
+package com.example.compose_study.utils.ui
 
 import android.os.Build.VERSION.SDK_INT
 import androidx.compose.runtime.Composable

@@ -32,4 +32,10 @@ private val styleBook5 = StyleBook(
     description = "피부 톤 찰떡 염색 컬러 추천"
 )
 
-val styleBooks = listOf(styleBook1, styleBook2, styleBook3, styleBook4, styleBook5)
+val styleBookBanners =  listOf(styleBook1, styleBook2, styleBook3, styleBook4, styleBook5)
+val styleBooks = listOf(
+    styleBook1, styleBook2, styleBook3, styleBook4, styleBook5, styleBook1, styleBook2, styleBook3, styleBook4, styleBook5, styleBook1, styleBook2, styleBook3, styleBook4, styleBook5,
+    styleBook1, styleBook2, styleBook3, styleBook4, styleBook5, styleBook1, styleBook2, styleBook3, styleBook4, styleBook5, styleBook1, styleBook2, styleBook3, styleBook4, styleBook5,
+    styleBook1, styleBook2, styleBook3, styleBook4, styleBook5, styleBook1, styleBook2, styleBook3, styleBook4, styleBook5, styleBook1, styleBook2, styleBook3, styleBook4, styleBook5,
+    styleBook1, styleBook2, styleBook3, styleBook4, styleBook5, styleBook1, styleBook2, styleBook3, styleBook4, styleBook5, styleBook1, styleBook2, styleBook3, styleBook4, styleBook5
+)

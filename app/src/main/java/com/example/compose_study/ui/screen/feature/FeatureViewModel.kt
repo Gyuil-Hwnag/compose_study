@@ -2,7 +2,7 @@ package com.example.compose_study.ui.screen.feature
 
 import com.example.compose_study.R
 import com.example.compose_study.ui.BaseViewModel
-import com.example.compose_study.ui.screen.feature.component.Category
+import com.example.compose_study.utils.ui.Category
 import com.example.compose_study.ui.screen.feature.component.QuickCardType
 import com.example.compose_study.ui.screen.feature.component.QuickLink
 import com.example.compose_study.ui.screen.feature.component.TopBanner
@@ -16,7 +16,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import java.lang.Thread.State
 import javax.inject.Inject
 
 @HiltViewModel

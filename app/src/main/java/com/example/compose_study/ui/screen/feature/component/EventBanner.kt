@@ -37,6 +37,9 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.compose_study.R
 import com.example.compose_study.ui.theme.ComposeStudyTheme
+import com.example.compose_study.utils.ContentsDivider
+import com.example.compose_study.utils.ui.DotsIndicator
+import com.example.compose_study.utils.infiniteLoopInitPage
 import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -47,7 +50,7 @@ fun EventBannerScreen() {
     val banner3 = EventBanner(bannerUri = "https://png.pngtree.com/thumb_back/fh260/background/20201019/pngtree-abstract-black-friday-event-banner-with-colorful-ornament-image_424224.jpg")
     val banners = listOf(banner1, banner2, banner3)
 
-    val pagerState = rememberPagerState(initialPage = banners.infiniteLoopInitPage(), pageCount = { Int.MAX_VALUE })
+    val pagerState = rememberPagerState(initialPage = 0, pageCount = { banners.size })
     val isDragged by pagerState.interactionSource.collectIsDraggedAsState()
     var nextPage by remember { mutableStateOf(banners.infiniteLoopInitPage()) }
     var pageSize by remember { mutableStateOf(IntSize.Zero) }
@@ -81,7 +84,7 @@ fun EventBannerScreen() {
             )
         }
         Spacer(modifier = Modifier.fillMaxWidth().size(24.dp))
-        Indicator(
+        DotsIndicator(
             totalDots = banners.size,
             selectedIndex = pagerState.currentPage % banners.size
         )

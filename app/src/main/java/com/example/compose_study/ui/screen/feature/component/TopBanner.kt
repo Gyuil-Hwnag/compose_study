@@ -55,6 +55,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.compose_study.ui.theme.ComposeStudyTheme
 import com.example.compose_study.utils.endOffsetForPage
+import com.example.compose_study.utils.infiniteLoopInitPage
 import com.example.compose_study.utils.offsetForPage
 import kotlinx.coroutines.delay
 import kotlin.math.absoluteValue
@@ -75,7 +76,7 @@ fun TopBannerScreen(
 @OptIn(ExperimentalFoundationApi::class, ExperimentalComposeUiApi::class)
 @Composable
 fun TopBannerSlider(banners: List<TopBanner>) {
-    val pagerState = rememberPagerState(initialPage = banners.infiniteLoopInitPage(), pageCount = { if (banners.size > 1) Int.MAX_VALUE else 1 })
+    val pagerState = rememberPagerState(initialPage = 0, pageCount = { banners.size })
     val isDragged by pagerState.interactionSource.collectIsDraggedAsState()
     var nextPage by remember { mutableStateOf(banners.infiniteLoopInitPage()) }
     var offsetY by remember { mutableStateOf(0f) }

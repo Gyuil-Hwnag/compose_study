@@ -1,4 +1,4 @@
-package com.example.compose_study.ui.screen.feature.component
+package com.example.compose_study.utils.behavior
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource

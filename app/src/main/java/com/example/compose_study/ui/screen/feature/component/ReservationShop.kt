@@ -30,6 +30,10 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.compose_study.R
 import com.example.compose_study.ui.theme.ComposeStudyTheme
+import com.example.compose_study.utils.ui.Category
+import com.example.compose_study.utils.ContentsDivider
+import com.example.compose_study.utils.ui.DotsIndicator
+import com.example.compose_study.utils.ui.LineIndicatorTabs
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
@@ -79,7 +83,7 @@ fun ReservationShopScreen() {
             .background(Color.White)
     ) {
         ReservationTitle()
-        Tab(
+        LineIndicatorTabs(
             tabs = tabs,
             selectedTabIndex = selectIndex,
             onTabClicked = { tabIndex, _ -> selectIndex = tabIndex }
@@ -100,7 +104,7 @@ fun ReservationShopScreen() {
                 .fillMaxWidth()
                 .size(24.dp)
         )
-        Indicator(
+        DotsIndicator(
             totalDots = reservations.size,
             selectedIndex = state.currentPage
         )

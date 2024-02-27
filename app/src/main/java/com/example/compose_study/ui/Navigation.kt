@@ -22,6 +22,7 @@ import com.example.compose_study.ui.screen.more.More
 import com.example.compose_study.ui.screen.permission.PermissionScreen
 import com.example.compose_study.ui.screen.photo.PhotoScreen
 import com.example.compose_study.ui.screen.slider.SliderScreen
+import com.example.compose_study.ui.screen.stylebook.StyleBookScreen
 import com.example.compose_study.ui.screen.vibrate.VibrateScreen
 import com.example.compose_study.ui.screen.viewpager.ViewpagerScreen
 import com.example.compose_study.ui.screen.viewpagerwithtabbar.ViewPagerWithTabBarScreen
@@ -104,6 +105,9 @@ fun NavigationGraph(
                     navController.navigate(DETAIL)
                 }
             )
+        }
+        composable(BottomNavItem.StyleBook.screenRoute) {
+            StyleBookScreen()
         }
         composable(PHOTO) {
             PhotoScreen(

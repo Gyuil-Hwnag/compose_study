@@ -1,4 +1,4 @@
-package com.example.compose_study.ui.screen.feature.component
+package com.example.compose_study.utils.ui
 
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateDpAsState
@@ -57,7 +57,7 @@ fun Modifier.tabIndicatorOffset(
 }
 
 @Composable
-fun Indicator(
+fun DotsIndicator(
     totalDots: Int,
     selectedIndex: Int
 ) {
