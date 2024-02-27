@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.compose_study.R
 import com.example.compose_study.ui.screen.feature.component.clickableSingle
+import com.example.compose_study.utils.HorizontalDivider
 import com.example.compose_study.utils.VerticalDivider
 
 @Composable
@@ -32,7 +33,7 @@ fun StyleBookHeader(
     onPhotoClicked: () -> Unit
 ) {
     val colorAlpha = (offset / 100).coerceIn(0f..1f)
-    val iconWidth = 96 * ((100f - offset) / 100).coerceIn(0.7f .. 1f)
+    val iconWidth = 100 * ((100f - offset) / 100).coerceIn(0.7f .. 1f)
     val iconHeight = 44 * ((100f - offset) / 100).coerceIn(0.7f .. 1f)
     Surface(
         color = Color.White.copy(alpha = colorAlpha),
@@ -55,16 +56,24 @@ fun StyleBookHeader(
                     color = Color.Black.copy(alpha = colorAlpha)
                 )
                 IconButton(
-                    modifier = Modifier.width(iconWidth.dp).height(iconHeight.dp),
+                    modifier = Modifier
+                        .width(iconWidth.dp)
+                        .height(iconHeight.dp),
                     onClick = {}
                 ) {
-                    Row {
+                    Row(
+                        modifier = Modifier
+                            .width(iconWidth.dp)
+                            .height(iconHeight.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.End
+                    ) {
                         Icon(
                             modifier = Modifier.clickableSingle { onSearchClicked() },
                             painter = painterResource(R.drawable.ic_search),
                             contentDescription = "임시 아이콘",
                         )
-                        VerticalDivider(dp = 8)
+                        HorizontalDivider(dp = 12)
                         Icon(
                             modifier = Modifier.clickableSingle { onPhotoClicked() },
                             painter = painterResource(R.drawable.ic_photo),

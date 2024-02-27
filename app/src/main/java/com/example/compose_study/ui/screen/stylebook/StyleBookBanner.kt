@@ -41,7 +41,9 @@ import androidx.compose.ui.unit.sp
 import com.example.compose_study.ui.screen.feature.component.ContentsDivider
 import com.example.compose_study.ui.screen.feature.component.infiniteLoopInitPage
 import com.example.compose_study.ui.screen.feature.data.StyleBook
+import com.example.compose_study.ui.screen.feature.data.styleBookBanners
 import com.example.compose_study.ui.screen.feature.data.styleBooks
+import com.example.compose_study.utils.VerticalDivider
 import com.example.compose_study.utils.offsetForPage
 import kotlinx.coroutines.delay
 import kotlin.math.absoluteValue
@@ -49,9 +51,9 @@ import kotlin.math.absoluteValue
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun StyleBannerScreen() {
-    val pagerState = rememberPagerState(initialPage = 0, pageCount = { styleBooks.size })
+    val pagerState = rememberPagerState(initialPage = 0, pageCount = { styleBookBanners.size })
     val isDragged by pagerState.interactionSource.collectIsDraggedAsState()
-    var nextPage by remember { mutableStateOf(styleBooks.infiniteLoopInitPage()) }
+    var nextPage by remember { mutableStateOf(styleBookBanners.infiniteLoopInitPage()) }
 
     if (!isDragged) {
         LaunchedEffect(key1 = nextPage) {
@@ -86,17 +88,12 @@ fun StyleBannerScreen() {
                 shape = RoundedCornerShape(6.dp),
                 border = BorderStroke(1.dp, Color(0xFFEEEEEE)),
             ) {
-                StyleBookItem(item = styleBooks[page % styleBooks.size], pageOffset = pageOffset, alphaOffset = (1f - alphaOffset.coerceIn(0f, 1f)))
+                StyleBookBannerItem(item = styleBookBanners[page % styleBookBanners.size], pageOffset = pageOffset, alphaOffset = (1f - alphaOffset.coerceIn(0f, 1f)))
             }
         }
-        Spacer(modifier = Modifier
-            .fillMaxWidth()
-            .size(12.dp))
-        StyleBookIndicator(pageOffset = pagerState.currentPageOffsetFraction, currentPage = (pagerState.currentPage % styleBooks.size) + 1, pageSize = styleBooks.size)
-        Spacer(modifier = Modifier
-            .fillMaxWidth()
-            .size(24.dp))
-        ContentsDivider()
+        VerticalDivider(dp = 12)
+        StyleBookBannerIndicator(pageOffset = pagerState.currentPageOffsetFraction, currentPage = (pagerState.currentPage % styleBookBanners.size) + 1, pageSize = styleBookBanners.size)
+        VerticalDivider(dp = 12)
     }
 }
 
@@ -114,7 +111,7 @@ fun StyleBookTitle() {
 }
 
 @Composable
-fun StyleBookItem(item: StyleBook, pageOffset: Float, alphaOffset: Float) {
+fun StyleBookBannerItem(item: StyleBook, pageOffset: Float, alphaOffset: Float) {
     Box(
         modifier = Modifier.fillMaxWidth(),
         contentAlignment = Alignment.BottomStart
@@ -156,7 +153,7 @@ fun StyleBookItem(item: StyleBook, pageOffset: Float, alphaOffset: Float) {
 }
 
 @Composable
-fun StyleBookIndicator(pageOffset: Float, currentPage: Int, pageSize: Int) {
+fun StyleBookBannerIndicator(pageOffset: Float, currentPage: Int, pageSize: Int) {
     val progressTargetValue = when {
         ((pageOffset + currentPage) / pageSize) > 1.0f -> ((pageOffset + currentPage) / pageSize) - 1.0f
         else -> ((pageOffset + currentPage) / pageSize)
