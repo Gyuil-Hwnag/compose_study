@@ -5,10 +5,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
@@ -21,9 +20,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.compose_study.R
-import com.example.compose_study.ui.screen.feature.component.clickableSingle
-import com.example.compose_study.utils.HorizontalDivider
-import com.example.compose_study.utils.VerticalDivider
+import com.example.compose_study.utils.ColorLineDivider
 
 @Composable
 fun StyleBookHeader(
@@ -33,8 +30,8 @@ fun StyleBookHeader(
     onPhotoClicked: () -> Unit
 ) {
     val colorAlpha = (offset / 100).coerceIn(0f..1f)
-    val iconWidth = 100 * ((100f - offset) / 100).coerceIn(0.7f .. 1f)
-    val iconHeight = 44 * ((100f - offset) / 100).coerceIn(0.7f .. 1f)
+    val iconButtonSize = 44 * ((100f - offset) / 100).coerceIn(0.8f .. 1f)
+    val iconSize = 22 * ((100f - offset) / 100).coerceIn(0.9f .. 1f)
     Surface(
         color = Color.White.copy(alpha = colorAlpha),
     ) {
@@ -49,35 +46,38 @@ fun StyleBookHeader(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Spacer(modifier = Modifier.width(iconWidth.dp).height(iconHeight.dp))
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Spacer(modifier = Modifier.size(iconButtonSize.dp))
+                    Spacer(modifier = Modifier.size(iconButtonSize.dp))
+                }
                 Text(
                     text = title,
                     fontSize = 15.sp,
                     color = Color.Black.copy(alpha = colorAlpha)
                 )
-                IconButton(
-                    modifier = Modifier
-                        .width(iconWidth.dp)
-                        .height(iconHeight.dp),
-                    onClick = {}
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Row(
-                        modifier = Modifier
-                            .width(iconWidth.dp)
-                            .height(iconHeight.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.End
+                    IconButton(
+                        modifier = Modifier.size(iconButtonSize.dp),
+                        onClick = { onSearchClicked() }
                     ) {
                         Icon(
-                            modifier = Modifier.clickableSingle { onSearchClicked() },
-                            painter = painterResource(R.drawable.ic_search),
+                            modifier = Modifier.size(iconSize.dp),
+                            painter = painterResource(R.drawable.ic_star),
                             contentDescription = "임시 아이콘",
                         )
-                        HorizontalDivider(dp = 12)
+                    }
+                    IconButton(
+                        modifier = Modifier.size(iconButtonSize.dp),
+                        onClick = { onPhotoClicked() }
+                    ) {
                         Icon(
-                            modifier = Modifier.clickableSingle { onPhotoClicked() },
-                            painter = painterResource(R.drawable.ic_photo),
-                            contentDescription = "임시 아이콘"
+                            modifier = Modifier.size(iconSize.dp),
+                            painter = painterResource(R.drawable.ic_notification),
+                            contentDescription = "임시 아이콘",
                         )
                     }
                 }
