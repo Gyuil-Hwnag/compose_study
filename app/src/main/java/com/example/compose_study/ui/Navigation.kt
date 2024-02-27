@@ -16,13 +16,13 @@ import com.example.compose_study.ui.screen.detail.DetailScreen
 import com.example.compose_study.ui.screen.dialog.CustomDialogScreen
 import com.example.compose_study.ui.screen.draw.DrawScreen
 import com.example.compose_study.ui.screen.feature.FeatureScreen
-import com.example.compose_study.ui.screen.feature.component.StyleBookScreen
 import com.example.compose_study.ui.screen.foldable.FoldableScreen
 import com.example.compose_study.ui.screen.home.HomeScreen
 import com.example.compose_study.ui.screen.more.More
 import com.example.compose_study.ui.screen.permission.PermissionScreen
 import com.example.compose_study.ui.screen.photo.PhotoScreen
 import com.example.compose_study.ui.screen.slider.SliderScreen
+import com.example.compose_study.ui.screen.stylebook.StyleBookScreen
 import com.example.compose_study.ui.screen.vibrate.VibrateScreen
 import com.example.compose_study.ui.screen.viewpager.ViewpagerScreen
 import com.example.compose_study.ui.screen.viewpagerwithtabbar.ViewPagerWithTabBarScreen

@@ -100,7 +100,6 @@ fun FeatureScreen(
             NewShopScreen()
             UpdateProfileCard()
             RecentStyleScreen()
-            StyleBannerScreen()
             BottomAndroidView(adapter = adapter)
         }
         LoadingScreen(isLoadingCompleted = isLoadingCompleted, scrollState = scrollState)

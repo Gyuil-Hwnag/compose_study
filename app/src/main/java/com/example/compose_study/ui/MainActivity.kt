@@ -1,5 +1,6 @@
 package com.example.compose_study.ui
 
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -33,10 +34,12 @@ fun MainScreenView() {
         modifier = Modifier.fillMaxSize(),
         bottomBar = { BottomNavigationScreen(navController = navController) }
     ) { contentPadding ->
-        NavigationGraph(
-            navController = navController,
-            modifier = Modifier.padding(contentPadding)
-        )
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            NavigationGraph(
+                navController = navController,
+                modifier = Modifier.padding(contentPadding)
+            )
+        }
     }
 }
 
