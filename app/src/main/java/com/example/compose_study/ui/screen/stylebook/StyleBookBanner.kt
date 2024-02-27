@@ -49,7 +49,7 @@ import kotlin.math.absoluteValue
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun StyleBannerScreen() {
-    val pagerState = rememberPagerState(initialPage = styleBooks.infiniteLoopInitPage(), pageCount = { styleBooks.size })
+    val pagerState = rememberPagerState(initialPage = 0, pageCount = { styleBooks.size })
     val isDragged by pagerState.interactionSource.collectIsDraggedAsState()
     var nextPage by remember { mutableStateOf(styleBooks.infiniteLoopInitPage()) }
 
