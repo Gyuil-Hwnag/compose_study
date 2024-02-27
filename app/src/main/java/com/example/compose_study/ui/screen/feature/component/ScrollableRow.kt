@@ -53,7 +53,7 @@ import kotlinx.coroutines.launch
  *
  * ![Scrollable tabs image](https://developer.android.com/images/reference/androidx/compose/material/scrollable-tabs.png)
  *
- * A ScrollableTabRow contains a row of [Tab]s, and displays an indicator underneath the currently
+ * A ScrollableTabRow contains a row of [BottomIndicatorTabRow]s, and displays an indicator underneath the currently
  * selected tab. A ScrollableTabRow places its tabs offset from the starting edge, and allows
  * scrolling to tabs that are placed off screen. For a fixed tab row that does not allow
  * scrolling, and evenly places its tabs, see [TabRow].
@@ -76,7 +76,7 @@ import kotlinx.coroutines.launch
  * animate the actual drawn indicator inside this space, and provide an offset from the start.
  * @param divider the divider displayed at the bottom of the ScrollableTabRow. This provides a layer
  * of separation between the ScrollableTabRow and the content displayed underneath.
- * @param tabs the tabs inside this ScrollableTabRow. Typically this will be multiple [Tab]s. Each
+ * @param tabs the tabs inside this ScrollableTabRow. Typically this will be multiple [BottomIndicatorTabRow]s. Each
  * element inside this lambda will be measured and placed evenly across the TabRow, each taking
  * up equal space.
  */

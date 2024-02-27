@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.compose_study.ui.screen.feature.component.Category
-import com.example.compose_study.ui.screen.feature.component.Tab
+import com.example.compose_study.ui.screen.feature.component.RoundedIndicatorTabRow
 import com.example.compose_study.ui.screen.feature.data.styleBooks
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -35,10 +35,13 @@ fun StyleBookScreen(
         Category("여성"),
         Category("남성"),
         Category("스페셜"),
-        Category("STYLE GUIDE"),
         Category("바버샵"),
-        Category("데일리 TIP"),
-        Category("방방곡곡")
+        Category("네일샵"),
+        Category("오놀의 스타일"),
+        Category("봄 스타일 추천"),
+        Category("여름 스타일 추천"),
+        Category("가을 스타일 추천"),
+        Category("겨울 스타일 추천"),
     )
     var selectIndex by remember { mutableStateOf(0) }
     Scaffold(
@@ -57,7 +60,7 @@ fun StyleBookScreen(
             modifier = Modifier.fillMaxSize().verticalScroll(scrollState)
         ) {
             StyleBannerScreen()
-            Tab(
+            RoundedIndicatorTabRow(
                 tabs = tabs,
                 selectedTabIndex = selectIndex,
                 onTabClicked = { tabIndex, _ -> selectIndex = tabIndex }

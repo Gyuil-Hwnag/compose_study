@@ -81,7 +81,7 @@ fun RecommendMenuScreen(
         modifier = Modifier.fillMaxWidth().background(Color.White).clickable{ onMenuClicked() }
     ) {
         RecommendMenuTitle()
-        Tab(
+        BottomIndicatorTabRow(
             tabs = tabs,
             selectedTabIndex = selectIndex,
             onTabClicked = { tabIndex, _ -> selectIndex = tabIndex }

@@ -79,7 +79,7 @@ fun ReservationShopScreen() {
             .background(Color.White)
     ) {
         ReservationTitle()
-        Tab(
+        BottomIndicatorTabRow(
             tabs = tabs,
             selectedTabIndex = selectIndex,
             onTabClicked = { tabIndex, _ -> selectIndex = tabIndex }

@@ -68,7 +68,7 @@ fun RecommendStyleScreen() {
             .background(Color.White)
     ) {
         RecommendStyleTitle()
-        Tab(
+        BottomIndicatorTabRow(
             tabs = tabs,
             selectedTabIndex = selectIndex,
             onTabClicked = { tabIndex, _ -> selectIndex = tabIndex }

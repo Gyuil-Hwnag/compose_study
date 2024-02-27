@@ -19,10 +19,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -71,7 +67,7 @@ fun ReReservationScreen(
         modifier = Modifier.fillMaxWidth().background(Color.White)
     ) {
         ReReservationTitle()
-        Tab(
+        BottomIndicatorTabRow(
             tabs = tabs,
             selectedTabIndex = selectedTab,
             onTabClicked = { tabIndex, _ -> onTabClicked(tabIndex) }
