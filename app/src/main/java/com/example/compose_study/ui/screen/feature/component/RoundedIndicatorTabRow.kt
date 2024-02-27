@@ -1,19 +1,31 @@
 package com.example.compose_study.ui.screen.feature.component
 
-import androidx.compose.foundation.clickable
+import androidx.compose.animation.core.animateDp
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.updateTransition
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.TabRowDefaults
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.zIndex
+import com.example.compose_study.utils.noRippleClickable
 
 /**
  * 에러 분석 설명
@@ -28,72 +40,72 @@ import androidx.compose.ui.unit.sp
 **/
 
 @Composable
-fun Tab(
+fun RoundedIndicatorTabRow(
     tabs: List<Category>,
     selectedTabIndex: Int,
     onTabClicked: (index: Int, category: Category) -> Unit
 ) {
     val density = LocalDensity.current
-
-    /**
-     * Solve 코드
-     **/
     var tabWidths by remember { mutableStateOf(List(tabs.size) { 0.dp }) }
 
-    /**
-     * Error 코드
-     * 내용 비교하면 사실상 같은 코드인데 정리하고 안하고 차이
-     * mutalbe 변수 -> mutable 변수로 수정(tabs가 변경이 되는 리스트 이므로)
-     **/
-//    val tabWidths = remember {
-//        val tabWidthStateList = mutableStateListOf<Dp>()
-//        repeat(tabs.size) { tabWidthStateList.add(0.dp) }
-//        tabWidthStateList
-//    }
+    val indicator = @Composable { tabPositions: List<TabPosition> ->
+        CustomIndicator(tabPositions, selectedTabIndex)
+    }
 
     ScrollableTabRow(
         modifier = Modifier.padding(8.dp),
         selectedTabIndex = selectedTabIndex,
         edgePadding = 0.dp,
         backgroundColor = Color.Transparent,
-        indicator = { tabPositions ->
-            TabRowDefaults.Indicator(
-                modifier = Modifier.tabIndicatorOffset(
-                    currentTabPosition = tabPositions[selectedTabIndex],
-                    tabWidth = tabWidths[selectedTabIndex],
-                ),
-                color = Color.Black,
-                height = TabRowDefaults.IndicatorHeight * 0.5F
-            )
-        },
+        indicator = indicator,
         divider = {}
     ) {
         tabs.forEachIndexed { index, tab ->
             Text(
-                modifier = Modifier.padding(8.dp).clickable { onTabClicked(index, tab) },
+                modifier = Modifier
+                    .padding(vertical = 8.dp, horizontal = 12.dp)
+                    .noRippleClickable { onTabClicked(index, tab) },
                 text = tab.name,
                 onTextLayout = { textLayoutResult ->
-                    /**
-                     * Solve 코드
-                     **/
                     tabWidths = tabWidths.toMutableList().apply {
                         if (index < size) this[index] = with(density) { textLayoutResult.size.width.toDp() }
                         else add(with(density) { textLayoutResult.size.width.toDp() })
                     }
-
-                    /**
-                     * Error 코드
-                     * 현재 오류가 발생하는 IndexOutOfBounds가 발생하는 index >= size인 경우를 분기 처리하여 빈탭 Width를 만들어둔다
-                     **/
-//                    tabWidths[index] = with(density) { textLayoutResult.size.width.toDp() }
                 },
                 color = Color.Black,
-                fontSize = 15.sp
+                fontSize = 15.sp,
+                fontWeight = FontWeight.Bold
             )
         }
     }
 }
 
-data class Category(
-    val name: String
-)
+
+/**
+ * dampingRatio : 튕기는 비율 낮을수록 스프링이 앞뒤로 움직임 <- 기존 모양을 유지하는 보존력
+ * stiffness : 원대대로 돌아가려고 하는 힘 <- 낮을수록 속도 감속(복원력)
+ **/
+@Composable
+private fun CustomIndicator(tabPositions: List<TabPosition>, selectedTabIndex: Int) {
+    val transition = updateTransition(selectedTabIndex, label = "")
+    val indicatorStart by transition.animateDp(
+        transitionSpec = { spring(dampingRatio = 1f, stiffness = 300f) },
+        label = "",
+        targetValueByState = { tabPositions[it].left }
+    )
+    val indicatorEnd by transition.animateDp(
+        transitionSpec = { spring(dampingRatio = 1f, stiffness = 300f) },
+        label = "",
+        targetValueByState = { tabPositions[it].right }
+    )
+
+    Box(
+        Modifier
+            .offset(x = indicatorStart)
+            .wrapContentSize(align = Alignment.BottomStart)
+            .width(indicatorEnd - indicatorStart)
+            .fillMaxSize()
+            .background(color = Color.LightGray.copy(alpha = 0.3f), RoundedCornerShape(50))
+            .zIndex(-1f)
+    )
+}
