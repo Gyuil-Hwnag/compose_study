@@ -1,6 +1,6 @@
 package com.example.compose_study.ui.screen.feature.data
 
-import com.example.compose_study.ui.screen.feature.component.Category
+import com.example.compose_study.utils.ui.Category
 import java.util.Random
 
 val random = Random()

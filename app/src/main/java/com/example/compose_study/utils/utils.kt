@@ -1,4 +1,4 @@
-package com.example.compose_study.ui.screen.feature.component
+package com.example.compose_study.utils
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Spacer

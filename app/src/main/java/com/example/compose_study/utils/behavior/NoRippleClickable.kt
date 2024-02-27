@@ -1,4 +1,4 @@
-package com.example.compose_study.utils
+package com.example.compose_study.utils.behavior
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable

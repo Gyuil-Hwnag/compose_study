@@ -25,7 +25,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
-import com.example.compose_study.utils.noRippleClickable
+import com.example.compose_study.utils.ui.Category
+import com.example.compose_study.utils.ui.ScrollableTabRow
+import com.example.compose_study.utils.ui.TabPosition
+import com.example.compose_study.utils.behavior.noRippleClickable
 
 /**
  * 에러 분석 설명
@@ -40,7 +43,7 @@ import com.example.compose_study.utils.noRippleClickable
 **/
 
 @Composable
-fun RoundedIndicatorTabRow(
+fun RoundedTabs(
     tabs: List<Category>,
     selectedTabIndex: Int,
     onTabClicked: (index: Int, category: Category) -> Unit
@@ -49,7 +52,7 @@ fun RoundedIndicatorTabRow(
     var tabWidths by remember { mutableStateOf(List(tabs.size) { 0.dp }) }
 
     val indicator = @Composable { tabPositions: List<TabPosition> ->
-        CustomIndicator(tabPositions, selectedTabIndex)
+        RoundedIndicator(tabPositions, selectedTabIndex)
     }
 
     ScrollableTabRow(
@@ -86,7 +89,7 @@ fun RoundedIndicatorTabRow(
  * stiffness : 원대대로 돌아가려고 하는 힘 <- 낮을수록 속도 감속(복원력)
  **/
 @Composable
-private fun CustomIndicator(tabPositions: List<TabPosition>, selectedTabIndex: Int) {
+private fun RoundedIndicator(tabPositions: List<TabPosition>, selectedTabIndex: Int) {
     val transition = updateTransition(selectedTabIndex, label = "")
     val indicatorStart by transition.animateDp(
         transitionSpec = { spring(dampingRatio = 1f, stiffness = 300f) },

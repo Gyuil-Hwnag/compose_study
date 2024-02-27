@@ -34,6 +34,9 @@ import com.example.compose_study.R
 import com.example.compose_study.ui.screen.feature.data.StyleBook
 import com.example.compose_study.ui.screen.feature.data.styleBooks
 import com.example.compose_study.ui.theme.ComposeStudyTheme
+import com.example.compose_study.utils.ContentsDivider
+import com.example.compose_study.utils.ui.DotsIndicator
+import com.example.compose_study.utils.lerp
 import com.example.compose_study.utils.offsetForPage
 import kotlin.math.absoluteValue
 
@@ -76,7 +79,7 @@ fun TodayStyleBookScreen() {
             }
         }
         Spacer(modifier = Modifier.fillMaxWidth().size(24.dp))
-        Indicator(
+        DotsIndicator(
             totalDots = styleBooks.size,
             selectedIndex = pagerState.currentPage % styleBooks.size
         )

@@ -38,12 +38,10 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.compose_study.ui.screen.feature.component.ContentsDivider
-import com.example.compose_study.ui.screen.feature.component.infiniteLoopInitPage
+import com.example.compose_study.utils.infiniteLoopInitPage
 import com.example.compose_study.ui.screen.feature.data.StyleBook
 import com.example.compose_study.ui.screen.feature.data.styleBookBanners
-import com.example.compose_study.ui.screen.feature.data.styleBooks
-import com.example.compose_study.utils.VerticalDivider
+import com.example.compose_study.utils.ui.VerticalDivider
 import com.example.compose_study.utils.offsetForPage
 import kotlinx.coroutines.delay
 import kotlin.math.absoluteValue

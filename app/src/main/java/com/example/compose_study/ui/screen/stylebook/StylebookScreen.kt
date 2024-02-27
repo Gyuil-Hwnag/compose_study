@@ -15,8 +15,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.compose_study.ui.screen.feature.component.Category
-import com.example.compose_study.ui.screen.feature.component.RoundedIndicatorTabRow
+import com.example.compose_study.utils.ui.Category
+import com.example.compose_study.ui.screen.feature.component.RoundedTabs
 import com.example.compose_study.ui.screen.feature.data.styleBooks
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -60,7 +60,7 @@ fun StyleBookScreen(
             modifier = Modifier.fillMaxSize().verticalScroll(scrollState)
         ) {
             StyleBannerScreen()
-            RoundedIndicatorTabRow(
+            RoundedTabs(
                 tabs = tabs,
                 selectedTabIndex = selectIndex,
                 onTabClicked = { tabIndex, _ -> selectIndex = tabIndex }

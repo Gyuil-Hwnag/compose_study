@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.compose_study.R
 import com.example.compose_study.ui.theme.ComposeStudyTheme
+import com.example.compose_study.utils.ContentsDivider
 
 @Composable
 fun UpdateLocationScreen() {

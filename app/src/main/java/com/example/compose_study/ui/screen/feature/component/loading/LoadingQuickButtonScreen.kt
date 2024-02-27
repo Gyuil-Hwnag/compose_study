@@ -17,10 +17,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.compose_study.utils.HorizontalDivider
-import com.example.compose_study.utils.LoadingCircleShape
-import com.example.compose_study.utils.LoadingCornerRounded
-import com.example.compose_study.utils.VerticalDivider
+import com.example.compose_study.utils.ui.HorizontalDivider
+import com.example.compose_study.utils.ui.LoadingCircleShape
+import com.example.compose_study.utils.ui.LoadingCornerRounded
+import com.example.compose_study.utils.ui.VerticalDivider
 
 
 @Composable

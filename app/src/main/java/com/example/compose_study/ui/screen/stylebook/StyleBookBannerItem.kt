@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.compose_study.ui.screen.feature.data.StyleBook
-import com.example.compose_study.utils.VerticalDivider
+import com.example.compose_study.utils.ui.VerticalDivider
 
 @Composable
 fun StyleBookItem(item: StyleBook) {

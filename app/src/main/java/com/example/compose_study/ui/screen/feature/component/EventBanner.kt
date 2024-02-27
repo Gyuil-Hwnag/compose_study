@@ -37,6 +37,9 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.compose_study.R
 import com.example.compose_study.ui.theme.ComposeStudyTheme
+import com.example.compose_study.utils.ContentsDivider
+import com.example.compose_study.utils.ui.DotsIndicator
+import com.example.compose_study.utils.infiniteLoopInitPage
 import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -81,7 +84,7 @@ fun EventBannerScreen() {
             )
         }
         Spacer(modifier = Modifier.fillMaxWidth().size(24.dp))
-        Indicator(
+        DotsIndicator(
             totalDots = banners.size,
             selectedIndex = pagerState.currentPage % banners.size
         )

@@ -55,6 +55,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.compose_study.ui.theme.ComposeStudyTheme
 import com.example.compose_study.utils.endOffsetForPage
+import com.example.compose_study.utils.infiniteLoopInitPage
 import com.example.compose_study.utils.offsetForPage
 import kotlinx.coroutines.delay
 import kotlin.math.absoluteValue
