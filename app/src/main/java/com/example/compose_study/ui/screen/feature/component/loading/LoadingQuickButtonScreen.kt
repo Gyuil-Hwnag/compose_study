@@ -12,6 +12,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,6 +22,7 @@ import com.example.compose_study.utils.ui.HorizontalDivider
 import com.example.compose_study.utils.ui.LoadingCircleShape
 import com.example.compose_study.utils.ui.LoadingCornerRounded
 import com.example.compose_study.utils.ui.VerticalDivider
+import com.example.compose_study.utils.ui.buttonShadow
 
 
 @Composable
@@ -53,17 +55,15 @@ fun LoadingQuickButtonScreen(
                 }
             }
         }
-        VerticalDivider(dp = 16)
         LazyRow(
             modifier = Modifier.fillMaxWidth(),
             userScrollEnabled = false
         ) {
-            item { HorizontalDivider(dp = 16) }
+            item { HorizontalDivider(dp = 12) }
             items(count = 10) {
                 LoadingQuickButton(isLoadingCompleted = isLoadingCompleted)
-                HorizontalDivider(dp = 12)
             }
-            item { HorizontalDivider(dp = 16) }
+            item { HorizontalDivider(dp = 12) }
         }
     }
 }
@@ -75,7 +75,8 @@ fun LoadingMainShopQuickButtons(
     Button(
         modifier = Modifier
             .fillMaxWidth()
-            .height(164.dp),
+            .height(164.dp)
+            .buttonShadow(shapes = RoundedCornerShape(4.dp)),
         shape = RoundedCornerShape(4.dp),
         colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
         onClick = {},
@@ -131,7 +132,8 @@ fun LoadingSubShopQuickButtons(
     Button(
         modifier = Modifier
             .fillMaxWidth()
-            .height(78.dp),
+            .height(78.dp)
+            .buttonShadow(shapes = RoundedCornerShape(4.dp)),
         shape = RoundedCornerShape(4.dp),
         colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
         onClick = {},
@@ -180,15 +182,23 @@ fun LoadingSubShopQuickButtons(
 fun LoadingQuickButton(
     isLoadingCompleted: Boolean
 ) {
-    Button(
+    Surface(
         modifier = Modifier
-            .width(89.dp)
-            .height(40.dp),
-        shape = RoundedCornerShape(6.dp),
-        colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
-        onClick = {},
-        contentPadding = PaddingValues(all = 12.dp),
+            .padding(vertical = 16.dp, horizontal = 4.dp)
+            .buttonShadow(shapes = RoundedCornerShape(6.dp)),
+        shape = RoundedCornerShape(6.dp)
     ) {
-        LoadingCornerRounded(width = 65, height = 16, cornerRounded = 2, isLoadingCompleted = isLoadingCompleted)
+        Button(
+            modifier = Modifier
+                .width(89.dp)
+                .height(40.dp),
+            elevation = null,
+            shape = RoundedCornerShape(6.dp),
+            colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
+            onClick = {},
+            contentPadding = PaddingValues(all = 12.dp),
+        ) {
+            LoadingCornerRounded(width = 65, height = 16, cornerRounded = 2, isLoadingCompleted = isLoadingCompleted)
+        }
     }
 }
