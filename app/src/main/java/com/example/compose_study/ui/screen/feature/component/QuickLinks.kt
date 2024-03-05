@@ -16,6 +16,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,6 +26,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.example.compose_study.utils.ui.buttonShadow
 
 @Composable
 fun QuickLinkScreen(
@@ -53,7 +55,7 @@ fun QuickLinkScreen(
             item {
                 Spacer(modifier = Modifier.width(12.dp))
             }
-            items(quickLinks.subList(0, 2)) { quickLink ->
+            items(quickLinks.slice(3 until quickLinks.size)) { quickLink ->
                 QuickLinkItems(quickLink)
             }
             item {
@@ -67,7 +69,9 @@ fun QuickLinkScreen(
 @Composable
 fun MainQuickLinkItems(quickLink: QuickLink) {
     Button(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .buttonShadow(shapes = RoundedCornerShape(4.dp)),
         shape = RoundedCornerShape(4.dp),
         colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
         onClick = {}
@@ -86,7 +90,7 @@ fun MainQuickLinkItems(quickLink: QuickLink) {
                     model = quickLink.imageUri,
                     contentDescription = "배너 이미지",
                     contentScale = ContentScale.Crop,
-                    modifier = Modifier.size(70.dp)
+                    modifier = Modifier.size(75.dp)
                 )
             }
         }
@@ -96,7 +100,9 @@ fun MainQuickLinkItems(quickLink: QuickLink) {
 @Composable
 fun SubQuickLinkItems(quickLink: QuickLink) {
     Button(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .buttonShadow(shapes = RoundedCornerShape(4.dp)),
         shape = RoundedCornerShape(4.dp),
         colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
         onClick = {}
@@ -123,24 +129,20 @@ fun SubQuickLinkItems(quickLink: QuickLink) {
 
 @Composable
 fun QuickLinkItems(quickLink: QuickLink) {
-    Button(
-        modifier = Modifier.padding(vertical = 12.dp, horizontal = 4.dp),
-        shape = RoundedCornerShape(6.dp),
-        colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
-        onClick = {}
+    Surface(
+        modifier = Modifier
+            .padding(vertical = 12.dp, horizontal = 4.dp)
+            .buttonShadow(shapes = RoundedCornerShape(6.dp))
     ) {
-        Row {
-            if (quickLink.imageUri != 0) {
-                AsyncImage(
-                    model = quickLink.imageUri,
-                    contentDescription = "배너 이미지",
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier.size(12.dp)
-                )
-                Spacer(modifier = Modifier.size(4.dp))
-            }
-            Text(text = quickLink.title, fontSize = 13.sp, color = Color.Black)
-        }
+        Text(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 12.dp, horizontal = 16.dp)
+                .background(color = Color.White, shape = RoundedCornerShape(6.dp)),
+            text = quickLink.title,
+            fontSize = 13.sp,
+            color = Color.Black
+        )
     }
 }
 
