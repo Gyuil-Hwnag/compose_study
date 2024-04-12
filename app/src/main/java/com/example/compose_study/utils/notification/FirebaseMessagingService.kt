@@ -1,6 +1,7 @@
 package com.example.compose_study.utils.notification
 
 import android.annotation.TargetApi
+import android.content.Context
 import android.os.Build
 import com.example.compose_study.R
 import com.example.compose_study.utils.toEnumValueOfOrNull
@@ -12,7 +13,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.util.*
 
-class FirebaseMessagingService : FirebaseMessagingService() {
+class FirebaseMessagingService(val context: Context) : FirebaseMessagingService() {
 
     private val serviceJob = Job()
     private val serviceScope = CoroutineScope(Dispatchers.Main + serviceJob)
@@ -23,7 +24,7 @@ class FirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         val data = remoteMessage.data
-        if(data.isEmpty() || data.containsKey("af-uinstall-tracking")) return
+        if (data.isEmpty() || data.containsKey("af-uinstall-tracking")) return
 
         val pushMessage = data.toPushMessage()
         if (pushMessage.hasContents) {
@@ -32,8 +33,8 @@ class FirebaseMessagingService : FirebaseMessagingService() {
     }
 
     @TargetApi(Build.VERSION_CODES.O)
-    fun sendNotification(message: PushMessage) = serviceScope.launch{
-        NotificationHelper.notifyPushMessage(applicationContext, message)
+    fun sendNotification(message: PushMessage) = serviceScope.launch {
+        NotificationHelper.notifyPushMessage(context.applicationContext, message)
     }
 
     override fun onDestroy() {

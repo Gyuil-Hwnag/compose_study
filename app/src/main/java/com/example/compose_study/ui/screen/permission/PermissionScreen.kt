@@ -2,6 +2,7 @@ package com.example.compose_study.ui.screen.permission
 
 import android.Manifest
 import android.os.Build
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
@@ -29,11 +30,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.example.compose_study.utils.behavior.checkAndRequestPermissions
+import com.example.compose_study.utils.behavior.checkAndRequestGalleryPermissions
 import com.example.compose_study.utils.behavior.checkInstagramAppLink
 import com.example.compose_study.utils.behavior.openAppSettings
 import com.example.compose_study.utils.notification.FirebaseMessagingService
-import com.example.compose_study.utils.notification.PushMessage
 import com.example.compose_study.utils.notification.testPushMessage
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -50,9 +50,22 @@ fun PermissionScreen(
             else -> arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
         }
 
-    val launcherMultiplePermissions = rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissionsMap ->
+    val notificationPermission = arrayOf(Manifest.permission.POST_NOTIFICATIONS)
+
+    val photoMultiplePermissionsLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissionsMap ->
         val areGranted = permissionsMap.values.reduce { acc, next -> acc || next }
         if (areGranted) toPhotoPicker() else openAppSettings(context = context)
+    }
+
+    val notificationPermissionsLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissionsMap ->
+        val areGranted = permissionsMap.values.reduce { acc, next -> acc || next }
+        if (areGranted) {
+            Toast.makeText(context, "알림 권한을 허용 하였습니다.", Toast.LENGTH_SHORT).show()
+            FirebaseMessagingService(context).sendNotification(testPushMessage)
+        } else {
+            Toast.makeText(context, "알림 권한을 차단 하였습니다.", Toast.LENGTH_SHORT).show()
+            openAppSettings(context = context)
+        }
     }
 
     Scaffold(
@@ -96,11 +109,11 @@ fun PermissionScreen(
                     .background(color = Color.Black)
                     .padding(vertical = 12.dp, horizontal = 16.dp)
                     .clickable {
-                        checkAndRequestPermissions(
+                        checkAndRequestGalleryPermissions(
                             context = context,
                             permissions = galleyPermission,
-                            launcher = launcherMultiplePermissions,
-                            toPhotoPicker = toPhotoPicker
+                            launcher = photoMultiplePermissionsLauncher,
+                            toPermissionGranted = toPhotoPicker
                         )
                     }
             ) {
@@ -126,9 +139,7 @@ fun PermissionScreen(
                 modifier = Modifier
                     .background(color = Color.Black)
                     .padding(vertical = 12.dp, horizontal = 16.dp)
-                    .clickable {
-                        FirebaseMessagingService().sendNotification(testPushMessage)
-                    }
+                    .clickable { notificationPermissionsLauncher.launch(notificationPermission) }
             ) {
                 Text(
                     modifier = Modifier.background(color = Color.Black),
