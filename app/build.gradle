@@ -112,8 +112,8 @@ dependencies {
 
     // View Pager in Compose
     def viewPager = "0.24.1-alpha"
-    implementation "com.google.accompanist:accompanist-pager:$viewPager"
-    implementation "com.google.accompanist:accompanist-pager-indicators:$viewPager"
+    implementation("com.google.accompanist:accompanist-pager:$viewPager")
+    implementation("com.google.accompanist:accompanist-pager-indicators:$viewPager")
 
     // Compose
     implementation("androidx.compose.foundation:foundation:1.4.0-beta02")
@@ -125,6 +125,14 @@ dependencies {
     // WindowSize
     def windowSize = "1.2.0"
     implementation("androidx.compose.material3:material3-window-size-class:$windowSize")
+
+    // Glide
+    def glide = "4.14.2"
+    implementation("com.github.bumptech.glide:compiler:$glide")
+    implementation("com.github.bumptech.glide:glide:$glide")
+
+    // FCM
+    implementation("com.google.firebase:firebase-messaging-ktx:23.4.1")
 }
 kapt {
     correctErrorTypes true
