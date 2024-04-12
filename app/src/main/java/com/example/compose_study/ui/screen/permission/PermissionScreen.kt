@@ -1,14 +1,7 @@
 package com.example.compose_study.ui.screen.permission
 
 import android.Manifest
-import android.content.Context
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
-import android.provider.Settings
-import android.widget.Toast
-import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
@@ -35,8 +28,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat
 import coil.compose.AsyncImage
+import com.example.compose_study.utils.behavior.checkAndRequestPermissions
+import com.example.compose_study.utils.behavior.checkInstagramAppLink
+import com.example.compose_study.utils.behavior.openAppSettings
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
@@ -54,11 +49,7 @@ fun PermissionScreen(
 
     val launcherMultiplePermissions = rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissionsMap ->
         val areGranted = permissionsMap.values.reduce { acc, next -> acc || next }
-        if (areGranted) {
-            toPhotoPicker()
-        } else {
-            openAppSettings(context = context)
-        }
+        if (areGranted) toPhotoPicker() else openAppSettings(context = context)
     }
 
     Scaffold(
@@ -130,57 +121,6 @@ fun PermissionScreen(
         }
     }
 }
-
-fun checkInstagramAppLink(
-    context: Context,
-    url: String
-): Boolean {
-    val uri = Uri.parse(url)
-    val isInstagramUri = uri.host?.endsWith("instagram.com") == true
-    val hasInstagramApp: Boolean = context.packageManager?.getLaunchIntentForPackage("com.instagram.android") != null
-
-    if (isInstagramUri && hasInstagramApp) {
-        val intent = Intent(Intent.ACTION_VIEW, uri).apply {
-            setPackage("com.instagram.android")
-        }
-        context.startActivity(intent)
-        return true
-    }
-    return false
-}
-
-fun checkAndRequestPermissions(
-    context: Context,
-    permissions: Array<String>,
-    launcher: ManagedActivityResultLauncher<Array<String>, Map<String, Boolean>>,
-    toPhotoPicker: () -> Unit,
-) {
-    when (PackageManager.PERMISSION_GRANTED) {
-        ContextCompat.checkSelfPermission(context, Manifest.permission.READ_MEDIA_IMAGES) -> {
-            Toast.makeText(context, "사진 전체 허용 하였습니다.", Toast.LENGTH_SHORT).show()
-            toPhotoPicker()
-        }
-
-        ContextCompat.checkSelfPermission(context, Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED) -> {
-            Toast.makeText(context, "사진 일부 허용 하였습니다.", Toast.LENGTH_SHORT).show()
-            launcher.launch(permissions)
-        }
-
-        else -> {
-            Toast.makeText(context, "권한을 요청 하였습니다.", Toast.LENGTH_SHORT).show()
-            launcher.launch(permissions)
-        }
-    }
-}
-
-fun openAppSettings(context: Context) {
-    val intent = Intent(
-        Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-        Uri.fromParts("package", context.packageName, null)
-    )
-    context.startActivity(intent)
-}
-
 
 
 
