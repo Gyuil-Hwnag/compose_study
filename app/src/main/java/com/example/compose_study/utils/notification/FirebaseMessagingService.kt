@@ -32,7 +32,7 @@ class FirebaseMessagingService : FirebaseMessagingService() {
     }
 
     @TargetApi(Build.VERSION_CODES.O)
-    private fun sendNotification(message: PushMessage) = serviceScope.launch{
+    fun sendNotification(message: PushMessage) = serviceScope.launch{
         NotificationHelper.notifyPushMessage(applicationContext, message)
     }
 

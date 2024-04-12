@@ -32,6 +32,9 @@ import coil.compose.AsyncImage
 import com.example.compose_study.utils.behavior.checkAndRequestPermissions
 import com.example.compose_study.utils.behavior.checkInstagramAppLink
 import com.example.compose_study.utils.behavior.openAppSettings
+import com.example.compose_study.utils.notification.FirebaseMessagingService
+import com.example.compose_study.utils.notification.PushMessage
+import com.example.compose_study.utils.notification.testPushMessage
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
@@ -116,6 +119,21 @@ fun PermissionScreen(
                     model = selectedPhoto,
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
+                )
+            }
+
+            Surface(
+                modifier = Modifier
+                    .background(color = Color.Black)
+                    .padding(vertical = 12.dp, horizontal = 16.dp)
+                    .clickable {
+                        FirebaseMessagingService().sendNotification(testPushMessage)
+                    }
+            ) {
+                Text(
+                    modifier = Modifier.background(color = Color.Black),
+                    text = "Notification",
+                    color = Color.White
                 )
             }
         }
