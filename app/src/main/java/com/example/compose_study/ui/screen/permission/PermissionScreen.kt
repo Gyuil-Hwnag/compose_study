@@ -34,7 +34,7 @@ import com.example.compose_study.utils.behavior.checkAndRequestGalleryPermission
 import com.example.compose_study.utils.behavior.checkInstagramAppLink
 import com.example.compose_study.utils.behavior.openAppSettings
 import com.example.compose_study.utils.notification.FirebaseMessagingService
-import com.example.compose_study.utils.notification.testPushMessage
+import com.example.compose_study.utils.notification.getTestPushMessage
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
@@ -61,7 +61,7 @@ fun PermissionScreen(
         val areGranted = permissionsMap.values.reduce { acc, next -> acc || next }
         if (areGranted) {
             Toast.makeText(context, "알림 권한을 허용 하였습니다.", Toast.LENGTH_SHORT).show()
-            FirebaseMessagingService(context).sendNotification(testPushMessage)
+            FirebaseMessagingService(context).sendNotification(getTestPushMessage())
         } else {
             Toast.makeText(context, "알림 권한을 차단 하였습니다.", Toast.LENGTH_SHORT).show()
             openAppSettings(context = context)

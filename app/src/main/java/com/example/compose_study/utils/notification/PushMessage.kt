@@ -32,14 +32,3 @@ data class PushMessage(
     }
 }
 
-val testPushMessage: PushMessage =
-    PushMessage(
-        id = "test",
-        type = PushMessage.Type.GENERAL,
-        typeName = "GENERAL",
-        soundMode = PushMessage.SoundMode.DEFAULT,
-        title = "테스트 알림",
-        message = "테스트 알림이 왔어요~",
-        imageUrl = "",
-        uri = ""
-    )
