@@ -1,5 +1,8 @@
 package com.example.compose_study.ui
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -13,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.example.compose_study.ui.screen.main.BottomNavigationScreen
 import com.example.compose_study.ui.theme.ComposeStudyTheme
+import com.example.compose_study.utils.notification.PushMessage
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -22,6 +26,21 @@ class MainActivity : ComponentActivity() {
         setContent {
             ComposeStudyTheme {
                 MainScreenView()
+            }
+        }
+    }
+
+    companion object {
+
+        const val EXTRA_PUSH_MESSAGE = "PUSH_MESSAGE"
+
+        fun starterIntent(
+            context: Context,
+            pushMessage: PushMessage? = null
+        ): Intent {
+            return Intent(context, MainActivity::class.java).apply {
+                if (!pushMessage?.uri.isNullOrBlank()) data = Uri.parse(pushMessage?.uri)
+                if (pushMessage != null) putExtra(EXTRA_PUSH_MESSAGE, pushMessage)
             }
         }
     }
