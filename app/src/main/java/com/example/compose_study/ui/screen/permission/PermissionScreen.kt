@@ -37,8 +37,10 @@ import com.example.compose_study.utils.behavior.openAppSettings
 import com.example.compose_study.utils.behavior.scheduleNotificationSettings
 import com.example.compose_study.utils.permission.galleyPermission
 import com.example.compose_study.utils.notification.FirebaseMessagingService
+import com.example.compose_study.utils.notification.getExactPushMessage
+import com.example.compose_study.utils.notification.getNonExactPushMessage
 import com.example.compose_study.utils.notification.local.LocalNotificationHelper
-import com.example.compose_study.utils.notification.getTestPushMessage
+import com.example.compose_study.utils.notification.getPushMessage
 import com.example.compose_study.utils.permission.notificationPermission
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -61,28 +63,39 @@ fun PermissionScreen(
         val areGranted = permissionsMap.values.reduce { acc, next -> acc || next }
         if (areGranted) {
             Toast.makeText(context, "알림 권한을 허용 하였습니다.", Toast.LENGTH_SHORT).show()
-            firebaseMessagingService.sendNotification(message = getTestPushMessage())
+            firebaseMessagingService.sendNotification(message = getPushMessage())
         } else {
             Toast.makeText(context, "알림 권한을 차단 하였습니다.", Toast.LENGTH_SHORT).show()
             openAppSettings(context = context)
         }
     }
 
-    val scheduleNotificationPermissionsLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissionsMap ->
+    val exactRepeatNotificationPermissionsLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissionsMap ->
         val areGranted = permissionsMap.values.reduce { acc, next -> acc || next }
         when {
             areGranted && alarmManager?.canScheduleExactAlarms() == true -> {
-                Toast.makeText(context, "스케줄 알림 권한을 허용 하였습니다.", Toast.LENGTH_SHORT).show()
-                localNotificationHelper.sendNotification(message = getTestPushMessage())
+                Toast.makeText(context, "정확한 시간 알림 권한을 허용 하였습니다.", Toast.LENGTH_SHORT).show()
+                localNotificationHelper.sendNotification(message = getExactPushMessage())
             }
             areGranted && alarmManager?.canScheduleExactAlarms() == false -> {
-                Toast.makeText(context, "스케줄 알림 권한을 차단 하였습니다.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "정확한 시간 알림 권한을 허용해주세요.", Toast.LENGTH_SHORT).show()
                 scheduleNotificationSettings(context)
             }
             else -> {
                 Toast.makeText(context, "알림 권한을 차단 하였습니다.", Toast.LENGTH_SHORT).show()
                 openAppSettings(context = context)
             }
+        }
+    }
+
+    val nonExactRepeatNotificationPermissionsLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissionsMap ->
+        val areGranted = permissionsMap.values.reduce { acc, next -> acc || next }
+        if (areGranted) {
+            Toast.makeText(context, "알림 권한을 허용 하였습니다.", Toast.LENGTH_SHORT).show()
+            firebaseMessagingService.sendNotification(message = getNonExactPushMessage())
+        } else {
+            Toast.makeText(context, "알림 권한을 차단 하였습니다.", Toast.LENGTH_SHORT).show()
+            openAppSettings(context = context)
         }
     }
 
@@ -170,11 +183,24 @@ fun PermissionScreen(
                 modifier = Modifier
                     .background(color = Color.Black)
                     .padding(vertical = 12.dp, horizontal = 16.dp)
-                    .clickable { scheduleNotificationPermissionsLauncher.launch(notificationPermission) }
+                    .clickable { exactRepeatNotificationPermissionsLauncher.launch(notificationPermission) }
             ) {
                 Text(
                     modifier = Modifier.background(color = Color.Black),
-                    text = "Notification ExactAndAllowWhileIdle",
+                    text = "Repeat Notification (Exact)",
+                    color = Color.White
+                )
+            }
+            Spacer(modifier = Modifier.height(12.dp).wrapContentWidth())
+            Surface(
+                modifier = Modifier
+                    .background(color = Color.Black)
+                    .padding(vertical = 12.dp, horizontal = 16.dp)
+                    .clickable { nonExactRepeatNotificationPermissionsLauncher.launch(notificationPermission) }
+            ) {
+                Text(
+                    modifier = Modifier.background(color = Color.Black),
+                    text = "Repeat Notification (Non Exact)",
                     color = Color.White
                 )
             }
