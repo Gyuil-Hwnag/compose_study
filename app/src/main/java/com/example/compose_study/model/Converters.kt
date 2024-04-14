@@ -55,3 +55,9 @@ fun Date.getCalendarDate(): String {
     val dateFormat = SimpleDateFormat("yyyy-MM-dd")
     return dateFormat.format(this)
 }
+
+@SuppressLint("SimpleDateFormat")
+fun Date.getCalendarDateTime(): String {
+    val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+    return dateFormat.format(this)
+}

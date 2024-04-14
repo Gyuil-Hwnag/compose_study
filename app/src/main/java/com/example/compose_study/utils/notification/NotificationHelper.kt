@@ -1,5 +1,3 @@
-@file:Suppress("DEPRECATION")
-
 package com.example.compose_study.utils.notification
 
 import android.annotation.TargetApi
@@ -25,6 +23,7 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withTimeoutOrNull
 import kotlin.coroutines.resume
 
+@Suppress("DEPRECATION")
 object NotificationHelper {
 
     suspend fun notifyPushMessage(context: Context, message: PushMessage) {
@@ -43,6 +42,7 @@ object NotificationHelper {
         notificationManager.notify(message.hashCode(), notificationBuilder.build())
     }
 
+    @Suppress("KotlinConstantConditions")
     private fun createNotificationBuilder(
         context: Context,
         manager: NotificationManager,
