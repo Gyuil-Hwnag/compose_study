@@ -1,5 +1,6 @@
 package com.example.compose_study.utils.notification
 
+import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
@@ -10,23 +11,24 @@ import com.example.compose_study.model.getCalendarDateTime
 import java.util.Calendar
 import java.util.Date
 
-class LocalAlarmHelper(val context: Context) {
+class NotificationManager(val context: Context) {
 
     private val alarmManager by lazy { context.applicationContext.getSystemService(ALARM_SERVICE) as? AlarmManager }
 
     fun cancelNotification() {
-        val receiverIntent = Intent(context.applicationContext, LocalAlarmReceiver::class.java)
+        val receiverIntent = Intent(context.applicationContext, NotificationReceiver::class.java)
         val pendingIntent = PendingIntent.getBroadcast(context.applicationContext, 0, receiverIntent, PendingIntent.FLAG_MUTABLE)
         alarmManager?.cancel(pendingIntent)
     }
 
-    fun sendNotification(pushMessage: PushMessage) {
-//        if (!localAlarm.pushEnable) return
+    @SuppressLint("ScheduleExactAlarm")
+    fun sendNotification(pushEnable: Boolean, message: PushMessage) {
+        if (!pushEnable) return
 
-        val receiverIntent = Intent(context.applicationContext, LocalAlarmReceiver::class.java).apply {
-            putExtra("PushMessage", pushMessage)
+        val receiverIntent = Intent(context.applicationContext, NotificationReceiver::class.java).apply {
+            putExtra("PushMessage", message)
         }
-        val pendingIntent = PendingIntent.getBroadcast(context.applicationContext, pushMessage.hashCode() + 1, receiverIntent, PendingIntent.FLAG_IMMUTABLE)
+        val pendingIntent = PendingIntent.getBroadcast(context.applicationContext, message.hashCode() + 1, receiverIntent, PendingIntent.FLAG_IMMUTABLE)
 
         alarmManager?.cancel(pendingIntent)
 

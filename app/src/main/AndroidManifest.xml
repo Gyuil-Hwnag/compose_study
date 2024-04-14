@@ -61,7 +61,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".utils.notification.LocalAlarmReceiver"
+        <receiver android:name=".utils.notification.NotificationReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter>

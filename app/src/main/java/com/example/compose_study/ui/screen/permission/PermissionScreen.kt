@@ -34,8 +34,7 @@ import com.example.compose_study.utils.behavior.checkAndRequestGalleryPermission
 import com.example.compose_study.utils.behavior.checkInstagramAppLink
 import com.example.compose_study.utils.behavior.openAppSettings
 import com.example.compose_study.utils.notification.FirebaseMessagingService
-import com.example.compose_study.utils.notification.LocalAlarm
-import com.example.compose_study.utils.notification.LocalAlarmHelper
+import com.example.compose_study.utils.notification.NotificationManager
 import com.example.compose_study.utils.notification.getTestPushMessage
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -46,7 +45,7 @@ fun PermissionScreen(
 ) {
     val context = LocalContext.current
     val firebaseMessagingService = FirebaseMessagingService(context = context)
-    val localAlarmHelper = LocalAlarmHelper(context = context)
+    val notificationManager = NotificationManager(context = context)
 
     val galleyPermission =
         when {
@@ -66,7 +65,7 @@ fun PermissionScreen(
         val areGranted = permissionsMap.values.reduce { acc, next -> acc || next }
         if (areGranted) {
             Toast.makeText(context, "알림 권한을 허용 하였습니다.", Toast.LENGTH_SHORT).show()
-            firebaseMessagingService.sendNotification(getTestPushMessage())
+            firebaseMessagingService.sendNotification(message = getTestPushMessage())
         } else {
             Toast.makeText(context, "알림 권한을 차단 하였습니다.", Toast.LENGTH_SHORT).show()
             openAppSettings(context = context)
@@ -77,8 +76,8 @@ fun PermissionScreen(
         val areGranted = permissionsMap.values.reduce { acc, next -> acc || next }
         if (areGranted) {
             Toast.makeText(context, "알림 권한을 허용 하였습니다.", Toast.LENGTH_SHORT).show()
-            localAlarmHelper.cancelNotification()
-            localAlarmHelper.sendNotification(getTestPushMessage())
+            notificationManager.cancelNotification()
+            notificationManager.sendNotification(pushEnable = true, message = getTestPushMessage())
         } else {
             Toast.makeText(context, "알림 권한을 차단 하였습니다.", Toast.LENGTH_SHORT).show()
             openAppSettings(context = context)

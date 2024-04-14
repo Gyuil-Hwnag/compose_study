@@ -11,7 +11,7 @@ import com.example.compose_study.model.getCalendarDateTime
 import java.util.Date
 
 @Suppress("DEPRECATION")
-class LocalAlarmReceiver : BroadcastReceiver() {
+class NotificationReceiver : BroadcastReceiver() {
 
     private lateinit var firebaseMessagingService: FirebaseMessagingService
 
