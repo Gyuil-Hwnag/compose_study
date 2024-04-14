@@ -34,6 +34,8 @@ import com.example.compose_study.utils.behavior.checkAndRequestGalleryPermission
 import com.example.compose_study.utils.behavior.checkInstagramAppLink
 import com.example.compose_study.utils.behavior.openAppSettings
 import com.example.compose_study.utils.notification.FirebaseMessagingService
+import com.example.compose_study.utils.notification.LocalAlarm
+import com.example.compose_study.utils.notification.LocalAlarmHelper
 import com.example.compose_study.utils.notification.getTestPushMessage
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -43,6 +45,9 @@ fun PermissionScreen(
     selectedPhoto: String = ""
 ) {
     val context = LocalContext.current
+    val firebaseMessagingService = FirebaseMessagingService(context = context)
+    val localAlarmHelper = LocalAlarmHelper(context = context)
+
     val galleyPermission =
         when {
             (Build.VERSION.SDK_INT >= 34) -> arrayOf(Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED, Manifest.permission.READ_MEDIA_IMAGES)
@@ -61,7 +66,19 @@ fun PermissionScreen(
         val areGranted = permissionsMap.values.reduce { acc, next -> acc || next }
         if (areGranted) {
             Toast.makeText(context, "알림 권한을 허용 하였습니다.", Toast.LENGTH_SHORT).show()
-            FirebaseMessagingService(context).sendNotification(getTestPushMessage())
+            firebaseMessagingService.sendNotification(getTestPushMessage())
+        } else {
+            Toast.makeText(context, "알림 권한을 차단 하였습니다.", Toast.LENGTH_SHORT).show()
+            openAppSettings(context = context)
+        }
+    }
+
+    val notificationPeriodPermissionsLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissionsMap ->
+        val areGranted = permissionsMap.values.reduce { acc, next -> acc || next }
+        if (areGranted) {
+            Toast.makeText(context, "알림 권한을 허용 하였습니다.", Toast.LENGTH_SHORT).show()
+            localAlarmHelper.cancelNotification()
+            localAlarmHelper.sendNotification(LocalAlarm(true, 15, 8, 0), getTestPushMessage())
         } else {
             Toast.makeText(context, "알림 권한을 차단 하였습니다.", Toast.LENGTH_SHORT).show()
             openAppSettings(context = context)
@@ -144,6 +161,19 @@ fun PermissionScreen(
                 Text(
                     modifier = Modifier.background(color = Color.Black),
                     text = "Notification",
+                    color = Color.White
+                )
+            }
+            Spacer(modifier = Modifier.height(12.dp).wrapContentWidth())
+            Surface(
+                modifier = Modifier
+                    .background(color = Color.Black)
+                    .padding(vertical = 12.dp, horizontal = 16.dp)
+                    .clickable { notificationPeriodPermissionsLauncher.launch(notificationPermission) }
+            ) {
+                Text(
+                    modifier = Modifier.background(color = Color.Black),
+                    text = "Notification Period",
                     color = Color.White
                 )
             }

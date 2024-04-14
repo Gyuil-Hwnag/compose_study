@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
 
     companion object {
 
-        const val EXTRA_PUSH_MESSAGE = "PUSH_MESSAGE"
+        private const val EXTRA_PUSH_MESSAGE = "PUSH_MESSAGE"
 
         fun starterIntent(
             context: Context,
