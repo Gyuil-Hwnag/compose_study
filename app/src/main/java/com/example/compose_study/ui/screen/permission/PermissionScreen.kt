@@ -78,7 +78,7 @@ fun PermissionScreen(
         if (areGranted) {
             Toast.makeText(context, "알림 권한을 허용 하였습니다.", Toast.LENGTH_SHORT).show()
             localAlarmHelper.cancelNotification()
-            localAlarmHelper.sendNotification(LocalAlarm(true, 15, 11, 0), getTestPushMessage())
+            localAlarmHelper.sendNotification(getTestPushMessage())
         } else {
             Toast.makeText(context, "알림 권한을 차단 하였습니다.", Toast.LENGTH_SHORT).show()
             openAppSettings(context = context)

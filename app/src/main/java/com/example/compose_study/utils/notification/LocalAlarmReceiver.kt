@@ -5,7 +5,10 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import android.widget.Toast
+import com.example.compose_study.model.getCalendarDateTime
+import java.util.Date
 
 @Suppress("DEPRECATION")
 class LocalAlarmReceiver : BroadcastReceiver() {
@@ -14,6 +17,7 @@ class LocalAlarmReceiver : BroadcastReceiver() {
 
     @SuppressLint("UnsafeProtectedBroadcastReceiver")
     override fun onReceive(context: Context, intent: Intent) {
+        Log.d("LocalNotificationTest", "Received At : ${Date().getCalendarDateTime()}")
         Toast.makeText(context, "Alarm Received", Toast.LENGTH_SHORT).show()
         firebaseMessagingService = FirebaseMessagingService(context = context)
         val pushMessage = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
