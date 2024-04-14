@@ -40,7 +40,7 @@ class LocalNotificationHelper(val context: Context) {
         }
 
         if (calendar.time < Date()) {
-            calendar.add(Calendar.HOUR_OF_DAY, 0)
+            calendar.add(Calendar.DATE, 0)
         }
 
         alarmManager?.setExactAndAllowWhileIdle(
