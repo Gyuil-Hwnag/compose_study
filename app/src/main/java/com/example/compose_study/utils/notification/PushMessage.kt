@@ -11,7 +11,6 @@ data class PushMessage(
     val type: Type,
     val typeName: String,
     val soundMode: SoundMode,
-    val timeMode: TimeMode = TimeMode.NON_EXACT,
     val title: String,
     val message: String,
     val imageUrl: String,
@@ -26,10 +25,6 @@ data class PushMessage(
 
     enum class SoundMode {
         NONE, DEFAULT
-    }
-
-    enum class TimeMode {
-        EXACT, NON_EXACT
     }
 
     enum class Type {
