@@ -43,10 +43,21 @@ class LocalNotificationHelper(val context: Context) {
             calendar.add(Calendar.DATE, 1)
         }
 
-        alarmManager?.setExactAndAllowWhileIdle(
-            AlarmManager.RTC_WAKEUP,
-            calendar.timeInMillis,
-            pendingIntent
-        )
+        when (message.timeMode) {
+            PushMessage.TimeMode.EXACT -> {
+                alarmManager?.setExactAndAllowWhileIdle(
+                    AlarmManager.RTC_WAKEUP,
+                    calendar.timeInMillis,
+                    pendingIntent
+                )
+            }
+            PushMessage.TimeMode.NON_EXACT -> {
+                alarmManager?.set(
+                    AlarmManager.RTC_WAKEUP,
+                    calendar.timeInMillis,
+                    pendingIntent
+                )
+            }
+        }
     }
 }
