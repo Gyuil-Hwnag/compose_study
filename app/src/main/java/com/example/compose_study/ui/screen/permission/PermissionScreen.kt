@@ -1,10 +1,7 @@
 package com.example.compose_study.ui.screen.permission
 
-import android.Manifest
 import android.app.AlarmManager
-import android.content.Intent
 import android.os.Build
-import android.provider.Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -32,16 +29,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat.startActivity
 import androidx.core.content.getSystemService
 import coil.compose.AsyncImage
 import com.example.compose_study.utils.behavior.checkAndRequestGalleryPermissions
 import com.example.compose_study.utils.behavior.checkInstagramAppLink
 import com.example.compose_study.utils.behavior.openAppSettings
 import com.example.compose_study.utils.behavior.scheduleNotificationSettings
+import com.example.compose_study.utils.permission.galleyPermission
 import com.example.compose_study.utils.notification.FirebaseMessagingService
-import com.example.compose_study.utils.notification.LocalNotificationHelper
+import com.example.compose_study.utils.notification.local.LocalNotificationHelper
 import com.example.compose_study.utils.notification.getTestPushMessage
+import com.example.compose_study.utils.permission.notificationPermission
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
@@ -53,15 +51,6 @@ fun PermissionScreen(
     val alarmManager = context.getSystemService<AlarmManager>()
     val firebaseMessagingService = FirebaseMessagingService(context = context)
     val localNotificationHelper = LocalNotificationHelper(context = context)
-
-    val galleyPermission =
-        when {
-            (Build.VERSION.SDK_INT >= 34) -> arrayOf(Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED, Manifest.permission.READ_MEDIA_IMAGES)
-            (Build.VERSION.SDK_INT >= 33) -> arrayOf(Manifest.permission.READ_MEDIA_IMAGES)
-            else -> arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
-        }
-
-    val notificationPermission = arrayOf(Manifest.permission.POST_NOTIFICATIONS)
 
     val photoMultiplePermissionsLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissionsMap ->
         val areGranted = permissionsMap.values.reduce { acc, next -> acc || next }
@@ -79,13 +68,21 @@ fun PermissionScreen(
         }
     }
 
-    val scheduleNotificationPermissionsLauncher = {
-        if (alarmManager?.canScheduleExactAlarms() == true) {
-            Toast.makeText(context, "스케줄 알림 권한을 허용 하였습니다.", Toast.LENGTH_SHORT).show()
-            localNotificationHelper.sendNotification(pushEnable = true, message = getTestPushMessage())
-        } else {
-            Toast.makeText(context, "스케줄 알림 권한을 차단 하였습니다.", Toast.LENGTH_SHORT).show()
-            scheduleNotificationSettings(context)
+    val scheduleNotificationPermissionsLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissionsMap ->
+        val areGranted = permissionsMap.values.reduce { acc, next -> acc || next }
+        when {
+            areGranted && alarmManager?.canScheduleExactAlarms() == true -> {
+                Toast.makeText(context, "스케줄 알림 권한을 허용 하였습니다.", Toast.LENGTH_SHORT).show()
+                localNotificationHelper.sendNotification(message = getTestPushMessage())
+            }
+            areGranted && alarmManager?.canScheduleExactAlarms() == false -> {
+                Toast.makeText(context, "스케줄 알림 권한을 차단 하였습니다.", Toast.LENGTH_SHORT).show()
+                scheduleNotificationSettings(context)
+            }
+            else -> {
+                Toast.makeText(context, "알림 권한을 차단 하였습니다.", Toast.LENGTH_SHORT).show()
+                openAppSettings(context = context)
+            }
         }
     }
 
@@ -173,11 +170,11 @@ fun PermissionScreen(
                 modifier = Modifier
                     .background(color = Color.Black)
                     .padding(vertical = 12.dp, horizontal = 16.dp)
-                    .clickable { scheduleNotificationPermissionsLauncher() }
+                    .clickable { scheduleNotificationPermissionsLauncher.launch(notificationPermission) }
             ) {
                 Text(
                     modifier = Modifier.background(color = Color.Black),
-                    text = "Notification Period",
+                    text = "Notification ExactAndAllowWhileIdle",
                     color = Color.White
                 )
             }

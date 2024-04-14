@@ -62,7 +62,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".utils.notification.NotificationReceiver"
+        <receiver android:name=".utils.notification.local.NotificationReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
