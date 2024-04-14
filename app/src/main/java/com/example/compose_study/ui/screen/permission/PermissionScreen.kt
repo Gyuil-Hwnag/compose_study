@@ -1,7 +1,10 @@
 package com.example.compose_study.ui.screen.permission
 
 import android.Manifest
+import android.app.AlarmManager
+import android.content.Intent
 import android.os.Build
+import android.provider.Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -29,12 +32,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat.startActivity
+import androidx.core.content.getSystemService
 import coil.compose.AsyncImage
 import com.example.compose_study.utils.behavior.checkAndRequestGalleryPermissions
 import com.example.compose_study.utils.behavior.checkInstagramAppLink
 import com.example.compose_study.utils.behavior.openAppSettings
+import com.example.compose_study.utils.behavior.scheduleNotificationSettings
 import com.example.compose_study.utils.notification.FirebaseMessagingService
-import com.example.compose_study.utils.notification.NotificationManager
+import com.example.compose_study.utils.notification.LocalNotificationHelper
 import com.example.compose_study.utils.notification.getTestPushMessage
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -44,8 +50,9 @@ fun PermissionScreen(
     selectedPhoto: String = ""
 ) {
     val context = LocalContext.current
+    val alarmManager = context.getSystemService<AlarmManager>()
     val firebaseMessagingService = FirebaseMessagingService(context = context)
-    val notificationManager = NotificationManager(context = context)
+    val localNotificationHelper = LocalNotificationHelper(context = context)
 
     val galleyPermission =
         when {
@@ -72,15 +79,13 @@ fun PermissionScreen(
         }
     }
 
-    val notificationPeriodPermissionsLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissionsMap ->
-        val areGranted = permissionsMap.values.reduce { acc, next -> acc || next }
-        if (areGranted) {
-            Toast.makeText(context, "알림 권한을 허용 하였습니다.", Toast.LENGTH_SHORT).show()
-            notificationManager.cancelNotification()
-            notificationManager.sendNotification(pushEnable = true, message = getTestPushMessage())
+    val scheduleNotificationPermissionsLauncher = {
+        if (alarmManager?.canScheduleExactAlarms() == true) {
+            Toast.makeText(context, "스케줄 알림 권한을 허용 하였습니다.", Toast.LENGTH_SHORT).show()
+            localNotificationHelper.sendNotification(pushEnable = true, message = getTestPushMessage())
         } else {
-            Toast.makeText(context, "알림 권한을 차단 하였습니다.", Toast.LENGTH_SHORT).show()
-            openAppSettings(context = context)
+            Toast.makeText(context, "스케줄 알림 권한을 차단 하였습니다.", Toast.LENGTH_SHORT).show()
+            scheduleNotificationSettings(context)
         }
     }
 
@@ -168,7 +173,7 @@ fun PermissionScreen(
                 modifier = Modifier
                     .background(color = Color.Black)
                     .padding(vertical = 12.dp, horizontal = 16.dp)
-                    .clickable { notificationPeriodPermissionsLauncher.launch(notificationPermission) }
+                    .clickable { scheduleNotificationPermissionsLauncher() }
             ) {
                 Text(
                     modifier = Modifier.background(color = Color.Black),

@@ -11,11 +11,11 @@ import com.example.compose_study.model.getCalendarDateTime
 import java.util.Calendar
 import java.util.Date
 
-class NotificationManager(val context: Context) {
+class LocalNotificationHelper(val context: Context) {
 
     private val alarmManager by lazy { context.applicationContext.getSystemService(ALARM_SERVICE) as? AlarmManager }
 
-    fun cancelNotification() {
+    private fun cancelNotification() {
         val receiverIntent = Intent(context.applicationContext, NotificationReceiver::class.java)
         val pendingIntent = PendingIntent.getBroadcast(context.applicationContext, 0, receiverIntent, PendingIntent.FLAG_MUTABLE)
         alarmManager?.cancel(pendingIntent)
@@ -23,12 +23,13 @@ class NotificationManager(val context: Context) {
 
     @SuppressLint("ScheduleExactAlarm")
     fun sendNotification(pushEnable: Boolean, message: PushMessage) {
+        cancelNotification()
         if (!pushEnable) return
 
         val receiverIntent = Intent(context.applicationContext, NotificationReceiver::class.java).apply {
             putExtra("PushMessage", message)
         }
-        val pendingIntent = PendingIntent.getBroadcast(context.applicationContext, message.hashCode() + 1, receiverIntent, PendingIntent.FLAG_IMMUTABLE)
+        val pendingIntent = PendingIntent.getBroadcast(context.applicationContext, message.id.hashCode() + 1, receiverIntent, PendingIntent.FLAG_IMMUTABLE)
 
         alarmManager?.cancel(pendingIntent)
 
@@ -37,7 +38,7 @@ class NotificationManager(val context: Context) {
 //            set(Calendar.HOUR_OF_DAY, localAlarm.hour)
 //            set(Calendar.MINUTE, localAlarm.minute)
 //            set(Calendar.SECOND, localAlarm.second)
-            add(Calendar.MINUTE, 1)
+            add(Calendar.SECOND, 5)
         }
         Log.d("LocalNotificationTest", "Send To : ${calendar.time.getCalendarDateTime()}")
 
@@ -45,10 +46,9 @@ class NotificationManager(val context: Context) {
             calendar.add(Calendar.HOUR_OF_DAY, 0)
         }
 
-        alarmManager?.setRepeating(
+        alarmManager?.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
             calendar.timeInMillis,
-            AlarmManager.INTERVAL_FIFTEEN_MINUTES,
             pendingIntent
         )
     }

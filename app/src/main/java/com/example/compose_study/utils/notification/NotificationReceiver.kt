@@ -14,12 +14,16 @@ import java.util.Date
 class NotificationReceiver : BroadcastReceiver() {
 
     private lateinit var firebaseMessagingService: FirebaseMessagingService
+    private lateinit var localNotificationHelper: LocalNotificationHelper
 
     @SuppressLint("UnsafeProtectedBroadcastReceiver")
     override fun onReceive(context: Context, intent: Intent) {
         Log.d("LocalNotificationTest", "Received At : ${Date().getCalendarDateTime()}")
         Toast.makeText(context, "Alarm Received", Toast.LENGTH_SHORT).show()
+
         firebaseMessagingService = FirebaseMessagingService(context = context)
+        localNotificationHelper = LocalNotificationHelper(context = context)
+
         val pushMessage = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             intent.getParcelableExtra("PushMessage", PushMessage::class.java)
         } else {
@@ -27,7 +31,10 @@ class NotificationReceiver : BroadcastReceiver() {
         }
 
         pushMessage?.let {
-            if (it.hasContents) firebaseMessagingService.sendNotification(it)
+            if (it.hasContents) {
+                firebaseMessagingService.sendNotification(it)
+                localNotificationHelper.sendNotification(true, message = getTestPushMessage())
+            }
         }
     }
 }
