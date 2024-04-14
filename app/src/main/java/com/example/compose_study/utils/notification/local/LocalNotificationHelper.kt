@@ -50,8 +50,22 @@ class LocalNotificationHelper(val context: Context) {
                     calendar.timeInMillis,
                     pendingIntent
                 )
+
+                /**
+                 * NOTE :
+                 * setAlarmClock 은 "알림 및 리마인드" 에서 설정 안해도 되는데, setExactAndAllowWhileIdle() 보다 부 정확한 것 같음
+                **/
+//                alarmManager?.setAlarmClock(
+//                    AlarmManager.AlarmClockInfo(calendar.timeInMillis, pendingIntent),
+//                    pendingIntent
+//                )
             }
             PushMessage.TimeMode.NON_EXACT -> {
+                /**
+                 * NOTE :
+                 * setRepeat()로 설정 하면, Receiver 에서 sendNotification() 코드 없앨 수 있는데,
+                 * NotificationReceiver.kt setExactAndAllowWhileIdle() 와 공통 으로 사용 하기 위해서 set() & sendNotification() 으로 설정
+                 **/
                 alarmManager?.set(
                     AlarmManager.RTC_WAKEUP,
                     calendar.timeInMillis,
