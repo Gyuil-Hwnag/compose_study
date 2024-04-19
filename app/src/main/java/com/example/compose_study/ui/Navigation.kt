@@ -21,6 +21,7 @@ import com.example.compose_study.ui.screen.home.HomeScreen
 import com.example.compose_study.ui.screen.more.More
 import com.example.compose_study.ui.screen.permission.PermissionScreen
 import com.example.compose_study.ui.screen.photo.PhotoScreen
+import com.example.compose_study.ui.screen.photo.select.SelectPhotoScreen
 import com.example.compose_study.ui.screen.slider.SliderScreen
 import com.example.compose_study.ui.screen.stylebook.StyleBookScreen
 import com.example.compose_study.ui.screen.vibrate.VibrateScreen
@@ -35,6 +36,7 @@ fun NavigationGraph(
 ) {
     val (value: String, setValue: (String) -> Unit) = remember { mutableStateOf("") }
     val (selectPhoto: String, setSelectPhoto: (String) -> Unit) = remember { mutableStateOf("") }
+    val (selectPhotos: List<String>, setSelectPhotos: (List<String>) -> Unit) = remember { mutableStateOf(emptyList<String>()) }
 
     NavHost(
         navController = navController,
@@ -89,7 +91,9 @@ fun NavigationGraph(
         composable(BottomNavItem.Permission.screenRoute) {
             PermissionScreen(
                 toPhotoPicker = { navController.navigate(PHOTO) },
-                selectedPhoto = selectPhoto
+                toSelectPhoto = { navController.navigate(SELECT_PHOTO) },
+                selectedPhoto = selectPhoto,
+                selectedPhotos = selectPhotos
             )
         }
         composable(BottomNavItem.Draw.screenRoute) {
@@ -115,6 +119,15 @@ fun NavigationGraph(
                 selectPhoto = {
                     navController.popBackStack()
                     setSelectPhoto(it)
+                }
+            )
+        }
+        composable(SELECT_PHOTO) {
+            SelectPhotoScreen(
+                toBack = { navController.popBackStack() },
+                selectPhotos = {
+                    navController.popBackStack()
+                    setSelectPhotos(it)
                 }
             )
         }

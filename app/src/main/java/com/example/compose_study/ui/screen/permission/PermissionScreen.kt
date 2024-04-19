@@ -47,7 +47,9 @@ import com.example.compose_study.utils.permission.notificationPermission
 @Composable
 fun PermissionScreen(
     toPhotoPicker: () -> Unit,
-    selectedPhoto: String = ""
+    selectedPhoto: String = "",
+    toSelectPhoto: () -> Unit,
+    selectedPhotos: List<String> = emptyList()
 ) {
     val context = LocalContext.current
     val alarmManager = context.getSystemService<AlarmManager>()
