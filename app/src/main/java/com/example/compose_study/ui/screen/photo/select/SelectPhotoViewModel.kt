@@ -42,7 +42,7 @@ class SelectPhotoViewModel @Inject constructor(
             _selectedPhotos.value = photos
         }
         when (selectedPhotos.value.size) {
-            0, 1 -> {
+            0, 1, 2 -> {
                 photos.add(selectPhoto.imageUrl)
                 _selectedPhotos.value = photos
             }

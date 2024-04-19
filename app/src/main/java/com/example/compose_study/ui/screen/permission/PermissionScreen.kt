@@ -8,8 +8,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,6 +19,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
@@ -99,6 +102,12 @@ fun PermissionScreen(
             Toast.makeText(context, "알림 권한을 차단 하였습니다.", Toast.LENGTH_SHORT).show()
             openAppSettings(context = context)
         }
+    }
+
+    val scrollState = rememberScrollState()
+    val selectPhotoMultiplePermissionsLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissionsMap ->
+        val areGranted = permissionsMap.values.reduce { acc, next -> acc || next }
+        if (areGranted) toSelectPhoto() else openAppSettings(context = context)
     }
 
     Scaffold(
@@ -205,6 +214,46 @@ fun PermissionScreen(
                     text = "Repeat Notification (Non Exact)",
                     color = Color.White
                 )
+            }
+            Spacer(modifier = Modifier.fillMaxWidth().height(12.dp))
+            Surface(
+                modifier = Modifier
+                    .background(color = Color.Black)
+                    .padding(vertical = 12.dp, horizontal = 16.dp)
+                    .clickable {
+                        checkAndRequestGalleryPermissions(
+                            context = context,
+                            permissions = galleyPermission,
+                            launcher = selectPhotoMultiplePermissionsLauncher,
+                            toPermissionGranted = toSelectPhoto
+                        )
+                    }
+            ) {
+                Text(
+                    modifier = Modifier.background(color = Color.Black),
+                    text = "Gallery Multiple",
+                    color = Color.White
+                )
+            }
+            Spacer(modifier = Modifier.height(12.dp).wrapContentWidth())
+            if (selectedPhotos.isNotEmpty()) {
+                Row(
+                    modifier = Modifier.fillMaxWidth().horizontalScroll(scrollState),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    selectedPhotos.forEach {
+                        AsyncImage(
+                            modifier = Modifier
+                                .size(120.dp)
+                                .clip(shape = RoundedCornerShape(8.dp)),
+                            model = it,
+                            contentDescription = null,
+                            contentScale = ContentScale.Crop,
+                        )
+                    }
+
+                }
+
             }
         }
     }

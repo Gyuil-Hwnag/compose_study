@@ -16,6 +16,8 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLifecycleOwner
@@ -38,6 +40,7 @@ fun SelectPhotoScreen(
 ) {
     val photos = viewModel.pagingData.collectAsLazyPagingItems()
     val scrollState = rememberLazyGridState()
+    val selectedPhotos by viewModel.selectedPhotos.collectAsState()
 
     val lifecycle = LocalLifecycleOwner.current.lifecycle
     val coroutineScope = rememberCoroutineScope()
@@ -66,7 +69,7 @@ fun SelectPhotoScreen(
                         Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "Back")
                     }
                     IconButton(
-                        onClick = { selectPhotos(viewModel.selectedPhotos.value) }
+                        onClick = { selectPhotos(selectedPhotos) }
                     ) {
                         Icon(imageVector = Icons.Filled.Done, contentDescription = "Done")
                     }
@@ -89,9 +92,14 @@ fun SelectPhotoScreen(
             items(
                 count = photos.itemCount
             ) { index ->
+                val photo = photos[index] ?: throw Throwable(message = "Invalid Photo Gallery")
+                if (selectedPhotos.contains(photo.imageUrl)) photo.isChecked = true
                 SelectPhotoItem(
-                    photo = photos[index] ?: throw Throwable(message = "Invalid Photo Gallery"),
-                    onSelected = { photos[index]?.let { viewModel.onPhotoClicked(it)} }
+                    photo = photo,
+                    onCheckedChange = { checked ->
+                        photo.isChecked = checked
+                        viewModel.onPhotoClicked(photo)
+                    }
                 )
             }
         }
