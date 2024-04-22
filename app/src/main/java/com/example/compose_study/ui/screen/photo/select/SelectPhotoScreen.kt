@@ -1,5 +1,6 @@
 package com.example.compose_study.ui.screen.photo.select
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
@@ -18,11 +19,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.paging.LoadState
@@ -36,14 +40,16 @@ import kotlinx.coroutines.launch
 fun SelectPhotoScreen(
     toBack: () -> Unit,
     selectPhotos: (imageUrls: List<String>) -> Unit,
-    viewModel: SelectPhotoViewModel = hiltViewModel()
+    viewModel: SelectPhotoViewModel
 ) {
     val photos = viewModel.pagingData.collectAsLazyPagingItems()
     val scrollState = rememberLazyGridState()
     val selectedPhotos by viewModel.selectedPhotos.collectAsState()
+    val hasSelected by viewModel.hasSelected.collectAsState()
 
     val lifecycle = LocalLifecycleOwner.current.lifecycle
     val coroutineScope = rememberCoroutineScope()
+    val context = LocalContext.current
 
     LaunchedEffect(key1 = Unit) {
         lifecycle.repeatOnLifecycle(state = Lifecycle.State.STARTED) {
@@ -52,6 +58,12 @@ fun SelectPhotoScreen(
                     coroutineScope.launch {
                         scrollState.animateScrollToItem(0)
                     }
+                }
+            }
+
+            launch {
+                viewModel.overSelectToastMessage.collectLatest {
+                    Toast.makeText(context, "${SELECT_LIMIT}개 까지 선택할 수 있습니다.", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -69,7 +81,7 @@ fun SelectPhotoScreen(
                         Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "Back")
                     }
                     IconButton(
-                        onClick = { selectPhotos(selectedPhotos) }
+                        onClick = { selectPhotos(selectedPhotos.map { it.imageUrl }) }
                     ) {
                         Icon(imageVector = Icons.Filled.Done, contentDescription = "Done")
                     }
@@ -93,11 +105,12 @@ fun SelectPhotoScreen(
                 count = photos.itemCount
             ) { index ->
                 val photo = photos[index] ?: throw Throwable(message = "Invalid Photo Gallery")
-                if (selectedPhotos.contains(photo.imageUrl)) photo.isChecked = true
+                var isChecked by remember { mutableStateOf(photo.isChecked) }
                 SelectPhotoItem(
                     photo = photo,
+                    isChecked = isChecked,
                     onCheckedChange = { checked ->
-                        photo.isChecked = checked
+                        if (hasSelected) isChecked = checked
                         viewModel.onPhotoClicked(photo)
                     }
                 )

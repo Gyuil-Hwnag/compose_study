@@ -6,10 +6,12 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -25,25 +27,31 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.getSystemService
 import coil.compose.AsyncImage
+import com.example.compose_study.R
+import com.example.compose_study.ui.screen.photo.select.SelectPhotoViewModel
 import com.example.compose_study.utils.behavior.checkAndRequestGalleryPermissions
 import com.example.compose_study.utils.behavior.checkInstagramAppLink
 import com.example.compose_study.utils.behavior.openAppSettings
 import com.example.compose_study.utils.behavior.scheduleNotificationSettings
-import com.example.compose_study.utils.permission.galleyPermission
 import com.example.compose_study.utils.notification.FirebaseMessagingService
 import com.example.compose_study.utils.notification.getExactPushMessage
 import com.example.compose_study.utils.notification.getNonExactPushMessage
-import com.example.compose_study.utils.notification.local.LocalNotificationHelper
 import com.example.compose_study.utils.notification.getPushMessage
+import com.example.compose_study.utils.notification.local.LocalNotificationHelper
+import com.example.compose_study.utils.permission.galleyPermission
 import com.example.compose_study.utils.permission.notificationPermission
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -52,7 +60,7 @@ fun PermissionScreen(
     toPhotoPicker: () -> Unit,
     selectedPhoto: String = "",
     toSelectPhoto: () -> Unit,
-    selectedPhotos: List<String> = emptyList()
+    viewModel: SelectPhotoViewModel
 ) {
     val context = LocalContext.current
     val alarmManager = context.getSystemService<AlarmManager>()
@@ -110,6 +118,8 @@ fun PermissionScreen(
         if (areGranted) toSelectPhoto() else openAppSettings(context = context)
     }
 
+    val selectedPhotos by viewModel.selectedPhotos.collectAsState()
+
     Scaffold(
         modifier = Modifier.fillMaxSize()
     ) { paddingValues ->
@@ -124,7 +134,12 @@ fun PermissionScreen(
                 modifier = Modifier
                     .background(color = Color.Black)
                     .padding(vertical = 12.dp, horizontal = 16.dp)
-                    .clickable { checkInstagramAppLink(context = context, url = "https://www.instagram.com/duru_hgi/") }
+                    .clickable {
+                        checkInstagramAppLink(
+                            context = context,
+                            url = "https://www.instagram.com/duru_hgi/"
+                        )
+                    }
             ) {
                 Text(
                     modifier = Modifier.background(color = Color.Black),
@@ -132,12 +147,19 @@ fun PermissionScreen(
                     color = Color.White
                 )
             }
-            Spacer(modifier = Modifier.fillMaxWidth().height(12.dp))
+            Spacer(modifier = Modifier
+                .fillMaxWidth()
+                .height(12.dp))
             Surface(
                 modifier = Modifier
                     .background(color = Color.Black)
                     .padding(vertical = 12.dp, horizontal = 16.dp)
-                    .clickable { checkInstagramAppLink(context = context, url = "https://www.instagram.com/p/CfhDRMLPeHZ/?utm_source=ig_web_copy_link&igshid=MzRlODBiNWFlZA==") }
+                    .clickable {
+                        checkInstagramAppLink(
+                            context = context,
+                            url = "https://www.instagram.com/p/CfhDRMLPeHZ/?utm_source=ig_web_copy_link&igshid=MzRlODBiNWFlZA=="
+                        )
+                    }
             ) {
                 Text(
                     modifier = Modifier.background(color = Color.Black),
@@ -145,7 +167,9 @@ fun PermissionScreen(
                     color = Color.White
                 )
             }
-            Spacer(modifier = Modifier.fillMaxWidth().height(12.dp))
+            Spacer(modifier = Modifier
+                .fillMaxWidth()
+                .height(12.dp))
             Surface(
                 modifier = Modifier
                     .background(color = Color.Black)
@@ -165,7 +189,9 @@ fun PermissionScreen(
                     color = Color.White
                 )
             }
-            Spacer(modifier = Modifier.height(12.dp).wrapContentWidth())
+            Spacer(modifier = Modifier
+                .height(12.dp)
+                .wrapContentWidth())
             if (selectedPhoto.isNotBlank()) {
                 AsyncImage(
                     modifier = Modifier
@@ -189,12 +215,18 @@ fun PermissionScreen(
                     color = Color.White
                 )
             }
-            Spacer(modifier = Modifier.height(12.dp).wrapContentWidth())
+            Spacer(modifier = Modifier
+                .height(12.dp)
+                .wrapContentWidth())
             Surface(
                 modifier = Modifier
                     .background(color = Color.Black)
                     .padding(vertical = 12.dp, horizontal = 16.dp)
-                    .clickable { exactRepeatNotificationPermissionsLauncher.launch(notificationPermission) }
+                    .clickable {
+                        exactRepeatNotificationPermissionsLauncher.launch(
+                            notificationPermission
+                        )
+                    }
             ) {
                 Text(
                     modifier = Modifier.background(color = Color.Black),
@@ -202,12 +234,18 @@ fun PermissionScreen(
                     color = Color.White
                 )
             }
-            Spacer(modifier = Modifier.height(12.dp).wrapContentWidth())
+            Spacer(modifier = Modifier
+                .height(12.dp)
+                .wrapContentWidth())
             Surface(
                 modifier = Modifier
                     .background(color = Color.Black)
                     .padding(vertical = 12.dp, horizontal = 16.dp)
-                    .clickable { nonExactRepeatNotificationPermissionsLauncher.launch(notificationPermission) }
+                    .clickable {
+                        nonExactRepeatNotificationPermissionsLauncher.launch(
+                            notificationPermission
+                        )
+                    }
             ) {
                 Text(
                     modifier = Modifier.background(color = Color.Black),
@@ -215,7 +253,9 @@ fun PermissionScreen(
                     color = Color.White
                 )
             }
-            Spacer(modifier = Modifier.fillMaxWidth().height(12.dp))
+            Spacer(modifier = Modifier
+                .fillMaxWidth()
+                .height(12.dp))
             Surface(
                 modifier = Modifier
                     .background(color = Color.Black)
@@ -235,25 +275,38 @@ fun PermissionScreen(
                     color = Color.White
                 )
             }
-            Spacer(modifier = Modifier.height(12.dp).wrapContentWidth())
+            Spacer(modifier = Modifier
+                .height(12.dp)
+                .wrapContentWidth())
             if (selectedPhotos.isNotEmpty()) {
                 Row(
-                    modifier = Modifier.fillMaxWidth().horizontalScroll(scrollState),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .horizontalScroll(scrollState)
+                        .padding(16.dp),
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
                     selectedPhotos.forEach {
-                        AsyncImage(
-                            modifier = Modifier
-                                .size(120.dp)
-                                .clip(shape = RoundedCornerShape(8.dp)),
-                            model = it,
-                            contentDescription = null,
-                            contentScale = ContentScale.Crop,
-                        )
+                        Box(
+                            contentAlignment = Alignment.TopEnd
+                        ) {
+                            AsyncImage(
+                                modifier = Modifier
+                                    .size(120.dp)
+                                    .clip(shape = RoundedCornerShape(8.dp)),
+                                model = it.imageUrl,
+                                contentDescription = null,
+                                contentScale = ContentScale.Crop,
+                            )
+                            Image(
+                                modifier = Modifier.size(36.dp).clickable { viewModel.onDeselectPhoto(it) },
+                                painter = painterResource(id = R.drawable.ic_close),
+                                contentDescription = "",
+                                colorFilter = ColorFilter.tint(color = Color.Black)
+                            )
+                        }
                     }
-
                 }
-
             }
         }
     }

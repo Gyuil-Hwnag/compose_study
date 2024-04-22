@@ -21,9 +21,9 @@ import coil.compose.AsyncImage
 @Composable
 fun SelectPhotoItem(
     photo: SelectPhoto,
+    isChecked: Boolean,
     onCheckedChange: (Boolean) -> Unit
 ) {
-    var isChecked by remember { mutableStateOf(photo.isChecked) }
     Box(
         modifier = Modifier.wrapContentSize(),
         contentAlignment = Alignment.TopEnd
@@ -33,9 +33,7 @@ fun SelectPhotoItem(
                 .fillMaxWidth()
                 .aspectRatio(1f)
                 .padding(4.dp)
-                .clickable {
-                    isChecked = !photo.isChecked
-                    onCheckedChange(!photo.isChecked) },
+                .clickable { onCheckedChange(!photo.isChecked) },
             model = photo.imageUrl,
             contentDescription = null,
             contentScale = ContentScale.Crop,
@@ -43,7 +41,6 @@ fun SelectPhotoItem(
         Checkbox(
             checked = isChecked,
             onCheckedChange = {
-                isChecked = it
                 onCheckedChange(it)
             }
         )

@@ -9,9 +9,13 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,8 +27,18 @@ class SelectPhotoViewModel @Inject constructor(
     internal val pagingData: Flow<PagingData<SelectPhoto>> = createSelectPhotoPager(imageStorage = imageStorage)
         .flow.cachedIn(baseViewModelScope)
 
-    private val _selectedPhotos: MutableStateFlow<List<String>> = MutableStateFlow<List<String>>(emptyList())
-    val selectedPhotos: StateFlow<List<String>> = _selectedPhotos.asStateFlow()
+    private val _selectedPhotos: MutableStateFlow<List<SelectPhoto>> = MutableStateFlow<List<SelectPhoto>>(emptyList())
+    val selectedPhotos: StateFlow<List<SelectPhoto>> = _selectedPhotos.asStateFlow()
+
+    val hasSelected: StateFlow<Boolean> = selectedPhotos.map { it.size < SELECT_LIMIT }
+        .stateIn(
+            baseViewModelScope,
+            started = SharingStarted.WhileSubscribed(5000L),
+            initialValue = true
+        )
+
+    private val _overPickToastMessage: MutableSharedFlow<Unit> = MutableSharedFlow<Unit>()
+    val overSelectToastMessage: SharedFlow<Unit> = _overPickToastMessage.asSharedFlow()
 
     private val _scrollToTopEvent: MutableSharedFlow<Unit> = MutableSharedFlow()
     val scrollToTopEvent: SharedFlow<Unit> = _scrollToTopEvent.asSharedFlow()
@@ -36,21 +50,23 @@ class SelectPhotoViewModel @Inject constructor(
     }
 
     fun onPhotoClicked(selectPhoto: SelectPhoto) {
-        val photos = selectedPhotos.value.toMutableList()
-        photos.find { it == selectPhoto.imageUrl }?.let {
-            photos.remove(selectPhoto.imageUrl)
-            _selectedPhotos.value = photos
-        }
-        when (selectedPhotos.value.size) {
-            0, 1, 2 -> {
-                photos.add(selectPhoto.imageUrl)
+        baseViewModelScope.launch {
+            if (selectedPhotos.value.size < SELECT_LIMIT) {
+                val photos = selectedPhotos.value.toMutableList().apply {
+                    add(selectPhoto)
+                }
                 _selectedPhotos.value = photos
-            }
-            else -> {
-                photos.removeFirst()
-                photos.add(selectPhoto.imageUrl)
-                _selectedPhotos.value = photos
+            } else {
+                _overPickToastMessage.emit(Unit)
             }
         }
     }
+
+    fun onDeselectPhoto(selectPhoto: SelectPhoto) {
+        val photos = selectedPhotos.value.toMutableList()
+        photos.remove(selectPhoto)
+        _selectedPhotos.value = photos
+    }
 }
+
+const val SELECT_LIMIT = 5

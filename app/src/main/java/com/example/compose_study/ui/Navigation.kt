@@ -3,9 +3,11 @@ package com.example.compose_study.ui
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -22,6 +24,7 @@ import com.example.compose_study.ui.screen.more.More
 import com.example.compose_study.ui.screen.permission.PermissionScreen
 import com.example.compose_study.ui.screen.photo.PhotoScreen
 import com.example.compose_study.ui.screen.photo.select.SelectPhotoScreen
+import com.example.compose_study.ui.screen.photo.select.SelectPhotoViewModel
 import com.example.compose_study.ui.screen.slider.SliderScreen
 import com.example.compose_study.ui.screen.stylebook.StyleBookScreen
 import com.example.compose_study.ui.screen.vibrate.VibrateScreen
@@ -36,7 +39,7 @@ fun NavigationGraph(
 ) {
     val (value: String, setValue: (String) -> Unit) = remember { mutableStateOf("") }
     val (selectPhoto: String, setSelectPhoto: (String) -> Unit) = remember { mutableStateOf("") }
-    val (selectPhotos: List<String>, setSelectPhotos: (List<String>) -> Unit) = remember { mutableStateOf(emptyList<String>()) }
+    val selectPhotoViewModel: SelectPhotoViewModel = viewModel()
 
     NavHost(
         navController = navController,
@@ -93,7 +96,7 @@ fun NavigationGraph(
                 toPhotoPicker = { navController.navigate(PHOTO) },
                 toSelectPhoto = { navController.navigate(SELECT_PHOTO) },
                 selectedPhoto = selectPhoto,
-                selectedPhotos = selectPhotos
+                viewModel = selectPhotoViewModel
             )
         }
         composable(BottomNavItem.Draw.screenRoute) {
@@ -127,8 +130,8 @@ fun NavigationGraph(
                 toBack = { navController.popBackStack() },
                 selectPhotos = {
                     navController.popBackStack()
-                    setSelectPhotos(it)
-                }
+                },
+                viewModel = selectPhotoViewModel
             )
         }
     }
