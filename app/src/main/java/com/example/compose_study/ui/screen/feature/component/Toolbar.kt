@@ -11,6 +11,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -30,13 +31,18 @@ fun ToolBarScreen(
 ) {
     val currentOffset = offset()
     val appBarOffset by remember(currentOffset) {
-        mutableStateOf(
+        mutableFloatStateOf(
             (if (offset() >= 200f) 1.0f else (offset() - 100f) / 100).coerceIn(0f..1f)
         )
     }
     val iconColor by remember(appBarOffset) {
         mutableStateOf(
             if (appBarOffset > 0.3f) Color.Black else Color.White
+        )
+    }
+    val textAlpha by remember(appBarOffset) {
+        mutableFloatStateOf(
+            appBarOffset.coerceIn(0f..1f)
         )
     }
     Row(
@@ -48,7 +54,7 @@ fun ToolBarScreen(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            modifier = Modifier.graphicsLayer { alpha = appBarOffset.coerceIn(0f..1f) },
+            modifier = Modifier.graphicsLayer { alpha = textAlpha },
             text = "FEATURE SCREEN",
             color = Color.Black,
             fontSize = 14.sp
