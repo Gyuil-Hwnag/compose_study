@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Scaffold
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -28,7 +28,6 @@ import com.example.compose_study.ui.screen.feature.component.RecommendMenuScreen
 import com.example.compose_study.ui.screen.feature.component.RecommendNailScreen
 import com.example.compose_study.ui.screen.feature.component.RecommendStyleScreen
 import com.example.compose_study.ui.screen.feature.component.ReservationShopScreen
-import com.example.compose_study.ui.screen.stylebook.StyleBannerScreen
 import com.example.compose_study.ui.screen.feature.component.TodayStyleBookScreen
 import com.example.compose_study.ui.screen.feature.component.ToolBarScreen
 import com.example.compose_study.ui.screen.feature.component.TopBannerScreen
@@ -38,7 +37,7 @@ import com.example.compose_study.ui.screen.feature.component.loading.LoadingScre
 import com.example.compose_study.ui.theme.ComposeStudyTheme
 import com.google.accompanist.pager.ExperimentalPagerApi
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun FeatureScreen(
@@ -65,7 +64,10 @@ fun FeatureScreen(
     }
 
     Scaffold(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
+        topBar = {
+            ToolBarScreen(offset = { scrollState.value.toFloat() })
+        }
     ) {
         Column(
             modifier = Modifier
@@ -103,7 +105,6 @@ fun FeatureScreen(
             BottomAndroidView(adapter = adapter)
         }
         LoadingScreen(isLoadingCompleted = isLoadingCompleted, scrollState = scrollState)
-        ToolBarScreen(offset = scrollState.value.toFloat())
     }
 }
 
