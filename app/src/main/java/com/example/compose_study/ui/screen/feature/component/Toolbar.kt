@@ -8,9 +8,12 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -22,15 +25,32 @@ import com.example.compose_study.ui.theme.ComposeStudyTheme
 fun ToolBarScreen(
     offset: () -> Float = { 0f }
 ) {
-    val appBarOffset = if (offset() >= 200f) 1.0f else (offset() - 100f) / 100
+    val currentOffset = offset()
+    val appBarOffset by remember(currentOffset) {
+        mutableStateOf(
+            (if (offset() >= 200f) 1.0f else (offset() - 100f) / 100).coerceIn(0f..1f)
+        )
+    }
+    val iconColor by remember(appBarOffset) {
+        mutableStateOf(
+            if (appBarOffset > 0.3f) Color.Black else Color.White
+        )
+    }
     Surface(
         modifier = Modifier.fillMaxWidth(),
-        color = Color.White.copy(alpha = appBarOffset.coerceIn(0f..1f))
+        color = Color.White.copy(alpha = appBarOffset)
     ) {
         TopAppBar(
-            modifier = Modifier.fillMaxWidth().statusBarsPadding(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .statusBarsPadding(),
             title = {
-                Text(text = "FEATURE SCREEN", color = Color.Black, fontSize = 14.sp, modifier = Modifier.alpha(appBarOffset.coerceIn(0f..1f)))
+                Text(
+                    modifier = Modifier.graphicsLayer { alpha = appBarOffset.coerceIn(0f..1f) },
+                    text = "FEATURE SCREEN",
+                    color = Color.Black,
+                    fontSize = 14.sp
+                )
             },
             actions = {
                 TopAppBarActionButton(
@@ -43,7 +63,7 @@ fun ToolBarScreen(
                 ) {}
             },
             backgroundColor = Color.Transparent,
-            contentColor = if (appBarOffset > 0.3f) Color.Black else Color.White,
+            contentColor = iconColor,
             elevation = 0.dp,
         )
     }
