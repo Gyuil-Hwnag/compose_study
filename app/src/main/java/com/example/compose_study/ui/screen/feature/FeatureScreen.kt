@@ -67,7 +67,7 @@ fun FeatureScreen(
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
-            ToolBarScreen(offset = scrollState.value.toFloat())
+            ToolBarScreen(offset = { scrollState.value.toFloat() })
         }
     ) {
         Column(
