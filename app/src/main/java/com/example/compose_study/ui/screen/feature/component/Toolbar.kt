@@ -1,16 +1,19 @@
 package com.example.compose_study.ui.screen.feature.component
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
@@ -36,35 +39,30 @@ fun ToolBarScreen(
             if (appBarOffset > 0.3f) Color.Black else Color.White
         )
     }
-    Surface(
-        modifier = Modifier.fillMaxWidth(),
-        color = Color.White.copy(alpha = appBarOffset)
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(color = Color.White.copy(alpha = appBarOffset))
+            .statusBarsPadding()
+            .padding(start = 16.dp, end = 8.dp, top = 8.dp, bottom = 8.dp),
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        TopAppBar(
-            modifier = Modifier
-                .fillMaxWidth()
-                .statusBarsPadding(),
-            title = {
-                Text(
-                    modifier = Modifier.graphicsLayer { alpha = appBarOffset.coerceIn(0f..1f) },
-                    text = "FEATURE SCREEN",
-                    color = Color.Black,
-                    fontSize = 14.sp
-                )
-            },
-            actions = {
-                TopAppBarActionButton(
-                    iconRes = R.drawable.ic_search,
-                    description = "Search"
-                ) {}
-                TopAppBarActionButton(
-                    iconRes = R.drawable.ic_notification,
-                    description = "Lock"
-                ) {}
-            },
-            backgroundColor = Color.Transparent,
-            contentColor = iconColor,
-            elevation = 0.dp,
+        Text(
+            modifier = Modifier.graphicsLayer { alpha = appBarOffset.coerceIn(0f..1f) },
+            text = "FEATURE SCREEN",
+            color = Color.Black,
+            fontSize = 14.sp
+        )
+        Spacer(modifier = Modifier.weight(1f))
+        TopAppBarActionButton(
+            iconRes = R.drawable.ic_search,
+            description = "Search",
+            color = iconColor
+        )
+        TopAppBarActionButton(
+            iconRes = R.drawable.ic_notification,
+            description = "Lock",
+            color = iconColor
         )
     }
 }
@@ -73,12 +71,17 @@ fun ToolBarScreen(
 fun TopAppBarActionButton(
     iconRes: Int,
     description: String,
-    onClick: () -> Unit
+    color: Color,
+    onClick: () -> Unit = {}
 ) {
-    IconButton(onClick = {
-        onClick()
-    }) {
-        Icon(painter = painterResource(id = iconRes), contentDescription = description)
+    IconButton(
+        onClick = { onClick() }
+    ) {
+        Icon(
+            painter = painterResource(id = iconRes),
+            contentDescription = description,
+            tint = color
+        )
     }
 }
 
