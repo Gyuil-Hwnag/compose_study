@@ -68,7 +68,7 @@ fun QuickCardScreen(
 
 @Composable
 fun QuickCard(type: QuickCardType) {
-    when(type) {
+    when (type) {
         QuickCardType.WELCOME -> WelcomeCard()
         QuickCardType.RESERVATION -> ReservationCard()
         QuickCardType.D_DAY -> DDayCard()
@@ -84,15 +84,40 @@ fun QuickCard(type: QuickCardType) {
 
 @Composable
 fun CardMessage(type: QuickCardType) {
-    when(type) {
+    when (type) {
         QuickCardType.WELCOME -> Text(text = "신규고객", color = Color.Black, fontSize = 15.sp)
         QuickCardType.RESERVATION -> Text(text = "-N ~ 1일전", color = Color.Black, fontSize = 15.sp)
         QuickCardType.D_DAY -> Text(text = "24시간 전", color = Color.Black, fontSize = 15.sp)
-        QuickCardType.BEFORE_REVIEW -> Text(text = "시술 후 - 리뷰작성 전", color = Color.Black, fontSize = 15.sp)
-        QuickCardType.AFTER_REVIEW -> Text(text = "시술 후 - 리뷰작성 후", color = Color.Black, fontSize = 15.sp)
-        QuickCardType.RE_RESERVATION_FEMALE -> Text(text = "여성 재예약하기", color = Color.Black, fontSize = 15.sp)
-        QuickCardType.RE_RESERVATION_MALE -> Text(text = "남성 재예약하기", color = Color.Black, fontSize = 15.sp)
-        QuickCardType.MY_DESIGNER -> Text(text = "나의 단골 디자이너", color = Color.Black, fontSize = 15.sp)
+        QuickCardType.BEFORE_REVIEW -> Text(
+            text = "시술 후 - 리뷰작성 전",
+            color = Color.Black,
+            fontSize = 15.sp
+        )
+
+        QuickCardType.AFTER_REVIEW -> Text(
+            text = "시술 후 - 리뷰작성 후",
+            color = Color.Black,
+            fontSize = 15.sp
+        )
+
+        QuickCardType.RE_RESERVATION_FEMALE -> Text(
+            text = "여성 재예약하기",
+            color = Color.Black,
+            fontSize = 15.sp
+        )
+
+        QuickCardType.RE_RESERVATION_MALE -> Text(
+            text = "남성 재예약하기",
+            color = Color.Black,
+            fontSize = 15.sp
+        )
+
+        QuickCardType.MY_DESIGNER -> Text(
+            text = "나의 단골 디자이너",
+            color = Color.Black,
+            fontSize = 15.sp
+        )
+
         QuickCardType.MY_MENU -> Text(text = "최근 본 메뉴", color = Color.Black, fontSize = 15.sp)
         QuickCardType.NORMAL -> Text(text = "프로필 업데이트", color = Color.Black, fontSize = 15.sp)
     }
@@ -160,7 +185,13 @@ fun ReservationCard() {
                     maxLines = 1
                 )
             }
-            Text(text = "D-5", fontSize = 15.sp, color = Color.White, modifier = Modifier.width(73.dp), textAlign = TextAlign.Center)
+            Text(
+                text = "D-5",
+                fontSize = 15.sp,
+                color = Color.White,
+                modifier = Modifier.width(73.dp),
+                textAlign = TextAlign.Center
+            )
         }
     }
 }
@@ -186,7 +217,11 @@ fun DDayCard() {
                 modifier = Modifier.size(56.dp)
             )
             Spacer(modifier = Modifier.size(12.dp))
-            Column(modifier = Modifier.weight(1f), horizontalAlignment = Alignment.Start, verticalArrangement = Arrangement.Center) {
+            Column(
+                modifier = Modifier.weight(1f),
+                horizontalAlignment = Alignment.Start,
+                verticalArrangement = Arrangement.Center
+            ) {
                 Text(
                     modifier = Modifier.fillMaxWidth(),
                     text = "여성 디자인컷",
@@ -203,7 +238,13 @@ fun DDayCard() {
                     maxLines = 1
                 )
             }
-            Text(text = "10:56:22", fontSize = 15.sp, color = Color.White, modifier = Modifier.width(73.dp), textAlign = TextAlign.Center)
+            Text(
+                text = "10:56:22",
+                fontSize = 15.sp,
+                color = Color.White,
+                modifier = Modifier.width(73.dp),
+                textAlign = TextAlign.Center
+            )
         }
     }
 }
@@ -229,7 +270,11 @@ fun ReviewCard(isWrite: Boolean) {
                 modifier = Modifier.size(56.dp)
             )
             Spacer(modifier = Modifier.size(12.dp))
-            Column(modifier = Modifier.weight(1f), horizontalAlignment = Alignment.Start, verticalArrangement = Arrangement.Center) {
+            Column(
+                modifier = Modifier.weight(1f),
+                horizontalAlignment = Alignment.Start,
+                verticalArrangement = Arrangement.Center
+            ) {
                 Text(
                     modifier = Modifier.fillMaxWidth(),
                     text = "여성 디자인컷",
@@ -246,9 +291,20 @@ fun ReviewCard(isWrite: Boolean) {
                     maxLines = 1
                 )
             }
-            Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.width(73.dp)) {
-                Image(painter = painterResource(id = R.drawable.ic_review), contentDescription = "리뷰 아이콘", modifier = Modifier.size(28.dp))
-                Text(text = if (isWrite) "리뷰 보기" else "리뷰 쓰기" , fontSize = 11.sp, color = Color.White)
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.width(73.dp)
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.ic_review),
+                    contentDescription = "리뷰 아이콘",
+                    modifier = Modifier.size(28.dp)
+                )
+                Text(
+                    text = if (isWrite) "리뷰 보기" else "리뷰 쓰기",
+                    fontSize = 11.sp,
+                    color = Color.White
+                )
             }
         }
     }
@@ -278,7 +334,11 @@ fun ReReservationCard(isFemale: Boolean) {
                 modifier = Modifier.size(56.dp)
             )
             Spacer(modifier = Modifier.size(12.dp))
-            Column(modifier = Modifier.weight(1f), horizontalAlignment = Alignment.Start, verticalArrangement = Arrangement.Center) {
+            Column(
+                modifier = Modifier.weight(1f),
+                horizontalAlignment = Alignment.Start,
+                verticalArrangement = Arrangement.Center
+            ) {
                 Text(
                     modifier = Modifier.fillMaxWidth(),
                     text = "여성 디자인컷",
@@ -302,12 +362,12 @@ fun ReReservationCard(isFemale: Boolean) {
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun FavoriteCard(type: FavoriteType) {
-    val backgroundColor = when(type) {
+    val backgroundColor = when (type) {
         FavoriteType.DESIGNER -> 0xFFEA6062
         FavoriteType.MENU -> 0xFF4FABC9
     }
 
-    val message = when(type) {
+    val message = when (type) {
         FavoriteType.DESIGNER -> "나의 단골 디자이너"
         FavoriteType.MENU -> "여성 디자인컷"
     }
@@ -330,7 +390,11 @@ fun FavoriteCard(type: FavoriteType) {
                 modifier = Modifier.size(56.dp)
             )
             Spacer(modifier = Modifier.size(12.dp))
-            Column(modifier = Modifier.weight(1f), horizontalAlignment = Alignment.Start, verticalArrangement = Arrangement.Center) {
+            Column(
+                modifier = Modifier.weight(1f),
+                horizontalAlignment = Alignment.Start,
+                verticalArrangement = Arrangement.Center
+            ) {
                 Text(
                     text = message,
                     fontSize = 15.sp,
@@ -344,7 +408,11 @@ fun FavoriteCard(type: FavoriteType) {
                     maxLines = 1
                 )
             }
-            Image(painter = painterResource(id = R.drawable.ic_close), contentDescription = "리뷰 아이콘", modifier = Modifier.size(20.dp))
+            Image(
+                painter = painterResource(id = R.drawable.ic_close),
+                contentDescription = "리뷰 아이콘",
+                modifier = Modifier.size(20.dp)
+            )
         }
     }
 }
@@ -364,9 +432,18 @@ fun NormalCard() {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Spacer(modifier = Modifier.height(56.dp))
-            Column(horizontalAlignment = Alignment.Start, verticalArrangement = Arrangement.Center) {
+            Column(
+                horizontalAlignment = Alignment.Start,
+                verticalArrangement = Arrangement.Center
+            ) {
                 Text(text = "여성 디자인컷", fontSize = 15.sp, color = Color.White)
-                Text(text = "이수 수석 ・ 준오헤어 판교점", fontSize = 13.sp, color = Color.White, modifier = Modifier.basicMarquee(), maxLines = 1)
+                Text(
+                    text = "이수 수석 ・ 준오헤어 판교점",
+                    fontSize = 13.sp,
+                    color = Color.White,
+                    modifier = Modifier.basicMarquee(),
+                    maxLines = 1
+                )
             }
             Spacer(modifier = Modifier.weight(1f))
         }
