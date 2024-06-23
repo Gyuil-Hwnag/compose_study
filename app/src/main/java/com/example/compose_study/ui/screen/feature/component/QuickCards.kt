@@ -15,9 +15,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -130,7 +130,7 @@ fun WelcomeCard() {
             .fillMaxWidth()
             .padding(horizontal = 4.dp),
         shape = RoundedCornerShape(4.dp),
-        colors = ButtonDefaults.buttonColors(backgroundColor = Color.Yellow),
+        colors = ButtonDefaults.buttonColors(containerColor = Color.Yellow),
         onClick = {}
     ) {
         Row(
@@ -151,7 +151,7 @@ fun ReservationCard() {
             .fillMaxWidth()
             .padding(horizontal = 4.dp),
         shape = RoundedCornerShape(4.dp),
-        colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFFF695B)),
+        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFF695B)),
         onClick = {}
     ) {
         Row(
@@ -204,7 +204,7 @@ fun DDayCard() {
             .fillMaxWidth()
             .padding(horizontal = 4.dp),
         shape = RoundedCornerShape(4.dp),
-        colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF666DC5)),
+        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF666DC5)),
         onClick = {}
     ) {
         Row(
@@ -257,7 +257,7 @@ fun ReviewCard(isWrite: Boolean) {
             .fillMaxWidth()
             .padding(horizontal = 4.dp),
         shape = RoundedCornerShape(4.dp),
-        colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF888888)),
+        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF888888)),
         onClick = {}
     ) {
         Row(
@@ -321,7 +321,7 @@ fun ReReservationCard(isFemale: Boolean) {
             .fillMaxWidth()
             .padding(horizontal = 4.dp),
         shape = RoundedCornerShape(4.dp),
-        colors = ButtonDefaults.buttonColors(backgroundColor = Color(backgroundColor)),
+        colors = ButtonDefaults.buttonColors(containerColor = Color(backgroundColor)),
         onClick = {}
     ) {
         Row(
@@ -377,7 +377,7 @@ fun FavoriteCard(type: FavoriteType) {
             .fillMaxWidth()
             .padding(horizontal = 4.dp),
         shape = RoundedCornerShape(4.dp),
-        colors = ButtonDefaults.buttonColors(backgroundColor = Color(backgroundColor)),
+        colors = ButtonDefaults.buttonColors(containerColor = Color(backgroundColor)),
         onClick = {}
     ) {
         Row(
@@ -425,7 +425,7 @@ fun NormalCard() {
             .fillMaxWidth()
             .padding(horizontal = 4.dp),
         shape = RoundedCornerShape(4.dp),
-        colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFDDDDDD)),
+        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFDDDDDD)),
         onClick = {}
     ) {
         Row(
