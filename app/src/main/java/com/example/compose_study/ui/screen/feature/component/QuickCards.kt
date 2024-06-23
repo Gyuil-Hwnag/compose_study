@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -155,6 +156,7 @@ fun ReservationCard() {
         onClick = {}
     ) {
         Row(
+            modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
             AsyncImage(
@@ -189,7 +191,7 @@ fun ReservationCard() {
                 text = "D-5",
                 fontSize = 15.sp,
                 color = Color.White,
-                modifier = Modifier.width(73.dp),
+                modifier = Modifier.wrapContentWidth(),
                 textAlign = TextAlign.Center
             )
         }
@@ -208,6 +210,7 @@ fun DDayCard() {
         onClick = {}
     ) {
         Row(
+            modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
             AsyncImage(
@@ -242,7 +245,7 @@ fun DDayCard() {
                 text = "10:56:22",
                 fontSize = 15.sp,
                 color = Color.White,
-                modifier = Modifier.width(73.dp),
+                modifier = Modifier.wrapContentWidth(),
                 textAlign = TextAlign.Center
             )
         }
@@ -261,6 +264,7 @@ fun ReviewCard(isWrite: Boolean) {
         onClick = {}
     ) {
         Row(
+            modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
             AsyncImage(
@@ -293,7 +297,7 @@ fun ReviewCard(isWrite: Boolean) {
             }
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.width(73.dp)
+                modifier = Modifier.wrapContentWidth()
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_review),
@@ -325,6 +329,7 @@ fun ReReservationCard(isFemale: Boolean) {
         onClick = {}
     ) {
         Row(
+            modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
             AsyncImage(
@@ -341,7 +346,7 @@ fun ReReservationCard(isFemale: Boolean) {
             ) {
                 Text(
                     modifier = Modifier.fillMaxWidth(),
-                    text = "여성 디자인컷",
+                    text = message,
                     fontSize = 15.sp,
                     color = Color.Black
                 )
@@ -381,6 +386,7 @@ fun FavoriteCard(type: FavoriteType) {
         onClick = {}
     ) {
         Row(
+            modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
             AsyncImage(
