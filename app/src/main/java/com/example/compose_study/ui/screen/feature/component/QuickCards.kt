@@ -1,11 +1,15 @@
 package com.example.compose_study.ui.screen.feature.component
 
-import androidx.compose.animation.core.CubicBezierEasing
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -14,18 +18,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -50,12 +48,7 @@ fun QuickCardScreen(
     Column(
         modifier = Modifier.fillMaxWidth()
     ) {
-        Box(
-            modifier = Modifier.padding(horizontal = 16.dp)
-        ) {
-            CardMessage(quickCards[state.currentPage])
-        }
-        Spacer(modifier = Modifier.size(16.dp))
+        WelcomeMessage(quickCards[state.currentPage])
         HorizontalPager(
             state = state,
             count = quickCards.size,
@@ -75,7 +68,7 @@ fun QuickCardScreen(
 
 @Composable
 fun QuickCard(type: QuickCardType) {
-    when(type) {
+    when (type) {
         QuickCardType.WELCOME -> WelcomeCard()
         QuickCardType.RESERVATION -> ReservationCard()
         QuickCardType.D_DAY -> DDayCard()
@@ -90,16 +83,63 @@ fun QuickCard(type: QuickCardType) {
 }
 
 @Composable
+fun WelcomeMessage(
+    type: QuickCardType
+) {
+    val animationDurationMillis = 1500
+    AnimatedContent(
+        modifier = Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
+        targetState = type,
+        transitionSpec = {
+            (fadeIn(animationSpec = tween(durationMillis = animationDurationMillis)) +
+                    slideInVertically(
+                        initialOffsetY = { 40.dp.value.toInt() },
+                        animationSpec = tween(animationDurationMillis)
+                    )
+                    ).togetherWith(fadeOut(animationSpec = tween(durationMillis = 0)))
+        },
+        label = ""
+    ) { currentType ->
+        CardMessage(type = currentType)
+    }
+}
+
+@Composable
 fun CardMessage(type: QuickCardType) {
-    when(type) {
+    when (type) {
         QuickCardType.WELCOME -> Text(text = "신규고객", color = Color.Black, fontSize = 15.sp)
         QuickCardType.RESERVATION -> Text(text = "-N ~ 1일전", color = Color.Black, fontSize = 15.sp)
         QuickCardType.D_DAY -> Text(text = "24시간 전", color = Color.Black, fontSize = 15.sp)
-        QuickCardType.BEFORE_REVIEW -> Text(text = "시술 후 - 리뷰작성 전", color = Color.Black, fontSize = 15.sp)
-        QuickCardType.AFTER_REVIEW -> Text(text = "시술 후 - 리뷰작성 후", color = Color.Black, fontSize = 15.sp)
-        QuickCardType.RE_RESERVATION_FEMALE -> Text(text = "여성 재예약하기", color = Color.Black, fontSize = 15.sp)
-        QuickCardType.RE_RESERVATION_MALE -> Text(text = "남성 재예약하기", color = Color.Black, fontSize = 15.sp)
-        QuickCardType.MY_DESIGNER -> Text(text = "나의 단골 디자이너", color = Color.Black, fontSize = 15.sp)
+        QuickCardType.BEFORE_REVIEW -> Text(
+            text = "시술 후 - 리뷰작성 전",
+            color = Color.Black,
+            fontSize = 15.sp
+        )
+
+        QuickCardType.AFTER_REVIEW -> Text(
+            text = "시술 후 - 리뷰작성 후",
+            color = Color.Black,
+            fontSize = 15.sp
+        )
+
+        QuickCardType.RE_RESERVATION_FEMALE -> Text(
+            text = "여성 재예약하기",
+            color = Color.Black,
+            fontSize = 15.sp
+        )
+
+        QuickCardType.RE_RESERVATION_MALE -> Text(
+            text = "남성 재예약하기",
+            color = Color.Black,
+            fontSize = 15.sp
+        )
+
+        QuickCardType.MY_DESIGNER -> Text(
+            text = "나의 단골 디자이너",
+            color = Color.Black,
+            fontSize = 15.sp
+        )
+
         QuickCardType.MY_MENU -> Text(text = "최근 본 메뉴", color = Color.Black, fontSize = 15.sp)
         QuickCardType.NORMAL -> Text(text = "프로필 업데이트", color = Color.Black, fontSize = 15.sp)
     }
@@ -112,7 +152,7 @@ fun WelcomeCard() {
             .fillMaxWidth()
             .padding(horizontal = 4.dp),
         shape = RoundedCornerShape(4.dp),
-        colors = ButtonDefaults.buttonColors(backgroundColor = Color.Yellow),
+        colors = ButtonDefaults.buttonColors(containerColor = Color.Yellow),
         onClick = {}
     ) {
         Row(
@@ -125,29 +165,19 @@ fun WelcomeCard() {
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ReservationCard() {
-    val scrollState = rememberScrollState()
-    var animateState by remember { mutableStateOf(true) }
-
-    LaunchedEffect(key1 = animateState){
-        scrollState.animateScrollTo(
-            scrollState.maxValue,
-            animationSpec = tween(1000, 200, easing = CubicBezierEasing(0f,0f,0f,0f))
-        )
-        scrollState.scrollTo(0)
-        animateState = !animateState
-    }
-
     Button(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 4.dp),
         shape = RoundedCornerShape(4.dp),
-        colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFFF695B)),
+        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFF695B)),
         onClick = {}
     ) {
         Row(
+            modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
             AsyncImage(
@@ -157,38 +187,51 @@ fun ReservationCard() {
                 modifier = Modifier.size(56.dp)
             )
             Spacer(modifier = Modifier.size(12.dp))
-            Column(modifier = Modifier.weight(1f), horizontalAlignment = Alignment.Start, verticalArrangement = Arrangement.Center) {
-                Text(text = "여성 디자인컷", fontSize = 15.sp, color = Color.White)
-                Text(text = "이수 수석 ・ 준오헤어 판교점", fontSize = 13.sp, color = Color.White, modifier = Modifier.horizontalScroll(scrollState, false), maxLines = 1)
+            Column(
+                modifier = Modifier.weight(1f),
+                horizontalAlignment = Alignment.Start,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = "여성 디자인컷",
+                    fontSize = 15.sp,
+                    color = Color.White
+                )
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .basicMarquee(),
+                    text = "이수 수석 ・ 준오헤어 판교점",
+                    fontSize = 13.sp,
+                    color = Color.White,
+                    maxLines = 1
+                )
             }
-            Text(text = "D-5", fontSize = 15.sp, color = Color.White, modifier = Modifier.width(73.dp), textAlign = TextAlign.Center)
+            Text(
+                text = "D-5",
+                fontSize = 15.sp,
+                color = Color.White,
+                modifier = Modifier.wrapContentWidth(),
+                textAlign = TextAlign.Center
+            )
         }
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun DDayCard() {
-    val scrollState = rememberScrollState()
-    var animateState by remember { mutableStateOf(true) }
-
-    LaunchedEffect(key1 = animateState){
-        scrollState.animateScrollTo(
-            scrollState.maxValue,
-            animationSpec = tween(1000, 200, easing = CubicBezierEasing(0f,0f,0f,0f))
-        )
-        scrollState.scrollTo(0)
-        animateState = !animateState
-    }
-
     Button(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 4.dp),
         shape = RoundedCornerShape(4.dp),
-        colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF666DC5)),
+        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF666DC5)),
         onClick = {}
     ) {
         Row(
+            modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
             AsyncImage(
@@ -198,38 +241,51 @@ fun DDayCard() {
                 modifier = Modifier.size(56.dp)
             )
             Spacer(modifier = Modifier.size(12.dp))
-            Column(modifier = Modifier.weight(1f), horizontalAlignment = Alignment.Start, verticalArrangement = Arrangement.Center) {
-                Text(text = "여성 디자인컷", fontSize = 15.sp, color = Color.White)
-                Text(text = "이수 수석 ・ 준오헤어 판교점", fontSize = 13.sp, color = Color.White, modifier = Modifier.horizontalScroll(scrollState, false), maxLines = 1)
+            Column(
+                modifier = Modifier.weight(1f),
+                horizontalAlignment = Alignment.Start,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = "여성 디자인컷",
+                    fontSize = 15.sp,
+                    color = Color.White
+                )
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .basicMarquee(),
+                    text = "이수 수석 ・ 준오헤어 판교점",
+                    fontSize = 13.sp,
+                    color = Color.White,
+                    maxLines = 1
+                )
             }
-            Text(text = "10:56:22", fontSize = 15.sp, color = Color.White, modifier = Modifier.width(73.dp), textAlign = TextAlign.Center)
+            Text(
+                text = "10:56:22",
+                fontSize = 15.sp,
+                color = Color.White,
+                modifier = Modifier.wrapContentWidth(),
+                textAlign = TextAlign.Center
+            )
         }
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ReviewCard(isWrite: Boolean) {
-    val scrollState = rememberScrollState()
-    var animateState by remember { mutableStateOf(true) }
-
-    LaunchedEffect(key1 = animateState){
-        scrollState.animateScrollTo(
-            scrollState.maxValue,
-            animationSpec = tween(1000, 200, easing = CubicBezierEasing(0f,0f,0f,0f))
-        )
-        scrollState.scrollTo(0)
-        animateState = !animateState
-    }
-
     Button(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 4.dp),
         shape = RoundedCornerShape(4.dp),
-        colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF888888)),
+        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF888888)),
         onClick = {}
     ) {
         Row(
+            modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
             AsyncImage(
@@ -239,32 +295,49 @@ fun ReviewCard(isWrite: Boolean) {
                 modifier = Modifier.size(56.dp)
             )
             Spacer(modifier = Modifier.size(12.dp))
-            Column(modifier = Modifier.weight(1f), horizontalAlignment = Alignment.Start, verticalArrangement = Arrangement.Center) {
-                Text(text = "여성 디자인컷", fontSize = 15.sp, color = Color.White)
-                Text(text = "이수 수석 ・ 준오헤어 판교점", fontSize = 13.sp, color = Color.White, modifier = Modifier.horizontalScroll(scrollState, false), maxLines = 1)
+            Column(
+                modifier = Modifier.weight(1f),
+                horizontalAlignment = Alignment.Start,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = "여성 디자인컷",
+                    fontSize = 15.sp,
+                    color = Color.White
+                )
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .basicMarquee(),
+                    text = "이수 수석 ・ 준오헤어 판교점",
+                    fontSize = 13.sp,
+                    color = Color.White,
+                    maxLines = 1
+                )
             }
-            Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.width(73.dp)) {
-                Image(painter = painterResource(id = R.drawable.ic_review), contentDescription = "리뷰 아이콘", modifier = Modifier.size(28.dp))
-                Text(text = if (isWrite) "리뷰 보기" else "리뷰 쓰기" , fontSize = 11.sp, color = Color.White)
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.wrapContentWidth()
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.ic_review),
+                    contentDescription = "리뷰 아이콘",
+                    modifier = Modifier.size(28.dp)
+                )
+                Text(
+                    text = if (isWrite) "리뷰 보기" else "리뷰 쓰기",
+                    fontSize = 11.sp,
+                    color = Color.White
+                )
             }
         }
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ReReservationCard(isFemale: Boolean) {
-    val scrollState = rememberScrollState()
-    var animateState by remember { mutableStateOf(true) }
-
-    LaunchedEffect(key1 = animateState){
-        scrollState.animateScrollTo(
-            scrollState.maxValue,
-            animationSpec = tween(1000, 200, easing = CubicBezierEasing(0f,0f,0f,0f))
-        )
-        scrollState.scrollTo(0)
-        animateState = !animateState
-    }
-
     val backgroundColor = if (isFemale) 0xFFFFA05B else 0xFF74E0C7
     val message = if (isFemale) "줄리님 스타일 손볼 때 되셨네요!" else "랄프님 머리할 때 되셨네요!"
 
@@ -273,10 +346,11 @@ fun ReReservationCard(isFemale: Boolean) {
             .fillMaxWidth()
             .padding(horizontal = 4.dp),
         shape = RoundedCornerShape(4.dp),
-        colors = ButtonDefaults.buttonColors(backgroundColor = Color(backgroundColor)),
+        colors = ButtonDefaults.buttonColors(containerColor = Color(backgroundColor)),
         onClick = {}
     ) {
         Row(
+            modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
             AsyncImage(
@@ -286,34 +360,40 @@ fun ReReservationCard(isFemale: Boolean) {
                 modifier = Modifier.size(56.dp)
             )
             Spacer(modifier = Modifier.size(12.dp))
-            Column(modifier = Modifier.weight(1f), horizontalAlignment = Alignment.Start, verticalArrangement = Arrangement.Center) {
-                Text(text = message, fontSize = 15.sp, color = Color.Black)
-                Text(text = "이수 수석 ・ 준오헤어 판교점", fontSize = 13.sp, color = Color.Black, modifier = Modifier.horizontalScroll(scrollState, false), maxLines = 1)
+            Column(
+                modifier = Modifier.weight(1f),
+                horizontalAlignment = Alignment.Start,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = message,
+                    fontSize = 15.sp,
+                    color = Color.Black
+                )
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .basicMarquee(),
+                    text = "이수 수석 ・ 준오헤어 판교점",
+                    fontSize = 13.sp,
+                    color = Color.Black,
+                    maxLines = 1
+                )
             }
         }
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun FavoriteCard(type: FavoriteType) {
-    val scrollState = rememberScrollState()
-    var animateState by remember { mutableStateOf(true) }
-
-    LaunchedEffect(key1 = animateState){
-        scrollState.animateScrollTo(
-            scrollState.maxValue,
-            animationSpec = tween(1000, 200, easing = CubicBezierEasing(0f,0f,0f,0f))
-        )
-        scrollState.scrollTo(0)
-        animateState = !animateState
-    }
-
-    val backgroundColor = when(type) {
+    val backgroundColor = when (type) {
         FavoriteType.DESIGNER -> 0xFFEA6062
         FavoriteType.MENU -> 0xFF4FABC9
     }
 
-    val message = when(type) {
+    val message = when (type) {
         FavoriteType.DESIGNER -> "나의 단골 디자이너"
         FavoriteType.MENU -> "여성 디자인컷"
     }
@@ -323,10 +403,11 @@ fun FavoriteCard(type: FavoriteType) {
             .fillMaxWidth()
             .padding(horizontal = 4.dp),
         shape = RoundedCornerShape(4.dp),
-        colors = ButtonDefaults.buttonColors(backgroundColor = Color(backgroundColor)),
+        colors = ButtonDefaults.buttonColors(containerColor = Color(backgroundColor)),
         onClick = {}
     ) {
         Row(
+            modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
             AsyncImage(
@@ -336,44 +417,60 @@ fun FavoriteCard(type: FavoriteType) {
                 modifier = Modifier.size(56.dp)
             )
             Spacer(modifier = Modifier.size(12.dp))
-            Column(modifier = Modifier.weight(1f), horizontalAlignment = Alignment.Start, verticalArrangement = Arrangement.Center) {
-                Text(text = message, fontSize = 15.sp, color = Color.White)
-                Text(text = "이수 수석 ・ 준오헤어 판교점", fontSize = 13.sp, color = Color.White, modifier = Modifier.horizontalScroll(scrollState, false), maxLines = 1)
+            Column(
+                modifier = Modifier.weight(1f),
+                horizontalAlignment = Alignment.Start,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    text = message,
+                    fontSize = 15.sp,
+                    color = Color.White
+                )
+                Text(
+                    text = "이수 수석 ・ 준오헤어 판교점", fontSize = 13.sp, color = Color.White,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .basicMarquee(),
+                    maxLines = 1
+                )
             }
-            Image(painter = painterResource(id = R.drawable.ic_close), contentDescription = "리뷰 아이콘", modifier = Modifier.size(20.dp))
+            Image(
+                painter = painterResource(id = R.drawable.ic_close),
+                contentDescription = "리뷰 아이콘",
+                modifier = Modifier.size(20.dp)
+            )
         }
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun NormalCard() {
-    val scrollState = rememberScrollState()
-    var animateState by remember { mutableStateOf(true) }
-
-    LaunchedEffect(key1 = animateState){
-        scrollState.animateScrollTo(
-            scrollState.maxValue,
-            animationSpec = tween(1000, 200, easing = CubicBezierEasing(0f,0f,0f,0f))
-        )
-        scrollState.scrollTo(0)
-        animateState = !animateState
-    }
-
     Button(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 4.dp),
         shape = RoundedCornerShape(4.dp),
-        colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFDDDDDD)),
+        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFDDDDDD)),
         onClick = {}
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Spacer(modifier = Modifier.height(56.dp))
-            Column(horizontalAlignment = Alignment.Start, verticalArrangement = Arrangement.Center) {
+            Column(
+                horizontalAlignment = Alignment.Start,
+                verticalArrangement = Arrangement.Center
+            ) {
                 Text(text = "여성 디자인컷", fontSize = 15.sp, color = Color.White)
-                Text(text = "이수 수석 ・ 준오헤어 판교점", fontSize = 13.sp, color = Color.White, modifier = Modifier.horizontalScroll(scrollState, false), maxLines = 1)
+                Text(
+                    text = "이수 수석 ・ 준오헤어 판교점",
+                    fontSize = 13.sp,
+                    color = Color.White,
+                    modifier = Modifier.basicMarquee(),
+                    maxLines = 1
+                )
             }
             Spacer(modifier = Modifier.weight(1f))
         }
@@ -390,12 +487,3 @@ enum class QuickCardType {
 enum class FavoriteType {
     DESIGNER, MENU
 }
-
-//@OptIn(ExperimentalPagerApi::class)
-//@Preview
-//@Composable
-//fun UserCardPreview() {
-//    Compose_studyTheme {
-//        QuickCardScreen()
-//    }
-//}
