@@ -1,10 +1,15 @@
 package com.example.compose_study.ui.screen.feature.component
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -13,7 +18,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -44,12 +48,7 @@ fun QuickCardScreen(
     Column(
         modifier = Modifier.fillMaxWidth()
     ) {
-        Box(
-            modifier = Modifier.padding(horizontal = 16.dp)
-        ) {
-            CardMessage(quickCards[state.currentPage])
-        }
-        Spacer(modifier = Modifier.size(16.dp))
+        WelcomeMessage(quickCards[state.currentPage])
         HorizontalPager(
             state = state,
             count = quickCards.size,
@@ -80,6 +79,28 @@ fun QuickCard(type: QuickCardType) {
         QuickCardType.MY_DESIGNER -> FavoriteCard(FavoriteType.DESIGNER)
         QuickCardType.MY_MENU -> FavoriteCard(FavoriteType.MENU)
         QuickCardType.NORMAL -> NormalCard()
+    }
+}
+
+@Composable
+fun WelcomeMessage(
+    type: QuickCardType
+) {
+    val animationDurationMillis = 1500
+    AnimatedContent(
+        modifier = Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
+        targetState = type,
+        transitionSpec = {
+            (fadeIn(animationSpec = tween(durationMillis = animationDurationMillis)) +
+                    slideInVertically(
+                        initialOffsetY = { 40.dp.value.toInt() },
+                        animationSpec = tween(animationDurationMillis)
+                    )
+                    ).togetherWith(fadeOut(animationSpec = tween(durationMillis = 0)))
+        },
+        label = ""
+    ) { currentType ->
+        CardMessage(type = currentType)
     }
 }
 
