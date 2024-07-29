@@ -57,6 +57,7 @@ dependencies {
     def junit = "4.13.2"
     def junitTest = "1.1.5"
     def espresso = "3.5.1"
+    def composeUi = "1.2.0"
 
     implementation("androidx.core:core-ktx:$coreKtx")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleRuntime")
