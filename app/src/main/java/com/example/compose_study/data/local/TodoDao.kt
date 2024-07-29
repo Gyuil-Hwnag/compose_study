@@ -9,23 +9,23 @@ import com.example.compose_study.model.TodoEntity
 @Dao
 interface TodoDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun createTodo(todo: TodoEntity)
+    fun createTodo(todo: TodoEntity)
 
     @Query("SELECT * FROM todo ORDER BY todoIdx DESC")
-    suspend fun getTodoList(): List<TodoEntity>
+    fun getTodoList(): List<TodoEntity>
 
     @Query("SELECT * FROM todo WHERE todoIdx = :idx ")
-    suspend fun getTodo(idx: Int): TodoEntity
+    fun getTodo(idx: Int): TodoEntity
 
     @Query("DELETE FROM todo WHERE todoIdx = :idx")
-    suspend fun deleteTodo(idx: Int)
+    fun deleteTodo(idx: Int)
 
     @Query("DELETE FROM todo")
-    suspend fun deleteTodoList()
+    fun deleteTodoList()
 
     @Query("UPDATE todo SET title = :title, body = :body WHERE todoIdx = :id")
-    suspend fun patchTodo(id: Int, title: String, body: String)
+    fun patchTodo(id: Int, title: String, body: String)
 
     @Query("UPDATE todo SET isChecked = not isChecked  WHERE todoIdx = :id")
-    suspend fun isCheckTodo(id: Int)
+    fun isCheckTodo(id: Int)
 }
